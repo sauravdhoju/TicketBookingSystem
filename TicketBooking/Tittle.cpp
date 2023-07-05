@@ -1,4 +1,4 @@
-#include "Message.h"
+#include "Title.h"
 #include "ConsoleSize.h"
 
 COORD getConsoleWindowSize() {
@@ -13,7 +13,7 @@ COORD getConsoleWindowSize() {
     return windowSize;
 }
 
-void welcome(const std::string& text, int paddingY) {
+void Title(const std::string& text, int paddingY) {
     COORD consoleSize = getConsoleWindowSize();
     int consoleWidth = consoleSize.X;
     int consoleHeight = consoleSize.Y;

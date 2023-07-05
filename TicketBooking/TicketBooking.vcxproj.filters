@@ -24,7 +24,7 @@
     <ClCompile Include="ConsoleSize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Message.cpp">
+    <ClCompile Include="Tittle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Admin.cpp">
@@ -32,10 +32,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Login.h">
+    <ClInclude Include="User.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Message.h">
+    <ClInclude Include="Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleColor.h">
@@ -48,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="seat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuAndArrow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

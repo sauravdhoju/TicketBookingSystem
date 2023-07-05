@@ -23,14 +23,15 @@
     <ClCompile Include="ConsoleSize.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Message.cpp" />
+    <ClCompile Include="Tittle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="ConsoleSize.h" />
-    <ClInclude Include="Login.h" />
-    <ClInclude Include="Message.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="MenuAndArrow.h" />
+    <ClInclude Include="Title.h" />
     <ClInclude Include="seat.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

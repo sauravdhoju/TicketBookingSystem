@@ -1,5 +1,5 @@
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef Title_H
+#define Title_H
 
 #include <iostream>
 #include <iomanip>
@@ -17,7 +17,7 @@ inline void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void welcome(const std::string& text, int paddingY);
+void Title(const std::string& text, int paddingY);
 
 void setConsoleSizeAndCenter();
-#endif // MESSAGE_H
+#endif // Title_H

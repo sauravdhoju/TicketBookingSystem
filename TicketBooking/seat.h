@@ -1,11 +1,15 @@
 #pragma once
+
+#ifndef SEAT_H
+#define SEAT_H
+
+
 #include<windows.h>
-#include"Message.h"
+#include"Title.h"
 #include"ConsoleColor.h"
 #include<conio.h>
 #include"ConsoleSize.h"
-#ifndef SEAT_H
-#define SEAT_H
+
 
 #define row 8 // last ko 2 row premium
 #define column 12// 4 division
@@ -43,7 +47,7 @@ void drawSeat(int x, int y , colorCode c) {
 void drawHall(hall &h, int current) {
     int startX = centerX-hallLength/2;
     int x = startX, y = centerY-hallBreadth/2;
-    colorCode c;
+    colorCode c= Default_white;
     for (int i = 0; i < totalSeat; i++) {
         if (i == current) c = Bright_blue;
         else if (h.s[i].selected == true) c = Green;
@@ -68,28 +72,29 @@ void drawHall(hall &h, int current) {
     }
 }
 
-void controlHallSeat(hall &h) {
+/*void controlHallSeat(hall& h) {
     char keyPressed;
     int index=0;
     seat *selected[20];
     int totalSelected=0;
+    std::string s = char(37) + char(38) + char(39) + char(40);
     while (true) {
         do {
             keyPressed = _getch();
-        } while (keyPressed != 'w' && keyPressed != 'a' && keyPressed != 's' && keyPressed != 'd' &&
-            keyPressed != 'W' && keyPressed != 'A' && keyPressed != 'S' && keyPressed != 'D' &&
-            keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32));
+        } while (
+            keyPressed != '"w' = "wasd"
+            keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32));    
                     //      enter                   escape                    space         
-        if ((keyPressed == 'w' || keyPressed == 'W') && index > column - 1) {
+        if ((keyPressed == char(38)) && index > column - 1) {
             index -= column;
         }
-        if ((keyPressed == 's' || keyPressed == 'S') && index < ((row - 1) * column) - 1) {
+        if ((keyPressed == char(40)) && index < ((row - 1) * column) - 1) {
             index += column;
         }
-        if ((keyPressed == 'a' || keyPressed == 'A') && index % row > 0) {
+        if ((keyPressed == char(37)) && index % row > 0) {
             index -= 1;
         }
-        if ((keyPressed == 'd' || keyPressed == 'D') && index % row < column - 1) {
+        if ((keyPressed == char(39)) && index % row < column - 1) {
             index += 1;
         }
         if (keyPressed == '\r' && h.s[index].selected==false && h.s[index].available == true) {
@@ -109,5 +114,5 @@ void controlHallSeat(hall &h) {
         drawHall(h, index);
     }
 }
-
+*/
 #endif

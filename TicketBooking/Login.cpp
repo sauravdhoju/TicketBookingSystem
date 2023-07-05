@@ -5,9 +5,9 @@
 #include <regex>
 #include <sstream>
 
-#include "Login.h"
+#include "User.h"
 #include "ConsoleSize.h"
-#include "Message.h"
+#include "Title.h"
 #include "ConsoleColor.h"
 #include "Admin.h"
 
@@ -35,10 +35,10 @@ void User::getUserInfo() {
     if (!user) {
         std::cout << "File could not open";
     }
-    else {//class making
-        //std::string username, password, phonenumber, email;
+    else {
+
         char c;
-        gotoxy(centerX - 50, centerY - 5); //move the cursor to middle of the console
+        gotoxy(centerX - 50, centerY - 5);
         std::cout << "Username: ";
         std::cin >> username;
 
@@ -53,7 +53,7 @@ void User::getUserInfo() {
         gotoxy(centerX + 50, centerY - 0);
         std::cout << "Character count: " << std::endl;
 
-        gotoxy(centerX - 50, centerY - 4); //move the cursor to middle of the console
+        gotoxy(centerX - 50, centerY - 4); 
         std::cout << "Password: ";
 
         int tick = 1;
@@ -145,7 +145,7 @@ void User::getUserInfo() {
                 //for debugging
                 if (debug) {
                     gotoxy(centerX + 50, centerY + tick);
-                    std::cout << password ;
+                    std::cout << password;
                 }
 
             }
@@ -171,7 +171,8 @@ void User::getUserInfo() {
                 resetHighlight();
             }
         }
-       
+      
+        
         gotoxy(centerX + 50, centerY - 4);
         std::cout << "         " << std::endl;
         gotoxy(centerX + 50, centerY - 3);
@@ -229,7 +230,7 @@ void User::getUserInfo() {
                 break;
             }
         }
-        id++;
+        
         // Write the user data to the file
         std::ostringstream UserData;
         user << id << "," << username << "," << password << "," << phonenumber << "," << email << std::endl;
@@ -239,12 +240,34 @@ void User::getUserInfo() {
             std::cout << "Error occurred while writing user data to the file." << std::endl;
             return;
         }
-        welcome("Your account has been created Successfully", centerY + 2);
+        Title("Your account has been created Successfully", centerY + 2);
         
     }
+
 }
-//ss
-    
+
+void id() {
+    int id=-1;
+    std::ifstream user(USER_FILE, std::ios::in);
+    if (!user) {
+        std::cout << "file could not oopen";
+    }
+    else {
+        bool found = false;
+        int currentId;
+        while (user >> currentId) {
+            if (currentId == id) {
+                found = true;
+                break;
+            }
+
+        }
+        if (found) {
+            id++;
+            std::cout << "id" << id;
+        }
+    }
+ }
     void User::Login() {
         gotoxy(centerX - 50, centerY - 5);
         std::cout << "Username: ";
@@ -302,7 +325,7 @@ void User::getUserInfo() {
                 //do {
                     Admin admin;
                     system("cls");
-                    welcome("Movie-Ticket Booking System", centerY - 12);
+                    Title("Movie-Ticket Booking System", centerY - 12);
                     gotoxy(centerX - 50, centerY - 8);
                     std::cout << "Welcome " << username << std::endl;
 
@@ -312,7 +335,7 @@ void User::getUserInfo() {
                     std::cout << "2. Customer Details";
                     gotoxy(centerX - 50, centerY - 2);
                     std::cout << "3. Logout\n";
-                     choice = _getch();
+                    choice = _getch();
                      switch (choice) {
                      case '1':
                          admin.ListOfMovies();
@@ -320,6 +343,7 @@ void User::getUserInfo() {
 
                      case '2':
                          admin.CustomerDetails();
+                        // _getch();
                          break;
                      }
                      _getch();

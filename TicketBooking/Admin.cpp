@@ -1,18 +1,20 @@
 #include "Admin.h"
-#include "Message.h"
+#include "Title.h"
 #include "ConsoleSize.h"
 #include "ConsoleColor.h"
-#include "Login.h"
+#include "User.h"
 #include <iostream>
 #include <conio.h>
 #include <fstream>
 #include <string>
+
 void Admin::ListOfMovies() {
 	char choice;
 	std::string line;
 	do {
 		system("cls");
-		welcome("Movie-Ticket Booking System", centerY - 12);
+		
+		Title("Movie-Ticket Booking System", centerY - 12);
 		gotoxy(centerX - 30, centerY - 8);
 		std::cout << "List of Movies";
 		gotoxy(centerX - 30, centerY - 8);
@@ -70,7 +72,8 @@ void Admin::ListOfMovies() {
 	} while (choice != '4');
 }
 void Admin::CustomerDetails() {
-	/*int id1;
+	
+	int id1;
 	std::cout << "Customer Details";
 	std::ofstream file(USER_FILE, std::ios::in);
 	std::cout << "ID? ";
@@ -81,6 +84,6 @@ void Admin::CustomerDetails() {
 	else {
 		//search
 		
-	}*/
+	}
 	_getch();
 }

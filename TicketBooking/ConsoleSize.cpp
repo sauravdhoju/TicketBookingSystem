@@ -1,5 +1,5 @@
 #include "ConsoleSize.h"
-#include "Message.h"
+#include "Title.h"
 
 int centerX=0;
 int centerY=0;

@@ -21,16 +21,20 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="ConsoleSize.cpp" />
-    <ClCompile Include="Login.cpp" />
+    <ClCompile Include="Seat.cpp" />
+    <ClCompile Include="User.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Movies.cpp" />
     <ClCompile Include="Tittle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Admin.h" />
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="ConsoleSize.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Movies.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="MenuAndArrow.h" />
+    <ClInclude Include="MenuAndTime.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="seat.h" />
   </ItemGroup>
@@ -120,6 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

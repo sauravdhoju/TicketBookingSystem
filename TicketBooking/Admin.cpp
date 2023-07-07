@@ -1,19 +1,22 @@
-#include "Admin.h"
-#include "Title.h"
-#include "ConsoleSize.h"
-#include "ConsoleColor.h"
-#include "User.h"
+
 #include <iostream>
 #include <conio.h>
 #include <fstream>
 #include <string>
 
+#include "Admin.h"
+#include "Title.h"
+#include "ConsoleSize.h"
+#include "ConsoleColor.h"
+#include "User.h"
+#include "MenuAndTime.h"
+
 void Admin::ListOfMovies() {
 	char choice;
 	std::string line;
 	do {
-		system("cls");
-		
+		system("cls");  presentTime();
+
 		Title("Movie-Ticket Booking System", centerY - 12);
 		gotoxy(centerX - 30, centerY - 8);
 		std::cout << "List of Movies";
@@ -25,52 +28,31 @@ void Admin::ListOfMovies() {
 		std::cout << "3. The Amazing Spiderman\n";
 		gotoxy(centerX - 30, centerY - 5);
 		std::cout << "4. Main Menu\n";
-		choice = _getch();
 
-		if (choice == '1') {
-			highlightGreen();
-			gotoxy(centerX - 30, centerY - 8);
-			std::cout << "1. Spiderman Home Coming\n";
-			resetHighlight();
-		}
-		else if (choice == '2') {
-			highlightGreen();
-			gotoxy(centerX - 30, centerY - 7);
-			std::cout << "2. Spiderman Away From Home\n";
-			resetHighlight();
-		}
-		else if (choice == '3') {
-			highlightGreen();
-			gotoxy(centerX - 30, centerY - 6);
-			std::cout << "3. The Amazing Spiderman\n";
-			resetHighlight();
-		}
-		else if(choice == '4') {
-			highlightGreen();
-			gotoxy(centerX - 30, centerY - 5);
-			std::cout << "4. Main Menu\n";
-			resetHighlight();
-		}
 		std::fstream file;
 		std::string command;
+
+		choice = menuInput(centerY - 8, centerX - 30 - 1, 4);
+
 		switch (choice) {
-		case '1':
+		case 1:
 			command = "notepad " + MOVIES_DETAIL1;
 			system(command.c_str());
 			break;
 
-		case '2':
+		case 2:
 			command = "notepad " + MOVIES_DETAIL2;
 			system(command.c_str());
 			break;
 
-		case '3':
+		case 3:
 			command = "notepad " + MOVIES_DETAIL3;
 			system(command.c_str());
 			break;
 		}
-	} while (choice != '4');
+	} while (choice != 4);
 }
+
 void Admin::CustomerDetails() {
 	
 	int id1;

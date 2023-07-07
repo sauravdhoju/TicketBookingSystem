@@ -4,14 +4,16 @@
 #include <conio.h>
 #include <regex>
 #include <sstream>
+#include <dos.h>
 
 #include "User.h"
 #include "ConsoleSize.h"
 #include "Title.h"
 #include "ConsoleColor.h"
 #include "Admin.h"
-
-int debug = 0;
+#include "MenuAndTime.h"
+#include "Global.h"
+#include "Movies.h"
 
 bool isValidPhoneNumber(const std::string& phoneNumber) {
     // Regular expression pattern for a valid phone number
@@ -143,11 +145,11 @@ void User::getUserInfo() {
                 std::cout << "Character Count: " << password.length() << " " << std::endl;
 
                 //for debugging
-                if (debug) {
+               /* if (debug) {
                     gotoxy(centerX + 50, centerY + tick);
                     std::cout << password;
                 }
-
+                */
             }
             resetHighlight();
             if (password.length() >= 8 && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
@@ -157,7 +159,7 @@ void User::getUserInfo() {
                 resetHighlight();
                 isPasswordValid = true;
                 gotoxy(centerX - 40, centerY - 3);
-                std::cout << "                           ";//overwriting show passwor by ~
+                std::cout << "                           ";//overwriting show password by ~
             }
             else {
                 gotoxy(centerX - 40, centerY - 4);
@@ -230,23 +232,25 @@ void User::getUserInfo() {
                 break;
             }
         }
-        
+        system("cls");
+        Title("Your account has been created successfully", centerY + 2);
+        Sleep(500);
         // Write the user data to the file
         std::ostringstream UserData;
-        user << id << "," << username << "," << password << "," << phonenumber << "," << email << std::endl;
+        user << username << "," << password << "," << phonenumber << "," << email << std::endl;
         user << UserData.str();
         user.close();
         if (user.fail()) {
             std::cout << "Error occurred while writing user data to the file." << std::endl;
             return;
         }
-        Title("Your account has been created Successfully", centerY + 2);
+        
         
     }
 
 }
 
-void id() {
+/*void getUserId() {
     int id=-1;
     std::ifstream user(USER_FILE, std::ios::in);
     if (!user) {
@@ -267,94 +271,140 @@ void id() {
             std::cout << "id" << id;
         }
     }
- }
-    void User::Login() {
-        gotoxy(centerX - 50, centerY - 5);
-        std::cout << "Username: ";
-        std::getline(std::cin, username);
+ }*/
+
+
+void User::CustomerDetails() {
+    //customer details
+}
+
+
+void User::customerPortal() {
+    char choice;
+    Movies mov;
+    User user;
+    do {
+        system("cls");
+        presentTime();
+        Title("Movie-Ticket Booking System", centerY - 12);
+        gotoxy(centerX - 50, centerY - 8);
+        std::cout << "Welcome " << username << std::endl;
+
         gotoxy(centerX - 50, centerY - 4);
-        std::cout << "Password: ";
-        std::getline(std::cin, password);
+        std::cout << "1. Available Movies\n";
+        gotoxy(centerX - 50, centerY - 3);
+        std::cout << "2. Your Details\n";
+        gotoxy(centerX - 50, centerY - 2);
+        std::cout << "3. Logout\n";
 
-        std::ifstream user(USER_FILE, std::ios::out);
-        std::ifstream admin(ADMIN_FILE, std::ios::out);
+        choice = menuInput(centerY - 4, centerX - 50 - 1, 3);
 
-        if (!user || !admin) {
-            std::cout << "File could not open";
-            return;
+        switch (choice) {
+        case 1:
+            mov.showMovies();
+            break;
+        case 2:
+            user.CustomerDetails();
+            break;
         }
 
-        bool isAdmin = false;
-        bool found = false;
+        _getch();
+    } while (choice != '3');
+}
 
-        // Check if the user is an admin
-        std::string adminLine;
-        while (getline(admin, adminLine)) {
-            size_t pos = adminLine.find(",");
-            std::string adminUsername = adminLine.substr(0, pos);
-            std::string adminPassword = adminLine.substr(pos + 1);
-            if (adminUsername == username && adminPassword == password) {
-                isAdmin = true;
+void User::Login() {
+    gotoxy(centerX - 50, centerY - 5);
+    std::cout << "Username: ";
+    std::getline(std::cin, username);
+    gotoxy(centerX - 50, centerY - 4);
+    std::cout << "Password: ";
+    std::getline(std::cin, password);
+
+    std::ifstream user(USER_FILE, std::ios::out);
+    std::ifstream admin(ADMIN_FILE, std::ios::out);
+
+    if (!user || !admin) {
+        std::cout << "File could not open";
+        return;
+    }
+
+    bool isAdmin = false;
+    bool isCustomer = false;
+    bool found = false;
+
+    // Check if the user is an admin
+    std::string adminLine;
+    while (getline(admin, adminLine)) {
+        size_t pos = adminLine.find(",");
+        std::string adminUsername = adminLine.substr(0, pos);
+        std::string adminPassword = adminLine.substr(pos + 1);
+        if (adminUsername == username && adminPassword == password) {
+            isAdmin = true;
+            isCustomer = true;
+            found = true;
+            break;
+        }
+    }
+    admin.close();
+
+    if (!found) {
+        // Check if the user is a customer
+        std::string line;
+        while (getline(user, line)) {
+            size_t pos = line.find(",");
+            storedUsername = line.substr(0, pos);
+            storedPassword = line.substr(pos + 1);
+            pos = storedPassword.find(",");
+            storedPassword = storedPassword.substr(0, pos);
+
+            if (storedUsername == username && storedPassword == password) {
                 found = true;
                 break;
             }
         }
-        admin.close();
+        user.close();
+    }
 
-        if (!found) {
-            // Check if the user is a customer
-            std::string line;
-            while (getline(user, line)) {
-                size_t pos = line.find(",");
-                storedUsername = line.substr(0, pos);
-                storedPassword = line.substr(pos + 1);
-                pos = storedPassword.find(",");
-                storedPassword = storedPassword.substr(0, pos);
+    if (found) {
+        if (isAdmin) {
+            char choice;
+            //do {
+                Admin admin;
+                system("cls");  presentTime();
+                Title("Movie-Ticket Booking System", centerY - 12);
+                gotoxy(centerX - 50, centerY - 8);
+                std::cout << "Welcome " << username << std::endl;
 
-                if (storedUsername == username && storedPassword == password) {
-                    found = true;
-                    break;
-                }
-            }
-            user.close();
-        }
+                    
+                gotoxy(centerX - 50, centerY - 4);
+                std::cout << "1. List of Movies for Modification\n";
+                gotoxy(centerX - 50, centerY - 3);
+                std::cout << "2. Customer Details";
+                gotoxy(centerX - 50, centerY - 2);
+                std::cout << "3. Logout\n";
 
-        if (found) {
-            if (isAdmin) {
-                char choice;
-                //do {
-                    Admin admin;
-                    system("cls");
-                    Title("Movie-Ticket Booking System", centerY - 12);
-                    gotoxy(centerX - 50, centerY - 8);
-                    std::cout << "Welcome " << username << std::endl;
+                choice = menuInput(centerY - 4, centerX - 50-1, 3);
+                //choice = _getch();
+                    switch (choice) {
+                    case 1:
+                        admin.ListOfMovies();
+                        break;
 
-                    gotoxy(centerX - 50, centerY - 4);
-                    std::cout << "1. List of Movies for Modification\n";
-                    gotoxy(centerX - 50, centerY - 3);
-                    std::cout << "2. Customer Details";
-                    gotoxy(centerX - 50, centerY - 2);
-                    std::cout << "3. Logout\n";
-                    choice = _getch();
-                     switch (choice) {
-                     case '1':
-                         admin.ListOfMovies();
-                         break;
-
-                     case '2':
-                         admin.CustomerDetails();
-                        // _getch();
-                         break;
-                     }
-                     _getch();
-               // }while (choice != '3');
-            }
-            else {
-                std::cout << "Congratulations! Successfully logged in as a customer." << std::endl;
-            }
+                    case 2:
+                        admin.CustomerDetails();
+                    // _getch();
+                        break;
+                    }
+                    _getch();
+            // }while (choice != '3');
         }
         else {
-            std::cout << "Invalid username or password. Please try again." << std::endl;
+            customerPortal();
         }
     }
+    else {
+        std::cout << "Invalid username or password. Please try again." << std::endl;
+        _getch();
+    }
+}
 

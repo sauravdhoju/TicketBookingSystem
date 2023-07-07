@@ -23,6 +23,7 @@ enum colorCode {
     , Bright_white
 };
 
+     
 inline void highlight(colorCode color) {
     // Set console color to red
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);

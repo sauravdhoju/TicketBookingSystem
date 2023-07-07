@@ -13,6 +13,8 @@ class User {
 	std::string storedUsername, storedPassword;
 public:
 	void getUserInfo();
+	void CustomerDetails();
+	void customerPortal();
 	void Login();
 	
 

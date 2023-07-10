@@ -30,10 +30,10 @@ void drawHall(hall& h, int current) {
     std::cout << "Booked seat      " << char(Block) << char(Block);//size 1;
     gotoxy(x - 50, y + 10);
 
-    std::cout << " W " << char(24);
-    std::cout << " A " << char(24);
-    std::cout << " S " << char(24);
-    std::cout << " D " << char(24);
+    std::cout << " W " << " ↑ " << std::endl;
+    std::cout << " A " << char(24) << std::endl;
+    std::cout << " S " << char(24) << std::endl;
+    std::cout << " D " << char(24) << std::endl;
 
     for (int i = 0; i < totalSeat; i++) {
         if (i == current) c = Bright_blue;

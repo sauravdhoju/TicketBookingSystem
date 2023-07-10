@@ -12,7 +12,7 @@ void Movies::showMovies() {
 
 
 	system("cls"); presentTime();
-	//Title("Movie-Ticket Booking System", centerY - 12);
+	/*//Title("Movie-Ticket Booking System", centerY - 12);
 	gotoxy(centerX-8, centerY - 12);
 	std::cout << ("Movie-Ticket Booking System\n");
 	gotoxy(centerX-2, centerY - 8);
@@ -84,7 +84,7 @@ void Movies::showMovies() {
 			system("cls"); presentTime();
 			break;
 		}
-	} while (choice != 4);
+	} while (choice != 4);*/
 }
 void Movies::BookTicket() {
 	hall h;

@@ -14,7 +14,7 @@
 void Admin::ListOfMovies() {
 	char choice;
 	std::string line;
-	do {
+	/*do {
 		system("cls");  presentTime();
 
 		Title("Movie-Ticket Booking System", centerY - 12);
@@ -31,7 +31,7 @@ void Admin::ListOfMovies() {
 
 		std::fstream file;
 		std::string command;
-
+		
 		choice = menuInput(centerY - 8, centerX - 30 - 1, 4);
 
 		switch (choice) {
@@ -50,7 +50,7 @@ void Admin::ListOfMovies() {
 			system(command.c_str());
 			break;
 		}
-	} while (choice != 4);
+	} while (choice != 4);*/
 }
 
 void Admin::CustomerDetails() {

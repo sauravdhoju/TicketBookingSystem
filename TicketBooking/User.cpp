@@ -38,12 +38,10 @@ void User::getUserInfo() {
         std::cout << "File could not open";
     }
     else {
-
         char c;
         gotoxy(centerX - 50, centerY - 5);
         std::cout << "Username: ";
         std::cin >> username;
-
         gotoxy(centerX + 50, centerY - 4);
         std::cout << "Uppercase" << std::endl;
         gotoxy(centerX + 50, centerY - 3);
@@ -65,6 +63,7 @@ void User::getUserInfo() {
         bool hasDigit = false;
         bool hasSpecialChar = false;
         bool isPasswordValid = false;
+        bool showPassword = false;
 
         while (!isPasswordValid) {
             password = ""; // Clear the password on each iteration
@@ -95,17 +94,21 @@ void User::getUserInfo() {
 
                 else {
                     //tilde sign gives password
-                    if (c != '~') password += c;
-                    //to show the password in desired location
-                    gotoxy(centerX + password.length() - 41, centerY - 4);
                     resetHighlight();
-                    if (c != '~') {
+                    if (c == '~') {
+                        if (showPassword) showPassword = false;
+                        else showPassword = true;
+                    }
+                    else{
+                        password += c;
+                    }
+                    if (showPassword) {
                         gotoxy(centerX - 40, centerY - 4);
-                        for (int i = 0; i < password.length(); i++) std::cout << "*";
+                        std::cout << password;
                     }
                     else {
                         gotoxy(centerX - 40, centerY - 4);
-                        std::cout << password;
+                        for (int i = 0; i < password.length(); i++) std::cout << "*";
                     }
                     gotoxy(centerX + password.length() - 40, centerY - 4);
                 }
@@ -160,6 +163,8 @@ void User::getUserInfo() {
                 isPasswordValid = true;
                 gotoxy(centerX - 40, centerY - 3);
                 std::cout << "                           ";//overwriting show password by ~
+                gotoxy(centerX - 40, centerY - 4);
+                for (int i = 0; i < password.length(); i++) std::cout << "*";
             }
             else {
                 gotoxy(centerX - 40, centerY - 4);
@@ -169,7 +174,7 @@ void User::getUserInfo() {
                 password = "";
                 gotoxy(centerX + 20, centerY - 4);
                 highlightRed();
-                std::cout << "!Enough\n";
+                std::cout << "Weak Password\n";
                 resetHighlight();
             }
         }
@@ -189,51 +194,95 @@ void User::getUserInfo() {
         while (true) {
             gotoxy(centerX - 50, centerY - 3);
             std::cout << "Phone Number: +977-98";
-            std::string phoneNumberSuffix;
-            std::cin >> phoneNumberSuffix;
+            std::string phoneNumberSuffix="";
+            char c;
+            do {
+                c = _getch();
+                if (c >= char('0')&& c<= char('9')) phoneNumberSuffix += c;
+                else if (c == '\b'&&phoneNumberSuffix.length()>0) {
+                    gotoxy(centerX - 30 + phoneNumberSuffix.length(), centerY - 3);
+                    std::cout << " ";
+                    phoneNumberSuffix.pop_back();
+                }
+
+                (phoneNumberSuffix.length() == 8) ? highlightGreen() : highlightRed();
+                gotoxy(centerX + 50, centerY-3);
+                std::cout << "Character Count: " << phoneNumberSuffix.length()+2 << " " << std::endl;
+                resetHighlight();
+
+                
+                if ((c < char('0') || c > char('9')) && c!='\b' && c!='\r') {
+                    gotoxy(centerX + 50, centerY-2);
+                    highlightRed();  std::cout << "Please Enter Numbers Only!";
+                    resetHighlight();
+                }
+                else{
+                    gotoxy(centerX + 50, centerY-2); std::cout << "                           ";
+                }
+
+                gotoxy(centerX - 50, centerY - 3);
+                std::cout << "Phone Number: +977-98" << phoneNumberSuffix;
+                gotoxy(centerX - 29+ phoneNumberSuffix.length(), centerY - 3);
+            }while (c != '\r');
             phonenumber = "+977_98" + phoneNumberSuffix;
 
-            (phoneNumberSuffix.length() >= 8) ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 1);
-                std::cout << "Character Count: " << phoneNumberSuffix.length() << " " << std::endl;
-                resetHighlight();
             // Validate the phone number suffix
             if (!isValidPhoneNumber(phoneNumberSuffix)) {
                 // Overwrite the number with blank space
-                gotoxy(centerX - 50, centerY - 3);
+                gotoxy(centerX - 50+21, centerY - 3);
                 for (int i = 0; i < phoneNumberSuffix.length(); i++) {
                     std::cout << " ";
                 }
                 gotoxy(centerX + 20, centerY - 3);
-                std::cout << "!Valid Number\n";
+                highlightRed();
+                std::cout << "Invalid Number\n";
+                resetHighlight();
                 phoneNumberSuffix = "";
                 continue;
             }
 
             else {
+                gotoxy(centerX + 50, centerY - 3);
+                std::cout << "                                    ";//Overwrite Character Count
                 gotoxy(centerX + 20, centerY - 3);
-                std::cout << "Valid Number\n";
+                highlightGreen();
+                std::cout << "Valid Number  ";
+                resetHighlight();
                 break;
             }
         }
 
-        while (true) {
+        while (!isValidEmail(email)) {
             gotoxy(centerX - 50, centerY - 2);
             std::cout << "Email: ";
-            std::cin >> email;
-            if (!isValidEmail(email)){
+            do {
+                c = _getch();
+                if (c != '\b'&&c!='\r') {
+                    gotoxy(centerX - 43 + email.length(), centerY - 2);
+                    std::cout << c;
+                    email += c;
+                }
+                else if(c=='\b'&&email.length()>0){
+                    email.pop_back();
+                    gotoxy(centerX - 43 + email.length(), centerY - 2);
+                    std::cout << " ";
+                }
+
                 gotoxy(centerX + 20, centerY - 2);
-                std::cout << "!Valid Email\n";
-                continue;
-            }
-            else {
-                gotoxy(centerX + 20, centerY - 2);
-                std::cout << "Valid Email\n";
-                break;
-            }
+                if(isValidEmail(email)){
+                    highlightGreen(); std::cout << "Valid Email  "; 
+                } 
+                else {
+                    highlightRed(); std::cout << "Invalid Email"; 
+                }
+                resetHighlight();
+
+                gotoxy(centerX - 43 + email.length(), centerY - 2);
+            } while (c != '\r');
         }
         system("cls");
         Title("Your account has been created successfully", centerY + 2);
+        _getch();
         Sleep(500);
         // Write the user data to the file
         std::ostringstream UserData;
@@ -290,14 +339,7 @@ void User::customerPortal() {
         gotoxy(centerX - 50, centerY - 8);
         std::cout << "Welcome " << username << std::endl;
 
-        gotoxy(centerX - 50, centerY - 4);
-        std::cout << "1. Available Movies\n";
-        gotoxy(centerX - 50, centerY - 3);
-        std::cout << "2. Your Details\n";
-        gotoxy(centerX - 50, centerY - 2);
-        std::cout << "3. Logout\n";
-
-        choice = menuInput(centerY - 4, centerX - 50 - 1, 3);
+        choice = menuInput({"Available Movies","Your Details","Logout"}, centerX - 50, centerY - 4);
 
         switch (choice) {
         case 1:
@@ -307,7 +349,6 @@ void User::customerPortal() {
             user.CustomerDetails();
             break;
         }
-
         _getch();
     } while (choice != '3');
 }
@@ -374,16 +415,7 @@ void User::Login() {
                 Title("Movie-Ticket Booking System", centerY - 12);
                 gotoxy(centerX - 50, centerY - 8);
                 std::cout << "Welcome " << username << std::endl;
-
-                    
-                gotoxy(centerX - 50, centerY - 4);
-                std::cout << "1. List of Movies for Modification\n";
-                gotoxy(centerX - 50, centerY - 3);
-                std::cout << "2. Customer Details";
-                gotoxy(centerX - 50, centerY - 2);
-                std::cout << "3. Logout\n";
-
-                choice = menuInput(centerY - 4, centerX - 50-1, 3);
+                choice = menuInput({"List of Movies for Modification", "Customer Details", "Logout"}, centerX - 50, centerY - 4);
                 //choice = _getch();
                     switch (choice) {
                     case 1:

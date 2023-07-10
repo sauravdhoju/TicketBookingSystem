@@ -10,8 +10,6 @@
 #include "MenuAndTime.h"
 #include "Global.h"
 
-//rose push
-//r
  //bool debug = true;
 int actualMain();
 
@@ -37,16 +35,12 @@ int actualMain() {
     int choice;
 
     User user;
-    Title("Movie-Ticket Booking System", centerY);
+    Title("Movie-Ticket Booking System", centerY-7);
     _getch();
     do {
         system("cls");  presentTime();
-        Title("Movie-Ticket Booking System", centerY - 4);
-        Title("1. Login", centerY);
-        Title("   2. Register", centerY + 1);
-        Title("3. Exit", centerY + 2);
-
-        choice =menuInput(centerY, 73, 3);
+        Title("Movie-Ticket Booking System", centerY-7);
+        choice = menuInput({"Login", "Register", "Exit"}, centerX-3, centerY-4);
 
         switch (choice) {
         case 1:

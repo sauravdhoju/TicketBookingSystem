@@ -27,9 +27,9 @@ int actualMain() {
     
     Admin admin;
     //admin.CustomerDetails();
-    //hall h;
-    //initiateHall(h);
-    //controlHallSeat(h);
+    hall h;
+    initiateHall(h);
+    controlHallSeat(h);
    
     std::string username, password;
     int choice;

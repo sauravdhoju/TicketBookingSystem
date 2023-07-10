@@ -1,4 +1,4 @@
-#include "seat.h"
+﻿#include "seat.h"
 #include "Title.h"
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
@@ -20,6 +20,21 @@ void drawHall(hall& h, int current) {
     int startX = centerX - hallLength / 2;
     int x = startX, y = centerY - hallBreadth / 2;
     colorCode c = Default_white;
+
+    int Block = 219;
+    gotoxy(x - 50, y);
+    std::cout << "Available seat   " << char(Block) << char(Block);//size 1;
+    gotoxy(x - 50, y + 2);
+    std::cout << "Selected Seat    " << char(Block) << char(Block);//size 1;
+    gotoxy(x - 50, y + 4);
+    std::cout << "Booked seat      " << char(Block) << char(Block);//size 1;
+    gotoxy(x - 50, y + 10);
+
+    std::cout << " W " << char(24);
+    std::cout << " A " << char(24);
+    std::cout << " S " << char(24);
+    std::cout << " D " << char(24);
+
     for (int i = 0; i < totalSeat; i++) {
         if (i == current) c = Bright_blue;
         else if (h.s[i].selected == true) c = Green;
@@ -29,10 +44,6 @@ void drawHall(hall& h, int current) {
             else if (h.s[i].qlt == PREMIUM) c = yellow;
         }
         drawSeat(x, y, c);
-        /*if (debug) {
-            gotoxy(getConsoleWindowSize().X - 10, y);
-            std::cout << i;
-        }*/
         //columnPartition=column/column division 12/4 = 3
         if ((i % columnPartition) == columnPartition - 1) x += corridorGap;
         if (i % column == column - 1) {
@@ -87,7 +98,6 @@ void controlHallSeat(hall& h) {
             if (h.s[index].qlt == NON_PREMIUM) nonPremiumSelected++;
         }
         if (keyPressed == char(27)) {//esc button
-            //std::cout << "esc";
             for (int i = 0; i < totalSeat; i++) {
                 if (h.s[i].selected) h.s[i].selected = false;
             }

@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include <conio.h>
+#include <vector>
 #include "Global.h"
 #include "ConsoleColor.h"
 /*
@@ -41,60 +42,42 @@ void arrow(void (*Eptr)(),void (*uptr)(), void (*dptr)(), void (*lptr)() = NULL,
 }
 
 */
-inline int menuInput(int beginningY,int cursorX,int noOfChoices, char cursor = '>') {
+inline int menuInput(std::vector<std::string> options, int startX, int startY, char cursor = '>') {
     char keyPressed;
     int choice = 1;
-    int pointerCursorY = beginningY;
-    
-    highlightGreen();
-    gotoxy(cursorX, pointerCursorY);
-    std::cout << cursor;
-    resetHighlight();
     do {
+        for (int i = 0; i < options.size(); i++) {
+            gotoxy(startX - 1, startY + i);
+            if (i == choice - 1) {
+                highlightGreen();
+                std::cout << cursor;
+            }
+            else std::cout << " ";
+            std::cout << i + 1 << ". " << options.at(i);
+            resetHighlight();
+        }
         keyPressed = _getch(); // Read a single character without echoing it
-
-        
-
         if (keyPressed == -32) { // Check if the character is the escape character
             keyPressed = _getch(); // Read the arrow key character
             switch (keyPressed) {
             case 72: // Up arrow
-                if (pointerCursorY > beginningY) {
-                    gotoxy(cursorX, pointerCursorY);
-                    std::cout << ' ';
-                    pointerCursorY -= 1;
+                if (choice > 1) {
                     choice--;
-                    highlightGreen();
-                    gotoxy(cursorX, pointerCursorY);
-                    std::cout << cursor;
-                    resetHighlight();
                 }
-                gotoxy(0, 0);
-                std::cout << pointerCursorY - 1;
                 break;
             case 80: // Down arrow
-                if (pointerCursorY < beginningY + noOfChoices - 1) {
-                    gotoxy(cursorX, pointerCursorY);
-                    std::cout << ' ';
-                    pointerCursorY += 1;
+                if (choice < options.size()) {
                     choice++;
-                    highlightGreen();
-                    gotoxy(cursorX, pointerCursorY);
-                    std::cout << cursor;
-                    resetHighlight();
                 }
                 break;
             }
         }
         else if (keyPressed == '\r') {
-
             return choice;
         }
-        gotoxy(0, 0);
-        std::cout << pointerCursorY << "," << choice;
     } while (true);
-
 }
+
 
 inline int get_month_index(std::string name)
 {

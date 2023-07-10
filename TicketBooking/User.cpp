@@ -339,7 +339,7 @@ void User::customerPortal() {
         gotoxy(centerX - 50, centerY - 8);
         std::cout << "Welcome " << username << std::endl;
 
-        choice = menuInput({"Available Movies","Your Details","Logout"}, centerX - 50, centerY - 4);
+        choice = menuInput({"Available Movies","Your Details","Logout"}, centerX - 55, centerY - 4);
 
         switch (choice) {
         case 1:
@@ -347,6 +347,8 @@ void User::customerPortal() {
             break;
         case 2:
             user.CustomerDetails();
+            break;
+        case 3:
             break;
         }
         _getch();

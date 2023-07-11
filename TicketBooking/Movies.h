@@ -9,6 +9,9 @@
 #include "Admin.h"
 
 class Movies {
+	std::string movieName;
+	unsigned int id;
+	//DateAndTime startTime, endTime;
 public:
 	void showMovies();
 	void BookTicket();

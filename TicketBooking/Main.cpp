@@ -54,7 +54,7 @@ int actualMain() {
             system("cls");  presentTime();
             Title("Movie-Ticket Booking System", centerY - 12);
             Title("CREATE ACCOUNT", centerY - 8);
-            user.getUserInfo();
+           // user.getUserInfo();
             std::cout << "Registration Successfull";
             break;
 

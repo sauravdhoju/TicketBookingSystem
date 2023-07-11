@@ -31,8 +31,7 @@ bool isValidEmail(const std::string& email)
     return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3);
 }
 
-
-void User::getUserInfo() {
+/*void User::getUserInfo() {
     std::ofstream user(USER_FILE, std::ios::app);
     if (!user) {
         std::cout << "File could not open";
@@ -147,12 +146,7 @@ void User::getUserInfo() {
                 gotoxy(centerX + 50, centerY - 0);
                 std::cout << "Character Count: " << password.length() << " " << std::endl;
 
-                //for debugging
-               /* if (debug) {
-                    gotoxy(centerX + 50, centerY + tick);
-                    std::cout << password;
-                }
-                */
+                
             }
             resetHighlight();
             if (password.length() >= 8 && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
@@ -298,7 +292,7 @@ void User::getUserInfo() {
     }
 
 }
-
+*/
 /*void getUserId() {
     int id=-1;
     std::ifstream user(USER_FILE, std::ios::in);

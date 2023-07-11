@@ -11,6 +11,11 @@
 #include <vector>
 #include "Global.h"
 #include "ConsoleColor.h"
+
+struct DateAndTime {
+    int weekday, month, day, hour, minute, second, year;
+};
+
 /*
 void arrow(void (*Eptr)(),void (*uptr)(), void (*dptr)(), void (*lptr)() = NULL, void (*rptr)() = NULL) {
     char keyPressed;
@@ -130,8 +135,8 @@ DateAndTime NowTime(DateAndTime dat) {
     return dat;
     //std::cout << dat.weekday << " " << dat.month << " " << dat.day << " " << dat.hour << " " << dat.minute << " " << dat.second << " " << dat.year;
 }
-*/
 
+*/
 
 inline void updatePresentTime() {
     

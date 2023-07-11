@@ -16,8 +16,8 @@ int actualMain();
 int main() {
     terminateProgram = false;
     std::thread mainThread(actualMain);
-    std::thread timeThread(updatePresentTime);
-    timeThread.join();
+    //std::thread timeThread(updatePresentTime);
+    //timeThread.join();
     mainThread.join();
     return 0;
 }

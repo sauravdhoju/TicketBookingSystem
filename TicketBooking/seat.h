@@ -11,8 +11,8 @@
 #include"ConsoleSize.h"
 
 //int debug;
-#define row 8 // last ko 2 row premium
-#define column 12// 4 division
+#define row 12 // last ko 2 row premium
+#define column 16// 4 division
 #define totalSeat row*column
 #define hallLength 2*column+(column-1)//gap ko value 1
 #define hallBreadth row+(row-1)
@@ -33,25 +33,10 @@ struct seat {
 struct hall {
 	seat s[totalSeat];
 };
-#endif
-
-#pragma once
-
-#ifndef SEAT_H
-#define SEAT_H
-
-#include <windows.h>
-#include "Title.h"
-#include "ConsoleColor.h"
-#include <conio.h>
-#include "ConsoleSize.h"
-
-// Structures and function declarations
-
-#endif
 
 void initiateHall(hall& h);
 void drawSeat(int x, int y, colorCode c);
-void drawHall(hall& h, int current);
-void controlHallSeat(hall& h);
+inline void drawHall(hall& h, int current,int,int);
+inline void controlHallSeat(hall& h);
 
+#endif

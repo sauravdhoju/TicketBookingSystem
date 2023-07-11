@@ -12,29 +12,33 @@ void drawSeat(int x, int y, colorCode c) {
     int Block = 219;
     gotoxy(x, y);
     highlight(c);
-    std::cout << char(Block) << char(Block);//size 1
+    std::cout << char(Block) << char(Block) << " ";//size 1
     resetHighlight();
 }
 
-void drawHall(hall& h, int current) {
+inline void drawHall(hall& h, int current, int npSeats, int pSeats) {
     int startX = centerX - hallLength / 2;
     int x = startX, y = centerY - hallBreadth / 2;
     colorCode c = Default_white;
 
     int Block = 219;
-    gotoxy(x - 50, y);
-    std::cout << "Available seat   " << char(Block) << char(Block);//size 1;
-    gotoxy(x - 50, y + 2);
-    std::cout << "Selected Seat    " << char(Block) << char(Block);//size 1;
-    gotoxy(x - 50, y + 4);
-    std::cout << "Booked seat      " << char(Block) << char(Block);//size 1;
-    gotoxy(x - 50, y + 10);
+    gotoxy(0, y);
+    std::cout << "Available Seat   \n"<<"Selected Seat    \n" <<"Booked Seat      \n" <<"Premium Seat    ";
+    drawSeat(17, y, Default_white); 
+    drawSeat(17, y+1, Green); 
+    drawSeat(17, y+2, Red); 
+    drawSeat(17, y+3, yellow); 
+   
+    gotoxy(0, y + 10);
+    std::cout << " W " << char(24) << std::endl;
+    std::cout << " A " << char(27) << std::endl;
+    std::cout << " S " << char(25) << std::endl;
+    std::cout << " D " << char(26) << std::endl;
 
-    std::cout << " W " << " ↑ " << std::endl;
-    std::cout << " A " << char(24) << std::endl;
-    std::cout << " S " << char(24) << std::endl;
-    std::cout << " D " << char(24) << std::endl;
-
+    gotoxy(x+hallLength+50, y-10);
+    std::cout<<"Non-Premium Seats: "<<npSeats<<std::endl;
+    std::cout<<"Premium Seats:     "<<pSeats<<std::endl;
+    std::cout<<"Total   Seats:     "<<npSeats+pSeats<<std::endl;
     for (int i = 0; i < totalSeat; i++) {
         if (i == current) c = Bright_blue;
         else if (h.s[i].selected == true) c = Green;
@@ -55,41 +59,29 @@ void drawHall(hall& h, int current) {
     }
 }
 
-void controlHallSeat(hall& h) {
+inline void controlHallSeat(hall& h) {
     char keyPressed;
-    int index = 0;
+    int index = totalSeat/2;
     int premiumSelected = 0;
     int nonPremiumSelected = 0;
+    drawHall(h,totalSeat/2,0,0);
     while (true) {
-        /*
-        gotoxy(centerX * 2 - 15, 0);
-        std::cout << premiumSelected;
-        gotoxy(centerX * 2 - 15, 1);
-        std::cout << nonPremiumSelected;
-        gotoxy(centerX * 2 - 15, 2);
-        std::cout << index;
-        
-        gotoxy(centerX * 2 - 15, 3);
-        std::cout << "y" << index / 12;
-        gotoxy(centerX * 2 - 15, 4);
-        std::cout << "x" << index % 12;
-        */
         do {
             keyPressed = _getch();
         } while (
             keyPressed != 'w' && keyPressed != 'a' && keyPressed != 's' && keyPressed != 'd' &&
             keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32));
-        //      enter                   escape                    space         
+        //      enter                          escape                    space         
         if ((keyPressed == 'w' || keyPressed == 'W') && index > column - 1) {
             index -= column;
         }
         if ((keyPressed == 's' || keyPressed == 'S') && index < ((row - 1) * column) - 1) {
             index += column;
         }
-        if ((keyPressed == 'a' || keyPressed == 'A') && index % row > 0) {
+        if ((keyPressed == 'a' || keyPressed == 'A') && index % column > 0) {
             index -= 1;
         }
-        if ((keyPressed == 'd' || keyPressed == 'D') && index % row < column - 1) {
+        if ((keyPressed == 'd' || keyPressed == 'D') && index % column < column - 1) {
             index += 1;
         }
         if (keyPressed == '\r' && h.s[index].selected == false && h.s[index].available == true) {
@@ -104,8 +96,7 @@ void controlHallSeat(hall& h) {
             premiumSelected = 0;
             nonPremiumSelected = 0;
         }
-
-        drawHall(h, index);
+        drawHall(h, index,nonPremiumSelected,premiumSelected);
     }
 }
 

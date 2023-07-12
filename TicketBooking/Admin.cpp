@@ -14,10 +14,23 @@
 void Admin::ListOfMovies() {
 	char choice;
 	std::string line;
-	/*do {
+	do {
 		system("cls");  presentTime();
-
 		Title("Movie-Ticket Booking System", centerY - 12);
+		std::vector<std::string> movieNames = {
+		"Spiderman Home Coming",
+		"Spiderman Away From Home",
+		"The Amazing Spiderman",
+		"MainMenu"
+		};
+		for (int i = 0; i < movieNames.size(); i++) {
+			gotoxy(centerX - 30, centerY - 8 - i);
+			std::cout << i + 1 << ". " << movieNames[i] << std::endl;
+		}
+
+		std::cout << movieNames.size() + 1 << std::endl;
+
+		/*Title("Movie-Ticket Booking System", centerY - 12);
 		gotoxy(centerX - 30, centerY - 8);
 		std::cout << "List of Movies";
 		gotoxy(centerX - 30, centerY - 8);
@@ -28,11 +41,12 @@ void Admin::ListOfMovies() {
 		std::cout << "3. The Amazing Spiderman\n";
 		gotoxy(centerX - 30, centerY - 5);
 		std::cout << "4. Main Menu\n";
-
+		*/
 		std::fstream file;
 		std::string command;
 		
-		choice = menuInput(centerY - 8, centerX - 30 - 1, 4);
+		choice = menuInput(movieNames, centerY - 8, centerX - 30 - 1);
+
 
 		switch (choice) {
 		case 1:
@@ -50,7 +64,7 @@ void Admin::ListOfMovies() {
 			system(command.c_str());
 			break;
 		}
-	} while (choice != 4);*/
+	} while (choice != 4);
 }
 
 void Admin::CustomerDetails() {

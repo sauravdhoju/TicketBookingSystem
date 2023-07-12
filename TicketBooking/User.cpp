@@ -28,9 +28,9 @@ bool isValidEmail(const std::string& email)
     const std::regex pattern1("(\\w+)(\\.|)?(\\w*)@gmail(\\.com)+");
     const std::regex pattern2("(\\w+)(\\.|)?(\\w*)@yahoo(\\.com)+");
     const std::regex pattern3("(\\w+)(\\.|)?(\\w*)@khec(\\.np)+");
-    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3);
+    const std::regex pattern4("(\\w+)(\\.|)?(\\w*)@hotmail(\\.com)+");
+    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4);
 }
-
 
 void User::getUserInfo() {
     std::ofstream user(USER_FILE, std::ios::app);
@@ -147,12 +147,7 @@ void User::getUserInfo() {
                 gotoxy(centerX + 50, centerY - 0);
                 std::cout << "Character Count: " << password.length() << " " << std::endl;
 
-                //for debugging
-               /* if (debug) {
-                    gotoxy(centerX + 50, centerY + tick);
-                    std::cout << password;
-                }
-                */
+                
             }
             resetHighlight();
             if (password.length() >= 8 && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
@@ -330,7 +325,7 @@ void User::CustomerDetails() {
 
 void User::customerPortal() {
     char choice;
-    Movies mov;
+    Movie mov;
     User user;
     do {
         system("cls");

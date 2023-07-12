@@ -14,7 +14,7 @@
 int actualMain();
 
 int main() {
-    terminateProgram = false;
+    setConsoleSizeAndCenter();
     std::thread mainThread(actualMain);
     std::thread timeThread(updatePresentTime);
     timeThread.join();
@@ -26,16 +26,24 @@ int actualMain() {
     setConsoleSizeAndCenter();
     
     Admin admin;
+
+    /*DateAndTime a =   { 2010,10,4,6,50,36,0 },
+                b  =  { 2010,10,4,3,36,40,0  };
+	DateAndTime c= timeDiff(a, b);
+    std::cout << c.year << ' ' << c.month << ' ' << c.day << ' ' << c.hour << ' ' << c.minute << ' ' << c.second << ' ';
+    */
     //admin.CustomerDetails();
-    hall h;
-    initiateHall(h);
-    controlHallSeat(h);
+    //run h;
+    //initiateHall(h);
+    //controlHallSeat(h);
    
     std::string username, password;
     int choice;
 
+
     User user;
     Title("Movie-Ticket Booking System", centerY-0);
+    
     _getch();
     do {
         system("cls");  presentTime();
@@ -59,7 +67,6 @@ int actualMain() {
             break;
 
         case 3:
-            terminateProgram = true;
             system("cls");
             system("exit");
             //exit(0);

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <ctime>
 #include <chrono>
 #include <thread>
@@ -11,6 +12,11 @@
 #include <vector>
 #include "Global.h"
 #include "ConsoleColor.h"
+
+struct DateAndTime {
+    int year, month, day, hour, minute, second, weekday ;
+};
+
 /*
 void arrow(void (*Eptr)(),void (*uptr)(), void (*dptr)(), void (*lptr)() = NULL, void (*rptr)() = NULL) {
     char keyPressed;
@@ -107,8 +113,8 @@ inline std::string presentTime() {
         return date;
 }
 
-/*
-DateAndTime NowTime(DateAndTime dat) {
+
+inline DateAndTime NowTime(DateAndTime dat) {
     std::string now = presentTime();
     std::istringstream str(now);
     std::string weekday, month, day, hour, minute, second,year;
@@ -130,12 +136,43 @@ DateAndTime NowTime(DateAndTime dat) {
     return dat;
     //std::cout << dat.weekday << " " << dat.month << " " << dat.day << " " << dat.hour << " " << dat.minute << " " << dat.second << " " << dat.year;
 }
-*/
 
+inline DateAndTime timeDiff(DateAndTime a, DateAndTime b) {
+    DateAndTime c;
+	c.second = b.second - a.second;
+	c.minute = b.minute - a.minute;
+	c.hour = b.hour - a.hour;
+    c.weekday = b.weekday - b.weekday;
+    c.year = b.year - a.year;
+    c.month = b.month - a.month;
+    c.day = b.day - a.day;
+    while (c.month < 0 && c.day < 0 && c.hour < 0 && c.minute < 0 && c.second < 0) {
+        if (c.month < 0) {
+            c.month += 12;
+            c.year--;
+        }
+        if (c.day < 0) {
+            c.day += 30;
+            c.month--;
+        }
+        if (c.hour < 0) {
+            c.hour += 24;
+            c.day--;
+        }
+        if (c.minute < 0) {
+            c.minute += 60;
+            c.second--;
+        }
+        if (c.second < 0) {
+            c.second += 60;
+            c.minute--;
+        }
+    }
+    return c;
+}
 
 inline void updatePresentTime() {
-    
-    while (!terminateProgram) {
+    while (true) {
         HANDLE                      m_hConsole;
         WORD                        m_currentConsoleAttr;
         CONSOLE_SCREEN_BUFFER_INFO   csbi;

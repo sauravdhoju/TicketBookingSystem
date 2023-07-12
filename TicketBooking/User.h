@@ -23,6 +23,7 @@ public:
 	User(std::string username, std::string password, std::string phonenumber, std::string email){}
 	void CustomerDetails();
 	void customerPortal();
+    void getUserInfo();
 	void Login();
 };
 /*

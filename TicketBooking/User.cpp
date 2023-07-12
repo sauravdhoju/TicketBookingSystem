@@ -28,10 +28,11 @@ bool isValidEmail(const std::string& email)
     const std::regex pattern1("(\\w+)(\\.|)?(\\w*)@gmail(\\.com)+");
     const std::regex pattern2("(\\w+)(\\.|)?(\\w*)@yahoo(\\.com)+");
     const std::regex pattern3("(\\w+)(\\.|)?(\\w*)@khec(\\.np)+");
-    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3);
+    const std::regex pattern4("(\\w+)(\\.|)?(\\w*)@hotmail(\\.com)+");
+    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4);
 }
 
-/*void User::getUserInfo() {
+void User::getUserInfo() {
     std::ofstream user(USER_FILE, std::ios::app);
     if (!user) {
         std::cout << "File could not open";
@@ -292,7 +293,7 @@ bool isValidEmail(const std::string& email)
     }
 
 }
-*/
+
 /*void getUserId() {
     int id=-1;
     std::ifstream user(USER_FILE, std::ios::in);
@@ -324,7 +325,7 @@ void User::CustomerDetails() {
 
 void User::customerPortal() {
     char choice;
-    Movies mov;
+    Movie mov;
     User user;
     do {
         system("cls");

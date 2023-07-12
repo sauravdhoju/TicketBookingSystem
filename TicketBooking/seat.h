@@ -11,14 +11,17 @@
 #include"ConsoleSize.h"
 
 //int debug;
-#define row 12 // last ko 2 row premium
-#define column 16// 4 division
+#define row 8// last ko 2 row premium
+#define column 12// 4 division
 #define totalSeat row*column
 #define hallLength 2*column+(column-1)//gap ko value 1
 #define hallBreadth row+(row-1)
 #define corridorGap 3
 #define columnDivision 4
 #define premiumRowSeats 2
+
+#define nonPremiumRate 220
+#define premiumRate 410
 
 const int columnPartition = column / columnDivision;
 
@@ -30,13 +33,14 @@ struct seat {
 	qualityOfSeat qlt= NON_PREMIUM;
 };
 
-struct hall {
+struct run {
 	seat s[totalSeat];
+	DateAndTime start;
 };
 
-void initiateHall(hall& h);
+void initiateHall(run& h);
 void drawSeat(int x, int y, colorCode c);
-inline void drawHall(hall& h, int current,int,int);
-inline void controlHallSeat(hall& h);
+ void drawHall(run& h, int current);
+ void controlHallSeat(run& h);
 
 #endif

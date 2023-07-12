@@ -6,7 +6,7 @@
 #include "seat.h"
 #include <fstream>
 
-void Movies::showMovies() {
+void Movie::showMovies() {
 	int choice;
 	
 
@@ -86,8 +86,8 @@ void Movies::showMovies() {
 		}
 	} while (choice != 4);*/
 }
-void Movies::BookTicket() {
-	hall h;
+void Movie::BookTicket() {
+	run h;
 	initiateHall(h);
 	controlHallSeat(h);
 

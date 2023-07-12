@@ -43,7 +43,6 @@ int actualMain() {
 
     User user;
     Title("Movie-Ticket Booking System", centerY-0);
-    
     _getch();
     do {
         system("cls");  presentTime();

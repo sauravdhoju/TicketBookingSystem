@@ -35,7 +35,7 @@ struct seat {
 
 struct run {
 	seat s[totalSeat];
-	DateAndTime start;
+//	DateAndTime startTime;
 };
 
 void initiateHall(run& h);

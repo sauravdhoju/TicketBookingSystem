@@ -173,6 +173,7 @@ inline DateAndTime timeDiff(DateAndTime a, DateAndTime b) {
 
 inline void updatePresentTime() {
     while (true) {
+		//setConsoleSizeAndCenter();
         HANDLE                      m_hConsole;
         WORD                        m_currentConsoleAttr;
         CONSOLE_SCREEN_BUFFER_INFO   csbi;

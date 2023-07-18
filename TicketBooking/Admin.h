@@ -5,10 +5,10 @@
 
 #ifndef ADMIN_H
 #define ADMIN_H
-
-static const std::string MOVIES_DETAIL1 {"MoviesDetails/Spyderman_home_homecoming.txt"};
-static const std::string MOVIES_DETAIL2 {"MoviesDetails/Spiderman_away_from _home.txt"};
-static const std::string MOVIES_DETAIL3 {"MoviesDetails/The_amazing_spiderman.txt"};
+static const std::string MOVIES_NAME	{"MoviesDetails/Movie.txt"};
+static const std::string MOVIES_DETAIL1 {"MoviesDetails/Spiderman Home Coming.txt"};
+static const std::string MOVIES_DETAIL2 {"MoviesDetails/Spiderman Away From Home.txt"};
+static const std::string MOVIES_DETAIL3 {"MoviesDetails/The Amazing Spiderman.txt"};
 
 class Admin {
 public:

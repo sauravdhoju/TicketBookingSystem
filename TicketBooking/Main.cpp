@@ -9,12 +9,12 @@
 #include "Admin.h"
 #include "MenuAndTime.h"
 #include "Global.h"
+#include "Movies.h"
 
  //bool debug = true;
 int actualMain();
 
 int main() {
-    setConsoleSizeAndCenter();
     std::thread mainThread(actualMain);
     std::thread timeThread(updatePresentTime);
     timeThread.join();
@@ -26,7 +26,7 @@ int actualMain() {
     setConsoleSizeAndCenter();
     
     Admin admin;
-
+    
     /*DateAndTime a =   { 2010,10,4,6,50,36,0 },
                 b  =  { 2010,10,4,3,36,40,0  };
 	DateAndTime c= timeDiff(a, b);
@@ -36,13 +36,14 @@ int actualMain() {
     //run h;
     //initiateHall(h);
     //controlHallSeat(h);
-   
+
     std::string username, password;
     int choice;
 
 
     User user;
     Title("Movie-Ticket Booking System", centerY-0);
+    
     _getch();
     do {
         system("cls");  presentTime();
@@ -52,8 +53,6 @@ int actualMain() {
         switch (choice) {
         case 1:
             system("cls");  presentTime();
-            Title("Movie-Ticket Booking System", centerY - 12);
-            Title("LOGIN", centerY - 8);
             user.Login();
             break;
 

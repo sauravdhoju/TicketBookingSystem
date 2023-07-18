@@ -12,72 +12,110 @@
 #include "MenuAndTime.h"
 
 void Admin::ListOfMovies() {
-	char choice;
-	std::string line;
-	/*do {
-		system("cls");  presentTime();
-		Title("Movie-Ticket Booking System", centerY - 12);
-		std::vector<std::string> movieNames = {
-		"Spiderman Home Coming",
-		"Spiderman Away From Home",
-		"The Amazing Spiderman",
-		"MainMenu"
-		};
-		for (int i = 0; i < movieNames.size(); i++) {
-			gotoxy(centerX - 30, centerY - 8 - i);
-			std::cout << i + 1 << ". " << movieNames[i] << std::endl;
-		}
+    char choice;
+    std::string line;
+    int selectedMovieIndex = 0;
 
-		std::cout << movieNames.size() + 1 << std::endl;
+    std::ifstream movieFile(MOVIES_NAME);
+    std::vector<std::string> movieNames;
 
-		/*Title("Movie-Ticket Booking System", centerY - 12);
-		gotoxy(centerX - 30, centerY - 8);
-		std::cout << "List of Movies";
-		gotoxy(centerX - 30, centerY - 8);
-		std::cout << "1. Spiderman Home Coming\n";
-		gotoxy(centerX - 30, centerY - 7);
-		std::cout << "2. Spiderman Away From Home\n";
-		gotoxy(centerX - 30, centerY - 6);
-		std::cout << "3. The Amazing Spiderman\n";
-		gotoxy(centerX - 30, centerY - 5);
-		std::cout << "4. Main Menu\n";
-		*/
-		std::fstream file;
-		std::string command;
-		choice = menuInput(movieNames, centerY - 8, centerX - 30 - 1);
+    // Read movie names from the file
+    while (std::getline(movieFile, line)) {
+        movieNames.push_back(line);
+    }
 
-		switch (choice) {
-		case 1:
-			command = "notepad " + MOVIES_DETAIL1;
-			system(command.c_str());
-			break;
+    movieFile.close();
 
-		case 2:
-			command = "notepad " + MOVIES_DETAIL2;
-			system(command.c_str());
-			break;
+    system("cls");
+    presentTime();
 
-		case 3:
-			command = "notepad " + MOVIES_DETAIL3;
-			system(command.c_str());
-			break;
-		}
-	} while (choice != 4);*/
+    do {
+        Title("Movie-Ticket Booking System", centerY - 12);
+
+        for (int i = 0; i < movieNames.size(); i++) {
+            gotoxy(centerX - 30, centerY - 8 + i);
+            if (i == selectedMovieIndex) {
+                highlightGreen();  // Highlight the selected movie name
+            }
+            std::cout << i + 1 << ". " << movieNames[i] << std::endl;
+            resetHighlight();
+        }
+
+        choice = _getch();
+
+        switch (choice) {
+        case 72:  // Arrow key: Up
+            if (selectedMovieIndex > 0) {
+                selectedMovieIndex--;
+            }
+            break;
+        case 80:  // Arrow key: Down
+            if (selectedMovieIndex < movieNames.size() - 1) {
+                selectedMovieIndex++;
+            }
+            break;
+
+        case '\r':  // Enter key: Select movie
+            if (selectedMovieIndex < movieNames.size()) {
+                if (selectedMovieIndex == movieNames.size() - 1) {
+                    // Go Back option selected
+                    return;  // Exit the function to go back
+                }
+                else {
+                    std::string movieDetailsFile = "MoviesDetails/" + movieNames[selectedMovieIndex] + ".txt";
+                    std::string command = "notepad " + movieDetailsFile;
+                    system(command.c_str());
+                }
+            }
+            break;
+        }
+    } while (true);
 }
 
 void Admin::CustomerDetails() {
-	
-	int id1;
-	std::cout << "Customer Details";
-	std::ofstream file(USER_FILE, std::ios::in);
-	std::cout << "ID? ";
-	std::cin >> id1;
-	if (!file.is_open()) {
-		std::cout << "File could not open\n";
-	}
-	else {
-		//search
-		
-	}
-	_getch();
+    system("cls");  presentTime();
+    Title("Movie-Ticket Booking System", centerY - 12);
+    int id;
+    Title("Customer Details", centerY - 8);
+    std::ifstream file(USER_FILE, std::ios::in);
+    gotoxy(centerX - 10, centerY - 6);
+    std::cout << "ID? ";
+    std::cin >> id;
+    if (!file.is_open()) {
+        std::cout << "File could not open\n";
+    }
+    else {
+        std::string line;
+        bool found = false;
+
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            std::vector<std::string> customerData;
+            std::string field;
+
+            while (std::getline(iss, field, ',')) {
+                customerData.push_back(field);
+            }
+            //check whether given id is validate or not if calidation successfull then it promts single term into their name their credentials
+            if (!customerData.empty() && std::stoi(customerData[0]) == id) {
+                std::cout << "ID            : " << customerData[0] << std::endl;
+                std::cout << "Name          : " << customerData[1] << std::endl;
+                //dont need to show password so directly 3
+                std::cout << "Phone Number  : " << customerData[3] << std::endl;
+                std::cout << "Email         : " << customerData[4] << std::endl;
+                //need to wtite ticket 
+                //need to show their booked ticket and booked movies with time 
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            system("cls");  presentTime();
+            Title("Movie-Ticket Booking System", centerY - 12);
+            Title("No Data", centerY + 2);
+            _getch();
+        }
+    }
+    file.close();
+    _getch();
 }

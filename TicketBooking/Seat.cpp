@@ -3,12 +3,14 @@
 #include "MenuAndTime.h"
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
+#include "user.h"
 
 void initiateHall(run& h) {
     for (int i = (row - premiumRowSeats) * column; i < totalSeat; i++) {
         h.s[i].qlt = PREMIUM;
     }
 }
+
 void drawSeat(int x, int y, colorCode c) {
     int Block = 219;
     gotoxy(x, y);
@@ -38,6 +40,11 @@ void drawHall(run &h, int current) {
             std::cout << "Seat   Number:     ";
             if(i<10) std::cout << '0';
             std::cout<<i;
+            if (totalSelected == seatLimit) {
+                gotoxy(sx, y + totalSelected + 2+1);
+                highlightRed();
+                std::cout << "Seat Limit Reached!";
+            }
             resetHighlight();
         }
     }
@@ -69,26 +76,17 @@ void drawHall(run &h, int current) {
     int Block = 219;
     int ssy=y;
     gotoxy(0, ssy);
-    std::cout <<"Normal    Seat      \n\n"
-              <<"Premium   Seat      \n\n"
-              <<"Booked    Seat      \n\n" 
-              <<"Selected  Seat      \n\n\n\n\n"
-              <<"Cancel Selection :   ESC\n"
-              << "Payment :            SPACE\n";
+    std::cout <<"Normal    Seat            \n\n"
+              <<"Premium   Seat            \n\n"
+              <<"Booked    Seat            \n\n" 
+              <<"Selected  Seat            \n\n\n\n\n"
+              <<"Cancel Selection :   ESC  \n"
+              <<"Confirm Payment  :   SPACE\n"
+              <<"Seat Limit       :   "<<seatLimit;
     drawSeat(19, ssy, Default_white); 
     drawSeat(19, ssy+2, yellow);
     drawSeat(19, ssy+4, Red); 
     drawSeat(19, ssy+6, Green);
-   
-    /*
-    gotoxy(0, 0);
-    std::cout << char(24) << char(27) << char(25) << char(26);
-
-    std::cout << " W " << char(24);gotoxy(0, y + 11);
-    std::cout << " A " << char(27);gotoxy(0, y + 12);
-    std::cout << " S " << char(25);gotoxy(0, y + 13);
-    std::cout << " D " << char(26);
-    */
 
     for (int i = 0; i < totalSeat; i++) {
         if (i == current) c = Bright_blue;
@@ -109,12 +107,53 @@ void drawHall(run &h, int current) {
         else x += 3;
     }
 }
+ void payment(run& a, std::string name, std::string MovieName){
+     system("cls");
+     run aa;
+    int totalSelected = 0;
+    int totalPremium = 0;
+    int totalNonPremium = 0;
+    for (int i = 0; i < totalSeat; i++) {
+        if (a.s[i].selected) {
+            if (a.s[i].qlt == PREMIUM) totalPremium++;
+            if (a.s[i].qlt == NON_PREMIUM)totalNonPremium++;
+            totalSelected++;
+        }
+    }
+    gotoxy(centerX, centerY);
+    std::cout << "RECIPT \n \n";
+    gotoxy(centerX, centerY);
+    std::cout << "Booked by:" << name << std::endl;
+    std::cout << "Name of movie: " << MovieName << std::endl;
+    std::cout << "Movie time: \n";
+    std::cout << "Date: ";
+        time_t result = time(NULL);
+        char str[26];
+        ctime_s(str, sizeof str, &result);
+        std::cout << str;
+    std::cout << "No of seat booked:" << totalSelected << "\n";
+    std::cout << "Premium seat:" << totalPremium << "\n";
+    std::cout << "Non-Premium seat:" << totalNonPremium << "\n";
+    std::cout << "Seat no:";
+
+    for (int i = 0; i < totalSeat; i++) {
+        if (a.s[i].selected) {
+            std::cout << i << ",";
+        }
+    }
+
+    std::cout << "\nTotal cost: " << totalPremium * premiumRate + totalNonPremium * nonPremiumRate;
+    std::cout << "\nPayment \n";
+    _getch();
+}
+
 void confirmPayment(run &h) {
     system("cls");
     Title("Are You sure You want to Pay?", centerY);
     int choice = menuInput({ "Yes","No" }, centerX, centerY + 2);
     if(choice==1){//yes
-        //payemetn fucntion
+        //payemet fucntion
+        payment(h, "hello", "RRR");
     }
     else{//No
         system("cls");
@@ -154,11 +193,12 @@ void controlHallSeat(run& h) {
 					break;
 				}
 			}
-			else if (keyPressed == '\r' && h.s[index].selected == false && h.s[index].available == true && totalSelected < 8) {
-				h.s[index].selected = true;
-				totalSelected++;
+			else if (keyPressed == '\r' && h.s[index].selected == false && h.s[index].available == true&& totalSelected < seatLimit){
+                h.s[index].selected = true;
+                totalSelected++;
 			}
 			else if (keyPressed == char(27)) {//esc button
+                totalSelected = 0;
 				for (int i = 0; i < totalSeat; i++) {
                     if (h.s[i].selected) {
                         h.s[i].selected = false;
@@ -179,6 +219,4 @@ void controlHallSeat(run& h) {
         drawHall(h, index);
     }
 }
-
-
 

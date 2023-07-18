@@ -20,7 +20,7 @@ inline void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+void setConsoleSizeAndCenter();
 void Title(const std::string& text, int paddingY);
 
-void setConsoleSizeAndCenter();
 #endif // Title_H

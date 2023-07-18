@@ -22,6 +22,7 @@
 
 #define nonPremiumRate 220
 #define premiumRate 410
+#define seatLimit 4
 
 const int columnPartition = column / columnDivision;
 
@@ -33,7 +34,7 @@ struct seat {
 	qualityOfSeat qlt= NON_PREMIUM;
 };
 
-struct run {
+struct run {//run a;
 	seat s[totalSeat];
 //	DateAndTime startTime;
 };

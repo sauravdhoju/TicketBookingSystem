@@ -6,6 +6,53 @@
 #include "seat.h"
 #include <fstream>
 
+
+bool movie::update(bool DEL) {
+	location loc = giveLocationFromFile(name);
+	if (loc.start > loc.end) {
+		std::cout << name << " is not found in file. error!";
+		return false;
+	}
+	std::string beforeObject = "";
+	std::string afterObject = "";
+	std::ofstream fo;
+	std::ifstream fi;
+	fi.open("movies.txt", std::ios::in);
+	char c;
+	while (!fi.eof()) {
+		fi.get(c);
+		if (fi.tellg() < loc.start) beforeObject += c;
+		else if (fi.tellg() > loc.end) afterObject += c;
+		else {}
+	}
+	fi.close();
+	fo.open("movies.txt", std::ios::trunc);
+	fo << beforeObject;
+	if (DEL == false) fo.write((char*)&*this, sizeof(movie));
+	fo << afterObject;
+	fo.close();
+}
+
+bool movie::add() {
+	std::cout << "enter Movie Name to add: ";
+	std::cin.getline(name, 30);
+	std::string fileName = name + ".txt";
+	location loc = giveLocationFromFile(name);
+	std::cout << loc.start << '-' << loc.end;
+	if (loc.start < loc.end) {
+		std::cout << name << " already exist in the file";
+		return false;
+	}
+	std::ofstream fo;
+	fo.open("movies.txt", std::ios::app);
+	fo.write((char*)&*this, sizeof(movie));
+	std::string command = "notepad MoviesDetails/" + fileName;
+	system(command.c_str());
+	fo.close();
+	return true;
+}
+/*
+
 void Movie::showMovies() {
 	std::string line;
 	int selectedMovieIndex = 0;
@@ -77,10 +124,14 @@ void Movie::showMovies() {
 							system("cls");  presentTime();
 							Title("Movie-Ticket Booking System", centerY - 7);
 
-							int innerchoice = menuInput({ "Synopsis", "Book Ticket", "Go back" }, centerX - 3, centerY - 4);
+							int innerchoice = menuInput({"Trailer", "Synopsis", "Book Ticket", "Go back" }, centerX - 3, centerY - 4);
 
 							switch (innerchoice) {
-							case 1://synopsis
+							case 1://trailer
+								//milauna baakixa hai
+								system("start wmplayer.exe \"F:\cr\KhEC\Third Semester\Project\TicketBookingSystem\TicketBooking\MoviesDetails\Spiderman Home Coming.mp4\"");
+								break;
+							case 2://synopsis
 								system("cls");	presentTime();
 								Title("Movie-Ticket Booking System", centerY - 7);
 								switch (selectedMovieIndex) {
@@ -119,13 +170,13 @@ void Movie::showMovies() {
 								std::cout << "Press any key to go back...";
 								_getch();
 								break;
-							case 2: //book ticket
+							case 3: //book ticket
 								BookTicket();
 								break;
-							case 3: // go back
+							case 4: // go back
 								return;
 							}
-						} while (choice != 3);
+						} while (choice != 4);
 					}
 					else {
 						std::cout << "Unable to open movie details file." << std::endl;
@@ -143,4 +194,4 @@ void Movie::BookTicket() {
 	run h;
 	initiateHall(h);
 	controlHallSeat(h);
-}
+}*/

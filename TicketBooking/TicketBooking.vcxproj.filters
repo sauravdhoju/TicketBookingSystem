@@ -65,5 +65,8 @@
     <ClInclude Include="Movies.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Payment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

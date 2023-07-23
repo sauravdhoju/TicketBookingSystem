@@ -11,7 +11,6 @@
 #include "Global.h"
 #include "Movies.h"
 
- //bool debug = true;
 int actualMain();
 
 int main() {
@@ -37,6 +36,9 @@ int actualMain() {
     //initiateHall(h);
     //controlHallSeat(h);
 
+    movie m;
+    find(movieMenu(search(""), 10, 10)).showPage();
+
     std::string username, password;
     int choice;
 
@@ -52,25 +54,18 @@ int actualMain() {
 
         switch (choice) {
         case 1:
-            system("cls");  presentTime();
             user.Login();
             break;
 
         case 2:
-            system("cls");  presentTime();
-            Title("Movie-Ticket Booking System", centerY - 12);
-            Title("CREATE ACCOUNT", centerY - 8);
             user.getUserInfo();
-            std::cout << "Registration Successfull";
             break;
 
         case 3:
             system("cls");
-            system("exit");
-            //exit(0);
-            return 0;
+            exit(0);
         }
-    } while (true);
+    } while (choice != 3);
 
     return 0;
 }

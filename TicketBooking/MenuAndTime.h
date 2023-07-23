@@ -173,15 +173,14 @@ inline DateAndTime timeDiff(DateAndTime a, DateAndTime b) {
 
 inline void updatePresentTime() {
     while (true) {
-		//setConsoleSizeAndCenter();
-        HANDLE                      m_hConsole;
-        WORD                        m_currentConsoleAttr;
-        CONSOLE_SCREEN_BUFFER_INFO   csbi;
+        HANDLE m_hConsole;
+        WORD m_currentConsoleAttr;
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
 
-        //retrieve and save the current attributes
-        m_hConsole=GetStdHandle(STD_OUTPUT_HANDLE);
-        if(GetConsoleScreenBufferInfo(m_hConsole, &csbi))
-        m_currentConsoleAttr = csbi.wAttributes;
+        // Retrieve and save the current attributes
+        m_hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        if (GetConsoleScreenBufferInfo(m_hConsole, &csbi))
+            m_currentConsoleAttr = csbi.wAttributes;
 
         // Store the current cursor position
         GetConsoleScreenBufferInfo(m_hConsole, &csbi);
@@ -192,14 +191,13 @@ inline void updatePresentTime() {
 
         // Restore the cursor position
         SetConsoleCursorPosition(m_hConsole, originalPos);
-        
-        //set the ttribute to the original one
-        SetConsoleTextAttribute (m_hConsole,m_currentConsoleAttr);
-        
+
+        // Set the attribute to the original one
+        SetConsoleTextAttribute(m_hConsole, m_currentConsoleAttr);
 
         // Sleep for one second
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    } 
+    }
 }
 
 #endif

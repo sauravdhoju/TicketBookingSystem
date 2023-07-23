@@ -43,5 +43,6 @@ void initiateHall(run& h);
 void drawSeat(int x, int y, colorCode c);
  void drawHall(run& h, int current);
  void controlHallSeat(run& h);
+ void payment(run& a, std::string name, std::string MovieName); // Declare the payment function
 
 #endif

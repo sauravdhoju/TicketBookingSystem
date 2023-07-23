@@ -33,6 +33,10 @@ bool isValidEmail(const std::string& email) {
 
 
 void User::getUserInfo() {
+
+    system("cls");  presentTime();
+    Title("Movie-Ticket Booking System", centerY - 12);
+    Title("CREATE ACCOUNT", centerY - 8);
     std::ofstream user(USER_FILE, std::ios::app );
     std::ifstream user1(USER_FILE, std::ios::app);
     if (!user) {
@@ -283,7 +287,7 @@ void User::getUserInfo() {
         
         std::string id;
         // Generate a unique ID for the new user
-        int maxId = 0;
+        int maxId = 00;
         std::string userline;
         while (std::getline(user1, userline)) {
             std::stringstream iss(userline);
@@ -292,7 +296,7 @@ void User::getUserInfo() {
             int userIdInt = std::stoi(userId);
             maxId = max(maxId, userIdInt);
         }
-        int newId = maxId + 1;
+        int newId = maxId + 01;
         id = std::to_string(newId);
 
 
@@ -312,28 +316,6 @@ void User::getUserInfo() {
 
 }
 
-/*void getUserId() {
-    int id=-1;
-    std::ifstream user(USER_FILE, std::ios::in);
-    if (!user) {
-        std::cout << "file could not oopen";
-    }
-    else {
-        bool found = false;
-        int currentId;
-        while (user >> currentId) {
-            if (currentId == id) {
-                found = true;
-                break;
-            }
-
-        }
-        if (found) {
-            id++;
-            std::cout << "id" << id;
-        }
-    }
- }*/
 
 
 void User::CustomerDetails() {
@@ -343,7 +325,7 @@ void User::CustomerDetails() {
 
 void User::customerPortal() {
     char choice;
-    Movie mov;
+    movie mov;
     User user;
     do {
         system("cls");
@@ -356,7 +338,7 @@ void User::customerPortal() {
 
         switch (choice) {
         case 1:
-            mov.showMovies();
+            //mov.showMovies();
             break;
         case 2:
             user.CustomerDetails();
@@ -369,6 +351,7 @@ void User::customerPortal() {
 }
 
 void User::Login() {
+    system("cls");  presentTime();
     Title("Movie-Ticket Booking System", centerY - 14);
     Title("LOGIN", centerY - 8);
     gotoxy(centerX - 50, centerY - 5);

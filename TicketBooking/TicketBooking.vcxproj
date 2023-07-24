@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="ConsoleSize.cpp" />
+    <ClCompile Include="qrcodegen.cpp" />
     <ClCompile Include="Seat.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -34,6 +35,8 @@
     <ClInclude Include="Global.h" />
     <ClInclude Include="Movies.h" />
     <ClInclude Include="Payment.h" />
+    <ClInclude Include="qrcode.hpp" />
+    <ClInclude Include="qrcodegen.hpp" />
     <ClInclude Include="User.h" />
     <ClInclude Include="MenuAndTime.h" />
     <ClInclude Include="Title.h" />

@@ -62,7 +62,7 @@ void Admin::ListOfMovies() {
                     return;  // Exit the function to go back
                 }
                 else {
-                    std::string movieDetailsFile = "MoviesDetails/" + movieNames[selectedMovieIndex] + ".txt";
+                    std::string movieDetailsFile = std::string("moviesDetailsDir/") + movieNames[selectedMovieIndex] + ".txt";
                     std::string command = "notepad " + movieDetailsFile;
                     system(command.c_str());
                 }

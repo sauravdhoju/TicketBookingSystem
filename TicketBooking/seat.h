@@ -9,6 +9,7 @@
 #include"ConsoleColor.h"
 #include<conio.h>
 #include"ConsoleSize.h"
+#include"MenuAndTime.h"
 
 //int debug;
 #define row 8// last ko 2 row premium
@@ -36,7 +37,7 @@ struct seat {
 
 struct run {//run a;
 	seat s[totalSeat];
-//	DateAndTime startTime;
+	DateAndTime startTime = {0,0, 0, 0, 0, 0 };
 };
 
 void initiateHall(run& h);

@@ -6,7 +6,9 @@
 #include "seat.h"
 #include <fstream>
 
+void DELETEFILE(std::string ) {
 
+}
 bool movie::update(bool DEL) {
 	location loc = giveLocationFromFile(name);
 	if (loc.start > loc.end) {
@@ -17,7 +19,7 @@ bool movie::update(bool DEL) {
 	std::string afterObject = "";
 	std::ofstream fo;
 	std::ifstream fi;
-	fi.open("movies.txt", std::ios::in);
+	fi.open(moviesDir, std::ios::in);
 	char c;
 	while (!fi.eof()) {
 		fi.get(c);
@@ -26,9 +28,24 @@ bool movie::update(bool DEL) {
 		else {}
 	}
 	fi.close();
-	fo.open("movies.txt", std::ios::trunc);
+	fo.open(moviesDir, std::ios::trunc);
 	fo << beforeObject;
-	if (DEL == false) fo.write((char*)&*this, sizeof(movie));
+	if (DEL == false) {
+		fo.write((char*)&*this, sizeof(movie));
+	}
+	else {
+		std::string command = "del " + moviesDetailsDir + name+"\\synopsis.txt";
+		std::cout << command;
+		system(command.c_str());
+
+		command = "del " + moviesDetailsDir + name + "\\trailer.mp4";
+		std::cout << command;
+		system(command.c_str());
+
+	    command = "rmdir " + moviesDetailsDir + name;
+		system(command.c_str());
+		system("\r");
+	}
 	fo << afterObject;
 	fo.close();
 }
@@ -36,7 +53,6 @@ bool movie::update(bool DEL) {
 bool movie::add() {
 	std::cout << "enter Movie Name to add: ";
 	std::cin.getline(name, 30);
-	std::string fileName = name + ".txt";
 	location loc = giveLocationFromFile(name);
 	std::cout << loc.start << '-' << loc.end;
 	if (loc.start < loc.end) {
@@ -44,13 +60,16 @@ bool movie::add() {
 		return false;
 	}
 	std::ofstream fo;
-	fo.open("movies.txt", std::ios::app);
+	fo.open(moviesDir, std::ios::app);
 	fo.write((char*)&*this, sizeof(movie));
-	std::string command = "notepad MoviesDetails/" + fileName;
+	std::string command = "mkdir \"" + moviesDetailsDir + name+'\"';
+	system(command.c_str());
+	command = "notepad "+ moviesDetailsDir + name +"\\synopsis.txt";
 	system(command.c_str());
 	fo.close();
 	return true;
 }
+
 /*
 
 void Movie::showMovies() {

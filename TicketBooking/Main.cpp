@@ -10,20 +10,29 @@
 #include "MenuAndTime.h"
 #include "Global.h"
 #include "Movies.h"
-
+#include "qrcode.hpp"
 int actualMain();
 
 int main() {
     std::thread mainThread(actualMain);
-    std::thread timeThread(updatePresentTime);
-    timeThread.join();
+   //std::thread timeThread(updatePresentTime);
+    //timeThread.join();
     mainThread.join();
     return 0;
 }
 
 int actualMain() {
     setConsoleSizeAndCenter();
-    
+    /*std::istringstream iss(ID);
+    std::tm t = {};
+    iss >> std::get_time(&t, "%y%m%d");
+    if (iss.fail()) {
+        // do something, like throw an exception ...
+    }
+    int day = t.tm_mday;
+    int month = 1 + t.tm_mon;
+    int year = 1900 + t.tm_year;
+    std::cout<<year<<"\\" <<month<< "\\" << day;*/
     Admin admin;
     
     /*DateAndTime a =   { 2010,10,4,6,50,36,0 },
@@ -36,8 +45,9 @@ int actualMain() {
     //initiateHall(h);
     //controlHallSeat(h);
 
-    movie m;
-    find(movieMenu(search(""), 10, 10)).showPage();
+    //movie m;
+   // m.add();
+    //find(movieMenu(search(""), 10, 10)).showPage();*/
 
     std::string username, password;
     int choice;
@@ -55,6 +65,7 @@ int actualMain() {
         switch (choice) {
         case 1:
             user.Login();
+
             break;
 
         case 2:
@@ -69,3 +80,5 @@ int actualMain() {
 
     return 0;
 }
+
+// loggedInId = login();

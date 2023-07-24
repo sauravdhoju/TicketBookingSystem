@@ -14,11 +14,11 @@
 #include <vector>
 #include <string.h>
 #include<sstream>
-#include<iomanip>
+//#include<iomanip>
 #include<windows.h>
 
-#define totalSeat 96
-
+inline std::string moviesDir = "movies.txt";
+inline std::string moviesDetailsDir = "movieDetails\\";
 struct location {
     unsigned int start, end;
 };
@@ -26,36 +26,78 @@ struct location {
 
 class movie
 {
-    char name[30];
-    run schedule[8];
+	char name[30];
+	run schedule[8];
 public:
-    movie() {}
-    bool update(bool DEL=FALSE);
-    bool add();
-    friend std::vector<std::string> search(std::string);
-    friend location giveLocationFromFile(std::string);
-    friend movie find(std::string);
-    void showPage() {
-        std::cout << std::endl << name << '\n';
-		std::ofstream o.open("MoviesDetails/"+name, std::ios::out);
-		while(!o.eof()){}/*********/
-        int choice = menuInput({"Trailer", "Book Ticket", "Delete"}, 15, 15);
-        switch (choice) {
-        case 1:
-            break;
-        case 2:
-            int index;
-            std::cin >> index;
-            controlHallSeat(schedule[index]);
-            update();
-            break;
+	movie() {}
+	bool update(bool DEL = FALSE);
+	bool add();
+	friend std::vector<std::string> search(std::string);
+	friend location giveLocationFromFile(std::string);
+	friend movie find(std::string);
+	void schedules();
+	void adminShowPage() {
+		system("cls");
+		std::cout << std::endl << name << '\n';
+		std::ifstream file;
+		file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
+		std::string line;
+		int i = 0;
+		while (getline(file, line)) {
+			std::cout << line << std::endl;
+			i++;
+		}
+		int choice = menuInput({ "Trailer", "Delete" }, 1, i + 5);
+		std::string command;
+		switch (choice) {
+		case 1:
+			command = "vlc.exe " + moviesDetailsDir + name + "\\trailer.mp4";
+			std::cout << std::endl << command;
+			system(command.c_str());
+			break;
+		case 2:
+			update(TRUE);
+			break;
 
-        case 3:
-            update(TRUE);
-            break;
-        default: break;
-        }
-    }
+		case 3:
+			/*int index;
+			std::cin >> index;
+			controlHallSeat(schedule[index]);
+			update();
+			break;*/
+		default: break;
+		}
+	}
+	void userShowPage() {
+		system("cls");
+		std::cout << std::endl << name << '\n';
+		std::ifstream file;
+		file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
+		std::cout << moviesDetailsDir + name + "\\synopsis.txt";
+		std::string line;
+		int i = 0;
+		while (getline(file, line)) {
+			std::cout << line << std::endl;
+			i++;
+		}
+		int choice = menuInput({ "Trailer", "Book Ticket" }, 1, i + 5);
+		std::string command;
+		switch (choice) {
+		case 1:
+			command = "vlc.exe " + moviesDetailsDir + name + "\\trailer.mp4";
+			std::cout << std::endl << command;
+			system(command.c_str());
+			break;
+		case 2://Schedules
+			schedules();
+			break;
+
+		/*case 3:
+			update(TRUE);
+			break;*/
+		default: break;
+		}
+	}
     
 };
 
@@ -63,7 +105,7 @@ public:
 inline movie find(std::string s) {
 	movie m;
 	std::ifstream f;
-	f.open("movies.txt", std::ios::in);
+	f.open(moviesDir, std::ios::in);
 	while (f.read((char*)&m, sizeof(m)))
 	{
 		if (s == m.name) return m;
@@ -79,7 +121,7 @@ inline std::vector<std::string> search(std::string s = "")
 	std::string movieName;
 	listOfMovies.reserve(32);
 	std::ifstream f;
-	f.open("movies.txt", std::ios::in);
+	f.open(moviesDir, std::ios::in);
 	if (f.eof()) return {};
 	while (f.read((char*)&m, sizeof(m)))
 	{
@@ -90,15 +132,13 @@ inline std::vector<std::string> search(std::string s = "")
 	f.close();
 	return listOfMovies;
 }
-inline location giveLocationFromFile(std::string n)
-{
+inline location giveLocationFromFile(std::string n){
 	movie m;
 	location loc;
 	std::ifstream f;
-	f.open("movies.txt", std::ios::in);
+	f.open(moviesDir, std::ios::in);
 	if (f.tellg() < 0) return{ 401,0 };
 	while (!f.eof()) {
-		std::cout << f.tellg() << std::endl;
 		loc.start = f.tellg();
 		f.read((char*)&m, sizeof(m));
 		loc.end = f.tellg();
@@ -118,12 +158,12 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 		for (int i = 0; i < options.size(); i++) {
 			gotoxy(startX - 1, startY + i);
 			if (i == choice - 1) {
-				//  highlightGreen();
+			    highlightGreen();
 				std::cout << cursor;
 			}
 			else std::cout << " ";
 			std::cout << i + 1 << ". " << options.at(i);
-			//resetHighlight();
+			resetHighlight();
 		}
 		keyPressed = _getch(); // Read a single character without echoing it
 		if (keyPressed == -32) { // Check if the character is the escape character
@@ -145,5 +185,19 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 			return options[choice - 1];
 		}
 	} while (true);
+}
+struct a {
+	std::string s; int index;
+};
+
+inline void movie::schedules() {
+	std::vector <a> v;
+	for (int i = 0; i < 8; i++) {
+		//*if (NowTime().year != 0) 
+		{
+		
+			v.push_back({});
+		}
+	}
 }
 #endif

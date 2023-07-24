@@ -334,16 +334,22 @@ void User::customerPortal() {
         gotoxy(centerX - 50, centerY - 8);
         std::cout << "Welcome " << username << std::endl;
 
-        choice = menuInput({"Available Movies","Your Details","Logout"}, centerX - 55, centerY - 4);
+        choice = menuInput({"Available Movies","Search Movies","Schedules","Your Details","Logout"}, centerX - 55, centerY - 4);
 
+        std::string keyword;
         switch (choice) {
-        case 1:
-            //mov.showMovies();
+        case 1://Available Movies
+            find(movieMenu(search(""), 10, 10)).userShowPage();
             break;
-        case 2:
+        case 2:///Search Movies
+            std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
+            find(movieMenu(search(keyword), 10, 10)).userShowPage();
+            break;
+   
+        case 3://Your Details
             user.CustomerDetails();
             break;
-        case 3:
+        case 4://Logout
             break;
         }
         _getch();
@@ -422,11 +428,13 @@ void User::Login() {
                 Title("Movie-Ticket Booking System", centerY - 12);
                 gotoxy(centerX - 50, centerY - 8);
                 std::cout << "Welcome " << username << std::endl;
-                choice = menuInput({ "List of Movies for Modification", "Customer Details", "Logout" }, centerX - 50, centerY - 4);
+                choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 50, centerY - 4);
                 //choice = _getch();
+
+                movie m;
                 switch (choice) {
                 case 1:
-                    admin.ListOfMovies();
+                    find(movieMenu(search(""), 10, 10)).adminShowPage();
                     break;
 
                 case 2:
@@ -434,6 +442,9 @@ void User::Login() {
                     // _getch();
                     break;
                 case 3:
+                    m.add();
+                    break;
+                case 4:
                     return;
                 }
             } while (choice != 3);

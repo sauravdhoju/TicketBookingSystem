@@ -14,7 +14,7 @@
 #include "ConsoleColor.h"
 
 struct DateAndTime {
-    int year, month, day, hour, minute, second, weekday ;
+    int year, month, day, hour, minute, second;
 };
 
 /*
@@ -112,65 +112,6 @@ inline std::string presentTime() {
         std::cout << date;
         return date;
 }
-
-
-inline DateAndTime NowTime(DateAndTime dat) {
-    std::string now = presentTime();
-    std::istringstream str(now);
-    std::string weekday, month, day, hour, minute, second,year;
-    std::getline(str, weekday, ' ');
-    std::getline(str, month, ' ');
-    std::getline(str, day, ' ');// lol there are 2 spaces: Jul  2
-    std::getline(str, day, ' ');
-    std::getline(str, hour, ':');
-    std::getline(str, minute, ':');
-    std::getline(str, second, ' ');
-    std::getline(str, year, ' ');
-    dat.weekday = get_weekday_index(weekday);
-    dat.month = get_month_index(month);
-    dat.day = std::stoi(day);
-    dat.hour = std::stoi(hour);
-    dat.minute = std::stoi(minute);
-    dat.second = std::stoi(second);
-    dat.year = std::stoi(year);
-    return dat;
-    //std::cout << dat.weekday << " " << dat.month << " " << dat.day << " " << dat.hour << " " << dat.minute << " " << dat.second << " " << dat.year;
-}
-
-inline DateAndTime timeDiff(DateAndTime a, DateAndTime b) {
-    DateAndTime c;
-	c.second = b.second - a.second;
-	c.minute = b.minute - a.minute;
-	c.hour = b.hour - a.hour;
-    c.weekday = b.weekday - b.weekday;
-    c.year = b.year - a.year;
-    c.month = b.month - a.month;
-    c.day = b.day - a.day;
-    while (c.month < 0 && c.day < 0 && c.hour < 0 && c.minute < 0 && c.second < 0) {
-        if (c.month < 0) {
-            c.month += 12;
-            c.year--;
-        }
-        if (c.day < 0) {
-            c.day += 30;
-            c.month--;
-        }
-        if (c.hour < 0) {
-            c.hour += 24;
-            c.day--;
-        }
-        if (c.minute < 0) {
-            c.minute += 60;
-            c.second--;
-        }
-        if (c.second < 0) {
-            c.second += 60;
-            c.minute--;
-        }
-    }
-    return c;
-}
-
 inline void updatePresentTime() {
     while (true) {
         HANDLE m_hConsole;
@@ -199,5 +140,28 @@ inline void updatePresentTime() {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 }
+
+inline DateAndTime NowTime(DateAndTime dat) {
+    std::string now = presentTime();
+    std::istringstream str(now);
+    std::string month, day, hour, minute, second,year;
+    //std::getline(str, temp, ' ');
+    std::getline(str, month, ' ');
+    std::getline(str, day, ' ');// lol there are 2 spaces: Jul  2
+    std::getline(str, day, ' ');
+    std::getline(str, hour, ':');
+    std::getline(str, minute, ':');
+    std::getline(str, second, ' ');
+    std::getline(str, year, ' ');
+    dat.month = get_month_index(month);
+    dat.day = std::stoi(day);
+    dat.hour = std::stoi(hour);
+    dat.minute = std::stoi(minute);
+    dat.second = std::stoi(second);
+    dat.year = std::stoi(year);
+    return dat;
+    //std::cout << dat.weekday << " " << dat.month << " " << dat.day << " " << dat.hour << " " << dat.minute << " " << dat.second << " " << dat.year;
+}
+
 
 #endif

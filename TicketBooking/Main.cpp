@@ -23,6 +23,13 @@ int main() {
 
 int actualMain() {
     setConsoleSizeAndCenter();
+    int i;
+    while (true) {
+        do {
+            i = rand() % 15;
+        } while (i == 7);
+        printQr(generateRandomString(12).c_str(), 10, 10, static_cast<colorCode>(i));
+    }
     /*std::istringstream iss(ID);
     std::tm t = {};
     iss >> std::get_time(&t, "%y%m%d");

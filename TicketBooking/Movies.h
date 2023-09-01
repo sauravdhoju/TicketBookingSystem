@@ -51,7 +51,7 @@ public:
 		std::string command;
 		switch (choice) {
 		case 1:
-			command = "vlc.exe " + moviesDetailsDir + name + "\\trailer.mp4";
+			command = "wmplayer.exe " + moviesDetailsDir + name + "\\trailer.mp4";
 			std::cout << std::endl << command;
 			system(command.c_str());
 			break;
@@ -84,7 +84,7 @@ public:
 		std::string command;
 		switch (choice) {
 		case 1:
-			command = "vlc.exe " + moviesDetailsDir + name + "\\trailer.mp4";
+			command = "wmplayer.exe " + moviesDetailsDir + name + "\\trailer.mp4";
 			std::cout << std::endl << command;
 			system(command.c_str());
 			break;

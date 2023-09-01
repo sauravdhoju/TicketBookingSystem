@@ -14,7 +14,7 @@
 void Admin::ListOfMovies() {
 	char choice;
 	std::string line;
-	do {
+	/*do {
 		system("cls");  presentTime();
 		Title("Movie-Ticket Booking System", centerY - 12);
 		std::vector<std::string> movieNames = {
@@ -42,11 +42,9 @@ void Admin::ListOfMovies() {
 		gotoxy(centerX - 30, centerY - 5);
 		std::cout << "4. Main Menu\n";
 		*/
-		std::fstream file;
+		/*std::fstream file;
 		std::string command;
-		
 		choice = menuInput(movieNames, centerY - 8, centerX - 30 - 1);
-
 
 		switch (choice) {
 		case 1:
@@ -64,7 +62,7 @@ void Admin::ListOfMovies() {
 			system(command.c_str());
 			break;
 		}
-	} while (choice != 4);
+	} while (choice != 4);*/
 }
 
 void Admin::CustomerDetails() {

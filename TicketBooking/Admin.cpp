@@ -42,7 +42,7 @@ void Admin::ListOfMovies() {
 		gotoxy(centerX - 30, centerY - 5);
 		std::cout << "4. Main Menu\n";
 		*/
-		std::fstream file;
+		/*std::fstream file;
 		std::string command;
 		choice = menuInput(movieNames, centerY - 8, centerX - 30 - 1);
 

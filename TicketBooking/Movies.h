@@ -27,16 +27,17 @@ struct location {
 class movie
 {
 	char name[30];
-	run schedule[8];
-public:
+	
+public: run schedule[8];
 	movie() {}
 	bool update(bool DEL = FALSE);
 	bool add();
 	friend std::vector<std::string> search(std::string);
 	friend location giveLocationFromFile(std::string);
 	friend movie find(std::string);
-	void schedules();
-	void adminShowPage() {
+	void modifySchedule();
+	void selectSchedule();
+	void moviePageForAdmin() {
 		system("cls");
 		std::cout << std::endl << name << '\n';
 		std::ifstream file;
@@ -47,28 +48,28 @@ public:
 			std::cout << line << std::endl;
 			i++;
 		}
-		int choice = menuInput({ "Trailer", "Delete" }, 1, i + 5);
-		std::string command;
-		switch (choice) {
-		case 1:
-			command = "wmplayer.exe " + moviesDetailsDir + name + "\\trailer.mp4";
-			std::cout << std::endl << command;
-			system(command.c_str());
-			break;
-		case 2:
-			update(TRUE);
-			break;
-
-		case 3:
-			/*int index;
-			std::cin >> index;
-			controlHallSeat(schedule[index]);
-			update();
-			break;*/
-		default: break;
-		}
+		int choice;
+		do {
+			 choice = menuInput({ "Trailer", "Edit Schedules","Delete", "Back"}, 1, i + 5);
+			std::string command;
+			switch (choice) {
+			case 1:
+				command = "vlc.exe \"" + moviesDetailsDir + name + "\"\\trailer.mp4";
+				gotoxy(centerX - 7, centerY);
+				std::cout << "opening " << name << "'s trailer...";
+				system(command.c_str());
+				break;
+			case 2:
+				modifySchedule();
+				break;
+			case 3:
+				update(TRUE);
+				break;
+			default: break;
+			}
+		} while (choice!=4);
 	}
-	void userShowPage() {
+	void moviePageForUser() {
 		system("cls");
 		std::cout << std::endl << name << '\n';
 		std::ifstream file;
@@ -80,26 +81,28 @@ public:
 			std::cout << line << std::endl;
 			i++;
 		}
-		int choice = menuInput({ "Trailer", "Book Ticket" }, 1, i + 5);
-		std::string command;
-		switch (choice) {
-		case 1:
-			command = "wmplayer.exe " + moviesDetailsDir + name + "\\trailer.mp4";
-			std::cout << std::endl << command;
-			system(command.c_str());
-			break;
-		case 2://Schedules
-			schedules();
-			break;
+		int choice;
+		do {
+			int choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
+			std::string command;
+			switch (choice) {
+				case 1:
+					command = "wmplayer.exe " + moviesDetailsDir + name + "\\trailer.mp4";
+					std::cout << std::endl << command;
+					system(command.c_str());
+					break;
+				case 2://Schedules
+					selectSchedule();
+					break;
 
-		/*case 3:
-			update(TRUE);
-			break;*/
-		default: break;
-		}
+				default: break;
+			}
+		} while (choice != 3);
+		
 	}
     
 };
+
 
 
 inline movie find(std::string s) {
@@ -186,18 +189,41 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 		}
 	} while (true);
 }
-struct a {
-	std::string s; int index;
-};
 
-inline void movie::schedules() {
-	std::vector <a> v;
+inline void movie::modifySchedule() {
+	char choice;
+	while (true) {
+		std::vector <std::string> availableSchedules = {};
+		for (int i = 0; i < 9; i++) {
+			if (i == 8) availableSchedules.push_back("Exit");
+			else if (schedule[i].startTime.year > 0) availableSchedules.push_back(schedule[i].startTime.dateString() + " [" + std::to_string(i) + "]");
+			else availableSchedules.push_back("~Empty Schedule Slot");
+		}
+		int chosedSchedule = menuInput(availableSchedules, 15, 15);
+		if (chosedSchedule == 9) break;
+		schedule[chosedSchedule].startTime.modifyTime();
+		std::cout << "Do you want to Continue? (y/n)";  choice = _getch();
+		if (choice == 'n'||choice=='N') break;
+	}
+	std::cout << update();
+	_getch();
+}
+inline void movie::selectSchedule() {
+	std::vector <std::string> availableSchedules;
+	std::vector<int> indexOfAvailableSchedules;
 	for (int i = 0; i < 8; i++) {
-		//*if (NowTime().year != 0) 
-		{
-		
-			v.push_back({});
+		if (schedule[i].startTime.year > 0) {
+			availableSchedules.push_back(schedule[i].startTime.dateString() + " [" + std::to_string(i) + "]");
+			indexOfAvailableSchedules.push_back(i);
 		}
 	}
+	if (availableSchedules.size() == 0) {
+		std::cout << "No Schedule Available!";
+		return;
+	}
+	std::cout << "all good";
+	system("cls"); presentTime();
+	int selectedScheduleIndex = indexOfAvailableSchedules.at(menuInput(availableSchedules, 15, 15));
+	controlHallSeat(schedule[selectedScheduleIndex]);
 }
 #endif

@@ -20,7 +20,6 @@
 #define corridorGap 3
 #define columnDivision 4
 #define premiumRowSeats 2
-
 #define nonPremiumRate 220
 #define premiumRate 410
 #define seatLimit 4

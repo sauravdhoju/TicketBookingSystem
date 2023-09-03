@@ -6,11 +6,9 @@
 #include "seat.h"
 #include <fstream>
 
-void DELETEFILE(std::string ) {
-
-}
 bool movie::update(bool DEL) {
 	location loc = giveLocationFromFile(name);
+	std::cout << loc.start << "," << loc.end;
 	if (loc.start > loc.end) {
 		std::cout << name << " is not found in file. error!";
 		return false;
@@ -33,19 +31,6 @@ bool movie::update(bool DEL) {
 	if (DEL == false) {
 		fo.write((char*)&*this, sizeof(movie));
 	}
-	else {
-		std::string command = "del " + moviesDetailsDir + name+"\\synopsis.txt";
-		std::cout << command;
-		system(command.c_str());
-
-		command = "del " + moviesDetailsDir + name + "\\trailer.mp4";
-		std::cout << command;
-		system(command.c_str());
-
-	    command = "rmdir " + moviesDetailsDir + name;
-		system(command.c_str());
-		system("\r");
-	}
 	fo << afterObject;
 	fo.close();
 }
@@ -56,7 +41,7 @@ bool movie::add() {
 	location loc = giveLocationFromFile(name);
 	std::cout << loc.start << '-' << loc.end;
 	if (loc.start < loc.end) {
-		std::cout << name << " already exist in the file";
+		std::cout << name << " already exist in the file"; _getch();
 		return false;
 	}
 	std::ofstream fo;

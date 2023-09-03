@@ -31,7 +31,6 @@ void Admin::ListOfMovies() {
 
     do {
         Title("Movie-Ticket Booking System", centerY - 12);
-
         for (int i = 0; i < movieNames.size(); i++) {
             gotoxy(centerX - 30, centerY - 8 + i);
             if (i == selectedMovieIndex) {

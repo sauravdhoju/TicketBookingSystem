@@ -15,8 +15,8 @@ int actualMain();
 
 int main() {
     std::thread mainThread(actualMain);
-   //std::thread timeThread(updatePresentTime);
-    //timeThread.join();
+    std::thread timeThread(updatePresentTime);
+    timeThread.join();
     mainThread.join();
     return 0;
 }
@@ -30,40 +30,23 @@ int actualMain() {
         } while (i == 7);
         printQr(generateRandomString(12).c_str(), 10, 10, static_cast<colorCode>(i));
     }*/
-    //needed this only not color kek
-    
-    
-    //printQr(generateRandomString(12).c_str(), 10, 10);
-    /*std::istringstream iss(ID);
-    std::tm t = {};
-    iss >> std::get_time(&t, "%y%m%d");
-    if (iss.fail()) {
-        // do something, like throw an exception ...
-    }
-    int day = t.tm_mday;
-    int month = 1 + t.tm_mon;
-    int year = 1900 + t.tm_year;
-    std::cout<<year<<"\\" <<month<< "\\" << day;*/
-    Admin admin;
-    
-    /*DateAndTime a =   { 2010,10,4,6,50,36,0 },
-                b  =  { 2010,10,4,3,36,40,0  };
-	DateAndTime c= timeDiff(a, b);
-    std::cout << c.year << ' ' << c.month << ' ' << c.day << ' ' << c.hour << ' ' << c.minute << ' ' << c.second << ' ';
-    */
-    //admin.CustomerDetails();
-    //run h;
-    //initiateHall(h);
-    //controlHallSeat(h);
+
+    //printQr("rise is god", 10, 10, Black);
+
 
     //movie m;
-   // m.add();
-    //find(movieMenu(search(""), 10, 10)).showPage();*/
+    //m.add();
+    //find(movieMenu(search(""), 10, 10));
+    //m.schedule[0].startTime.modifyTime();
+    //m.update();
+    //find(movieMenu(search(""), 10, 10));
+    ////m.selectSchedule();
+    //_getch();
 
     std::string username, password;
     int choice;
 
-
+    Admin admin;
     User user;
     Title("Movie-Ticket Booking System", centerY-0);
     
@@ -76,7 +59,6 @@ int actualMain() {
         switch (choice) {
         case 1:
             user.Login();
-
             break;
 
         case 2:

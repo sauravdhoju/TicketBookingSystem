@@ -13,8 +13,131 @@
 #include "Global.h"
 #include "ConsoleColor.h"
 
+inline std::string presentTime() {
+    time_t result = time(NULL);
+    char str[26];
+    ctime_s(str, sizeof str, &result);
+    std::string date = str;
+    gotoxy(2 * centerX - 24, 0);
+    std::cout << date;
+    return date;
+}
+
 struct DateAndTime {
-    int year, month, day, hour, minute, second;
+    int year=0, month=0, day=0, hour=0, minute=0, second=0;
+    std::string dateString() {
+        return std::to_string(year)+ '/' + std::to_string(month)+ '/' + std::to_string(day)
+                + "  " + std::to_string(hour)+':' + std::to_string(minute)+':'+std::to_string(second);
+    }
+    void display(){
+        if (year > 0)std::cout << "" <<std::setw(-4)<< year << " years " << std::setw(-2) << month << " months " << std::setw(-2) << day << " Days ";
+        else if (month > 0)std::cout << std::setw(-2) << month << " months " << std::setw(-2) << day << " Days ";
+        else std::cout << std::setw(-2) << day << " Days ";
+        std::cout << std::setw(-2) << hour << " hours " << std::setw(-2) << minute << " minutes " << std::setw(-2) << second << " seconds " << std::endl;
+    }
+    void diffTime(){
+        time_t now = time(0);
+        tm* gmtm = gmtime(&now);//if this is causing error then:
+                                //Configuration Properties>>C/C++>>Preporocessor>>Preprocessor Definitions>> _CRT_SECURE_NO_WARNINGS
+        DateAndTime diff;
+        diff.year   = year - (1900 + gmtm->tm_year);
+        diff.month    = month - (1 + gmtm->tm_mon);
+        diff.day    = day - (gmtm->tm_mday);
+        diff.hour     = hour - (5 + gmtm->tm_hour);
+        diff.minute = minute - (45 + gmtm->tm_min);
+        diff.second    = second - (gmtm->tm_sec);
+        while (diff.second < 0 || diff.minute < 0 || diff.hour < 0 || diff.day < 0 || diff.month < 0) {
+            if (diff.second < 0) {
+                diff.minute--;
+                diff.second += 60;
+            }
+            if (diff.minute < 0) {
+                diff.hour--;
+                diff.minute += 60;
+            }
+            if (diff.hour < 0) {
+                diff.day--;
+                diff.hour += 24;
+            }
+            if (diff.day < 0) {
+                diff.month--;
+                diff.day += 30;
+            }
+            if (diff.month < 0) {
+                diff.year--;
+                diff.month += 12;
+            }
+        }
+        if (diff.year < 0) std::cout << "The Movie has premired already";
+        else diff.display();
+    }
+    void modifyTime() {
+        int vx = 15;
+        int vy = 2;
+        gotoxy(vx, vy); system("cls");  presentTime();
+        std::cout << "Enter Year month day hour minute and second:\n"; _getch();
+
+      
+        do{
+            gotoxy(vx, vy); system("cls");  presentTime();
+            std::cout << "year: ";
+            std::cin >> year;
+            if (year < 2000) {
+                std::cout << "\tYear cant be less than 2000"; _getch();
+            }
+        } while (year<2000);
+
+      
+        do{
+            gotoxy(vx, vy); system("cls");  presentTime();
+            std::cout << "month: ";
+            std::cin >> month;
+            if (month < 1 || month>12) {
+                std::cout << "\tmonth cant be less than 1 and greater than 12"; _getch();
+            }
+        }while (month<1||month>12);
+
+      
+        do{
+            gotoxy(vx, vy); system("cls");  presentTime();
+            std::cout << "day: ";
+            std::cin >> day;
+            if (day < 1 || day>31) {
+                std::cout << "\tday cant be less than 1 and greater than 31"; _getch();
+            }
+        } while (day<1||day>31);
+
+      
+        do{
+            gotoxy(vx, vy); system("cls");  presentTime();
+            std::cout << "hour: ";
+            std::cin >> hour;
+            if (hour < 0 || hour>23) {
+                std::cout << "\thour cant be less than 0 and greater than 23"; _getch();
+            }
+        } while (hour<0||hour>23);
+
+      
+        do{
+             gotoxy(vx, vy);system("cls");  presentTime();
+             std::cout << "minute: ";
+            std::cin >> minute;
+            if (minute < 0 || minute>59) {
+                std::cout << "\tminute cant be less than 0 and greater than 59"; _getch();
+            }
+        } while (minute < 0 || minute>59);
+
+      
+        do{
+             gotoxy(vx, vy);system("cls");  presentTime();
+             std::cout << "second: ";
+            std::cin >> second;
+            if (second < 0 || second>59) {
+                std::cout << "\tsecond cant be less than 0 and greater than 59"; _getch();
+            }
+        } while (second<0||second>59);
+        gotoxy(vx, vy); system("cls");  presentTime();
+    }
 };
 
 /*
@@ -85,33 +208,6 @@ inline int menuInput(std::vector<std::string> options, int startX, int startY, c
 }
 
 
-inline int get_month_index(std::string name)
-{
-    std::string month[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    for(int i = 0; i < 12; i++) {
-        if (month[i] == name) return i+1;
-    }
-    return 0;
-}
-
-inline int get_weekday_index(std::string name)
-{
-    std::string weekday[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-    for (int i = 0; i < 7; i++) {
-        if (weekday[i] == name) return i + 1;
-    }
-    return 0;
-}
-
-inline std::string presentTime() {
-        time_t result = time(NULL);
-        char str[26];
-        ctime_s(str, sizeof str, &result);
-        std::string date = str;
-        gotoxy(2*centerX-24, 0);
-        std::cout << date;
-        return date;
-}
 inline void updatePresentTime() {
     while (true) {
         HANDLE m_hConsole;
@@ -129,7 +225,6 @@ inline void updatePresentTime() {
 
         resetHighlight();
         presentTime();
-
         // Restore the cursor position
         SetConsoleCursorPosition(m_hConsole, originalPos);
 
@@ -139,28 +234,6 @@ inline void updatePresentTime() {
         // Sleep for one second
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
-}
-
-inline DateAndTime NowTime(DateAndTime dat) {
-    std::string now = presentTime();
-    std::istringstream str(now);
-    std::string month, day, hour, minute, second,year;
-    //std::getline(str, temp, ' ');
-    std::getline(str, month, ' ');
-    std::getline(str, day, ' ');// lol there are 2 spaces: Jul  2
-    std::getline(str, day, ' ');
-    std::getline(str, hour, ':');
-    std::getline(str, minute, ':');
-    std::getline(str, second, ' ');
-    std::getline(str, year, ' ');
-    dat.month = get_month_index(month);
-    dat.day = std::stoi(day);
-    dat.hour = std::stoi(hour);
-    dat.minute = std::stoi(minute);
-    dat.second = std::stoi(second);
-    dat.year = std::stoi(year);
-    return dat;
-    //std::cout << dat.weekday << " " << dat.month << " " << dat.day << " " << dat.hour << " " << dat.minute << " " << dat.second << " " << dat.year;
 }
 
 

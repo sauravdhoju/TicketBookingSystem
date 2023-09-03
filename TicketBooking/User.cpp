@@ -33,7 +33,6 @@ bool isValidEmail(const std::string& email) {
 
 
 void User::getUserInfo() {
-
     system("cls");  presentTime();
     Title("Movie-Ticket Booking System", centerY - 12);
     Title("CREATE ACCOUNT", centerY - 8);
@@ -328,8 +327,7 @@ void User::customerPortal() {
     movie mov;
     User user;
     do {
-        system("cls");
-        presentTime();
+        system("cls"); presentTime();
         Title("Movie-Ticket Booking System", centerY - 12);
         gotoxy(centerX - 50, centerY - 8);
         std::cout << "Welcome " << username << std::endl;
@@ -339,14 +337,22 @@ void User::customerPortal() {
         std::string keyword;
         switch (choice) {
         case 1://Available Movies
-            find(movieMenu(search(""), 10, 10)).userShowPage();
+            system("cls"); presentTime();
+            gotoxy(centerX - 10, 3);
+            std::cout << "Movie List";
+            find(movieMenu(search(""), 10, 10)).moviePageForUser();
             break;
         case 2:///Search Movies
+            system("cls"); presentTime();
+            gotoxy(centerX - 10, 3);
+            std::cout << "Movie Search";
             std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
-            find(movieMenu(search(keyword), 10, 10)).userShowPage();
+            find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
             break;
    
         case 3://Your Details
+            gotoxy(centerX - 10, 3);
+            std::cout << "Your info";
             user.CustomerDetails();
             break;
         case 4://Logout
@@ -429,25 +435,31 @@ void User::Login() {
                 gotoxy(centerX - 50, centerY - 8);
                 std::cout << "Welcome " << username << std::endl;
                 choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 50, centerY - 4);
-                //choice = _getch();
-
-                movie m;
+                movie m;//instance of movie created for adding new movie option
                 switch (choice) {
                 case 1:
-                    find(movieMenu(search(""), 10, 10)).adminShowPage();
+                    system("cls"); presentTime();
+                    gotoxy(centerX - 10, 3);
+                    std::cout << "Movie List";
+                    find(movieMenu(search(""), 10, 10)).moviePageForAdmin();
                     break;
-
                 case 2:
+                    system("cls"); presentTime();
                     admin.CustomerDetails();
                     // _getch();
                     break;
                 case 3:
+                    system("cls"); presentTime();
+                    gotoxy(centerX - 10, 3);
+                    std::cout << "Add movie:";
+                    gotoxy(centerX - 10, 3);
+                    //movie m;
                     m.add();
                     break;
                 case 4:
                     return;
                 }
-            } while (choice != 3);
+            } while (true);
         }
         else {
             customerPortal();

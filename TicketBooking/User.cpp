@@ -430,7 +430,7 @@ void User::Login() {
                 gotoxy(centerX - 50, centerY - 8);
                 std::cout << "Welcome " << username << std::endl;
 
-                choice = menuInput({ "Available Movies","Search Movies","Schedules","Your Details","Logout" }, centerX - 55, centerY - 4);
+                choice = menuInput({ "Available Movies","Search Movies","Your Details","Logout" }, centerX - 55, centerY - 4);
 
                 std::string keyword;
                 switch (choice) {

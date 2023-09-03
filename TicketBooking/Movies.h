@@ -230,7 +230,8 @@ inline void movie::selectSchedule() {
 	}
 	std::cout << "all good";
 	system("cls"); presentTime();
-	int selectedScheduleIndex = indexOfAvailableSchedules.at(menuInput(availableSchedules, 15, 15));
+	int selectedScheduleIndex = indexOfAvailableSchedules.at(menuInput(availableSchedules, 15, 15)-1);
 	controlHallSeat(schedule[selectedScheduleIndex]);
+	update();
 }
 #endif

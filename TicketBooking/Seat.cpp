@@ -73,27 +73,20 @@ void drawHall(run& h, int current) {
 		<< "Premium   Seat      \n\n"
 		<< "Booked    Seat      \n\n"
 		<< "Selected  Seat      \n\n\n\n\n"
-		<< "Cancel Selection :   ESC\n"
-		<< "Payment :            SPACE\n";
+		<< "Payment			: SPACE\n"
+		<< "Reset Selection		: R\n"
+		<< "Quit			: Esc";
 	drawSeat(19, ssy, Default_white);
 	drawSeat(19, ssy + 2, yellow);
 	drawSeat(19, ssy + 4, Red);
 	drawSeat(19, ssy + 6, Green);
 
-	/*
-	gotoxy(0, 0);
-	std::cout << char(24) << char(27) << char(25) << char(26);
 
-	std::cout << " W " << char(24);gotoxy(0, y + 11);
-	std::cout << " A " << char(27);gotoxy(0, y + 12);
-	std::cout << " S " << char(25);gotoxy(0, y + 13);
-	std::cout << " D " << char(26);
-	*/
 
 	for (int i = 0; i < totalSeat; i++) {
 		if (i == current) c = Bright_blue;
-		else if (h.s[i].selected == true) c = Green;
 		else if (h.s[i].available == false) c = Red;
+		else if (h.s[i].selected == true) c = Green;
 		else {
 			if (h.s[i].qlt == NON_PREMIUM) c = Default_white;
 			else if (h.s[i].qlt == PREMIUM) c = yellow;
@@ -109,19 +102,8 @@ void drawHall(run& h, int current) {
 		else x += 3;
 	}
 }
-void confirmPayment(run& h) {
-	system("cls");
-	Title("Are You sure You want to Pay?", centerY);
-	int choice = menuInput({ "Yes","No" }, centerX, centerY + 2);
-	if (choice == 1) {//yes
-		//payemetn fucntion
-	}
-	else {//No
-		system("cls");
-		controlHallSeat(h);
-	}
-}
-void controlHallSeat(run& h) {
+
+bool controlHallSeat(run& h){
 	char keyPressed;
 	int index = totalSeat / 2;
 	int totalSelected = 0;
@@ -158,20 +140,37 @@ void controlHallSeat(run& h) {
 				h.s[index].selected = true;
 				totalSelected++;
 			}
-			else if (keyPressed == char(27)) {//esc button
+			else if (keyPressed == 'r'|| keyPressed=='R') {//reset
 				for (int i = 0; i < totalSeat; i++) {
 					if (h.s[i].selected) {
 						h.s[i].selected = false;
 					}
 				}
 			}
-			else if (keyPressed == char(32)) {//space button
-				confirmPayment(h);
+			else if (keyPressed == char(32)&& totalSelected>0) {//space button //confirm payment?
+				system("cls");
+				Title("Are You sure You want to Pay?", centerY);
+				int choice = menuInput({ "Yes","No" }, centerX, centerY + 2);
+				if (choice == 1) {//yes
+					for (int i = 0; i < totalSeat; i++) {
+						if (h.s[i].selected == true) {
+							std::cout << i;
+							h.s[i].selected == false;
+							h.s[i].available == false;
+						}
+					}
+					return true;
+				}
+				else {//No
+				}
+			}
+			else if (keyPressed == char(27)) {//Escape to quit
+				return false;
 			}
 		} while (
 			keyPressed != char(72) && keyPressed != char(80) && keyPressed != char(75) && keyPressed != char(77) &&
-			keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32));
-		//      enter                          escape                    space   
+			keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32)&&keyPressed!='r'&&keyPressed!='R');
+		//      enter                          escape                    space				//rR
 		gotoxy(centerX - 11, centerY + hallBreadth / 2 + 5);
 		std::cout << "Currently on Seat No:  ";
 		if (index < 10)std::cout << '0';

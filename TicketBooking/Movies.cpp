@@ -6,9 +6,11 @@
 #include "seat.h"
 #include <fstream>
 
+movie gl;
+
 bool movie::update(bool DEL) {
 	location loc = giveLocationFromFile(name);
-	std::cout << loc.start << "," << loc.end;
+	//std::cout << loc.start << "," << loc.end;
 	if (loc.start > loc.end) {
 		std::cout << name << " is not found in file. error!";
 		return false;
@@ -19,6 +21,7 @@ bool movie::update(bool DEL) {
 	std::ifstream fi;
 	fi.open(moviesDir, std::ios::in);
 	char c;
+	gl = *this;
 	while (!fi.eof()) {
 		fi.get(c);
 		if (fi.tellg() < loc.start) beforeObject += c;
@@ -29,7 +32,7 @@ bool movie::update(bool DEL) {
 	fo.open(moviesDir, std::ios::trunc);
 	fo << beforeObject;
 	if (DEL == false) {
-		fo.write((char*)&*this, sizeof(movie));
+		fo.write((char*)&gl, sizeof(movie));
 	}
 	fo << afterObject;
 	fo.close();

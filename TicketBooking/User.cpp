@@ -322,46 +322,6 @@ void User::CustomerDetails() {
 }
 
 
-void User::customerPortal() {
-    char choice;
-    movie mov;
-    User user;
-    do {
-        system("cls"); presentTime();
-        Title("Movie-Ticket Booking System", centerY - 12);
-        gotoxy(centerX - 50, centerY - 8);
-        std::cout << "Welcome " << username << std::endl;
-
-        choice = menuInput({"Available Movies","Search Movies","Schedules","Your Details","Logout"}, centerX - 55, centerY - 4);
-
-        std::string keyword;
-        switch (choice) {
-        case 1://Available Movies
-            system("cls"); presentTime();
-            gotoxy(centerX - 10, 3);
-            std::cout << "Movie List";
-            find(movieMenu(search(""), 10, 10)).moviePageForUser();
-            break;
-        case 2:///Search Movies
-            system("cls"); presentTime();
-            gotoxy(centerX - 10, 3);
-            std::cout << "Movie Search";
-            std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
-            find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
-            break;
-   
-        case 3://Your Details
-            gotoxy(centerX - 10, 3);
-            std::cout << "Your info";
-            user.CustomerDetails();
-            break;
-        case 4://Logout
-            break;
-        }
-        _getch();
-    } while (choice != '3');
-}
-
 void User::Login() {
     system("cls");  presentTime();
     Title("Movie-Ticket Booking System", centerY - 14);
@@ -452,7 +412,7 @@ void User::Login() {
                     system("cls"); presentTime();
                     gotoxy(centerX - 10, 3);
                     std::cout << "Add movie:";
-                    gotoxy(centerX - 10, 3);
+                    gotoxy(centerX - 10, 4);
                     //movie m;
                     m.add();
                     break;
@@ -462,7 +422,42 @@ void User::Login() {
             } while (true);
         }
         else {
-            customerPortal();
+            char choice;
+            User user;
+            do {
+                system("cls"); presentTime();
+                Title("Movie-Ticket Booking System", centerY - 12);
+                gotoxy(centerX - 50, centerY - 8);
+                std::cout << "Welcome " << username << std::endl;
+
+                choice = menuInput({ "Available Movies","Search Movies","Schedules","Your Details","Logout" }, centerX - 55, centerY - 4);
+
+                std::string keyword;
+                switch (choice) {
+                case 1://Available Movies
+                    system("cls"); presentTime();
+                    gotoxy(centerX - 10, 3);
+                    std::cout << "Movie List";
+                    find(movieMenu(search(""), 10, 10)).moviePageForUser();
+                    break;
+                case 2:///Search Movies
+                    system("cls"); presentTime();
+                    gotoxy(centerX - 10, 3);
+                    std::cout << "Movie Search";
+                    std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
+                    find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
+                    break;
+
+                case 3://Your Details
+                    gotoxy(centerX - 10, 3);
+                    std::cout << "Your info";
+                    user.CustomerDetails();
+                    break;
+                case 4://Logout
+                    break;
+                }
+                _getch();
+            } while (choice != '3');
         }
     }
     else {

@@ -15,6 +15,7 @@
 #include <string.h>
 #include<sstream>
 //#include<iomanip>
+#include<iterator>
 #include<windows.h>
 
 inline std::string moviesDir = "movies.txt";
@@ -23,18 +24,25 @@ struct location {
     unsigned int start, end;
 };
 
+inline location giveLocationFromFile(std::string n);
 
-class movie
-{
+class movie{
 	char name[30];
-	
-public: run schedule[8];
+	run schedule[8];
+public: 
 	movie() {}
+	movie(char* n, run* sc) {
+		for (int i = 0; i < 30; i++) {
+			name[i] = n[i];
+			if (i < 8) schedule[i] = sc[i];
+		}
+	}
 	bool update(bool DEL = FALSE);
 	bool add();
 	friend std::vector<std::string> search(std::string);
 	friend location giveLocationFromFile(std::string);
 	friend movie find(std::string);
+	friend movie alternativeThis(movie* ptr);
 	void modifySchedule();
 	void selectSchedule();
 	void moviePageForAdmin() {
@@ -50,7 +58,7 @@ public: run schedule[8];
 		}
 		int choice;
 		do {
-			 choice = menuInput({ "Trailer", "Edit Schedules","Delete", "Back"}, 1, i + 5);
+			 choice = menuInput({ "Trailer", "change Name","delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -63,7 +71,7 @@ public: run schedule[8];
 				modifySchedule();
 				break;
 			case 3:
-				update(TRUE);
+				update(true);
 				break;
 			default: break;
 			}
@@ -83,12 +91,13 @@ public: run schedule[8];
 		}
 		int choice;
 		do {
-			int choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
+			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
 			std::string command;
 			switch (choice) {
 				case 1:
-					command = "vlc.exe " + moviesDetailsDir + name + "\\trailer.mp4";
-					std::cout << std::endl << command;
+					command = "vlc.exe \"" + moviesDetailsDir + name + "\"\\trailer.mp4";
+					gotoxy(centerX - 7, centerY);
+					std::cout << "opening " << name << "'s trailer...";
 					system(command.c_str());
 					break;
 				case 2://Schedules
@@ -97,8 +106,7 @@ public: run schedule[8];
 
 				default: break;
 			}
-		} while (choice != 3);
-		
+		} while (choice != 3);	
 	}
     
 };
@@ -196,17 +204,16 @@ inline void movie::modifySchedule() {
 		std::vector <std::string> availableSchedules = {};
 		for (int i = 0; i < 9; i++) {
 			if (i == 8) availableSchedules.push_back("Exit");
-			else if (schedule[i].startTime.year > 0) availableSchedules.push_back(schedule[i].startTime.dateString() + " [" + std::to_string(i) + "]");
+			else if (schedule[i].startTime.year > 0) availableSchedules.push_back(schedule[i].startTime.dateString());
 			else availableSchedules.push_back("~Empty Schedule Slot");
 		}
 		int chosedSchedule = menuInput(availableSchedules, 15, 15);
 		if (chosedSchedule == 9) break;
-		schedule[chosedSchedule].startTime.modifyTime();
+		schedule[chosedSchedule-1].startTime.modifyTime();
 		std::cout << "Do you want to Continue? (y/n)";  choice = _getch();
 		if (choice == 'n'||choice=='N') break;
 	}
-	std::cout << update();
-	_getch();
+	update();
 }
 inline void movie::selectSchedule() {
 	std::vector <std::string> availableSchedules;

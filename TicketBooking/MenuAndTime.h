@@ -74,9 +74,6 @@ struct DateAndTime {
     void modifyTime() {
         int vx = 15;
         int vy = 2;
-        gotoxy(vx, vy); system("cls");  presentTime();
-        std::cout << "Enter Year month day hour minute and second:\n"; _getch();
-
       
         do{
             gotoxy(vx, vy); system("cls");  presentTime();

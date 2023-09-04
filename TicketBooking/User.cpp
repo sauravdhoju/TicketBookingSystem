@@ -555,8 +555,12 @@ void User::displayTickets() {
                 if (keyPressed == 75 && index > 0)  index--;
                 if (keyPressed == 77 && index < tickets.size()-1) index++;
             }
+            else if (keyPressed == 'd') {//delete button
+                deleteTicket(tickets.at(index));
+                loadTickets();  displayTickets(); return;
+            }
             else if (keyPressed == char(27)) return;
-        } while (keyPressed != 75 && keyPressed != 77 && keyPressed != char(27));
+        } while (keyPressed != 75 && keyPressed != 77 && keyPressed != char(27) && keyPressed != 'd');
         system("cls");  presentTime();
         tickets.at(index).displayTicket(20, 10);
         std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";

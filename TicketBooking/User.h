@@ -32,4 +32,5 @@ public:
 	void Login();
 	void loadTickets();
 	void displayTickets();
+	void deleteTicket(ticket);
 };

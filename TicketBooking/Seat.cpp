@@ -32,7 +32,29 @@ void createTicket(std::string username, std::string movieName, int scheduleIndex
 	std::remove(USER_FILE.c_str());
 	std::rename(USER_FILE_TEMP.c_str(), USER_FILE.c_str());
 }
-
+void User::deleteTicket(ticket t) {
+	std::string ticketString = ',' + t.id + ',' + t.movieName + ',' + std::to_string(t.scheduleIndex) + ',' + std::to_string(t.seatNo);
+	std::ifstream user(USER_FILE, std::ios::in);
+	std::ofstream temp(USER_FILE_TEMP, std::ios::out);
+	if (!user || !temp) {
+		std::cout << "File could not open";
+		return;
+	}
+	std::string userLine, storedUsername;
+	while (std::getline(user, userLine)) {
+		std::stringstream iss(userLine);
+		std::getline(iss, storedUsername, ',');
+		if (storedUsername == username) {
+			std::string::size_type i = userLine.find(ticketString);
+			if (i != std::string::npos) userLine.erase(i, ticketString.length());
+		}
+		temp << userLine << '\n';
+	}
+	user.close();
+	temp.close();
+	std::remove(USER_FILE.c_str());
+	std::rename(USER_FILE_TEMP.c_str(), USER_FILE.c_str());
+}
 
 void drawSeat(int x, int y, colorCode c) {
 	int Block = 219;

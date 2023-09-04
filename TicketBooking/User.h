@@ -1,13 +1,29 @@
-#ifndef LOGIN_H
-#define LOGIN_H
+#pragma once
 
+#include "qrcode.hpp"
+#include "MenuAndTime.h"
+#include "ConsoleColor.h"
 static const std::string USER_FILE {"UserData/users.txt"};
 static const std::string ADMIN_FILE {"UserData/admin.txt"};
 
 
 struct ticket {
-	int movieId[20];
-	char ticketId[10];
+	char movieName[30]="";
+	DateAndTime startTime;
+	int seatNo;
+	void displayTicket() {
+		std::string qrText = movieName[2] + generateRandomString(2) + movieName[1];
+		if(seatNo<10) qrText += '0';
+		qrText += std::to_string(seatNo) + movieName[3];
+		if (startTime.day < 10) qrText += '0';
+		qrText += std::to_string(startTime.day);
+		if (startTime.month < 10) qrText += '0';
+		qrText += std::to_string(startTime.month);
+
+		//printQr(qrText.c_str(), 10, 10, Black);
+		std::cout << "Movie Name: " << movieName << "  Ticket Id: " << qrText << std::endl;
+		std::cout << "Movie StartTime: " << startTime.dateString();
+	}
 };
 
 class User {
@@ -24,4 +40,3 @@ public:
     void getUserInfo();
 	void Login();
 };
-#endif

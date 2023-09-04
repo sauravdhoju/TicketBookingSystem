@@ -34,7 +34,6 @@
     <ClInclude Include="ConsoleSize.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Movies.h" />
-    <ClInclude Include="Payment.h" />
     <ClInclude Include="qrcode.hpp" />
     <ClInclude Include="qrcodegen.hpp" />
     <ClInclude Include="User.h" />

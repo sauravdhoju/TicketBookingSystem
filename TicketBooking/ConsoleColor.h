@@ -1,5 +1,4 @@
-#ifndef CONSOLE_COLOR_H
-#define CONSOLE_COLOR_H
+#pragma once
 
 #include <windows.h>
 
@@ -49,4 +48,3 @@ inline void resetHighlight() {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 
-#endif // CONSOLE_COLOR_H

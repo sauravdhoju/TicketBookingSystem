@@ -1,4 +1,4 @@
-
+#pragma once
 #include <climits>
 #include <cstdint>
 #include <cstdlib>
@@ -15,7 +15,7 @@ using qrcodegen::QrCode;
 using qrcodegen::QrSegment;
 
 // Prints the given QrCode object to the console.
-inline static void printQr(const char* text, unsigned int posx, unsigned int posy, colorCode c= Black, colorCode background= Default_white) {
+inline static void printQr(const char* text, unsigned int posx, unsigned int posy, colorCode c, colorCode background) {
 	const QrCode::Ecc errCorLvl = QrCode::Ecc::LOW;  
 	const QrCode qr = QrCode::encodeText(text, errCorLvl);
 	//std::cout << toSvgString(qr, 4) << std::endl;

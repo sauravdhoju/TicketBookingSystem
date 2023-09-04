@@ -2,8 +2,8 @@
 #include <conio.h>
 #include <Windows.h>
 
-#include "Title.h"
 #include "User.h"
+#include "Title.h"
 #include "ConsoleSize.h"
 #include "seat.h"
 #include "Admin.h"
@@ -23,8 +23,8 @@ int main() {
 
 int actualMain() {
     setConsoleSizeAndCenter();
-    /*int i;
-    while (true) {
+    int i;
+    /*while (true) {
         do {
             i = rand() % 15;
         } while (i == 7);

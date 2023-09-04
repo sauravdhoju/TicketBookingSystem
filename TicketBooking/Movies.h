@@ -28,9 +28,10 @@ inline location giveLocationFromFile(std::string n);
 
 class movie{
 	char name[30];
+	int length=0;//in minute
 	run schedule[8];
 public: 
-	movie() {}
+	movie() { length = 0; }
 	movie(char* n, run* sc) {
 		for (int i = 0; i < 30; i++) {
 			name[i] = n[i];
@@ -45,6 +46,17 @@ public:
 	friend movie alternativeThis(movie* ptr);
 	void modifySchedule();
 	void selectSchedule();
+	void modifyLength() {
+		std::cout << "Enter movie Length(in Minute): ";
+		while (true) {
+			system("cls");  presentTime();
+			std::cin >> length;
+			if (length <= 0 || length > 300) {
+				std::cout << "give proper movie length(1-300 mins)!!";
+			}
+			else break;
+		}
+	}
 	void moviePageForAdmin() {
 		system("cls");
 		std::cout << std::endl << name << '\n';
@@ -58,7 +70,7 @@ public:
 		}
 		int choice;
 		do {
-			 choice = menuInput({ "Trailer", "modify schedule","delete", "Back"}, 1, i + 5);
+			 choice = menuInput({ "Trailer","modify schedule", "modify length","delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -69,17 +81,20 @@ public:
 				break;
 			case 2:
 				modifySchedule();
-				//update();
 				break;
 			case 3:
+				modifyLength();
+				break;
+
+			case 4:
 				update(true);
 				return;
-			case 4:
+			case 5:
 				return;
 				break;
 			default: break;
 			}
-		} while (choice!=4);
+		} while (choice!=5);
 	}
 	void moviePageForUser() {
 		system("cls");
@@ -129,8 +144,7 @@ inline movie find(std::string s) {
 	std::cout << "ERROR!!! file couldn't find";
 	return m;
 }
-inline std::vector<std::string> search(std::string s = "")
-{
+inline std::vector<std::string> search(std::string s = ""){
 	movie m;
 	std::vector<std::string> listOfMovies;
 	std::string movieName;

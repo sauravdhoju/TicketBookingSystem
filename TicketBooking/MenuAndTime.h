@@ -1,6 +1,4 @@
 #pragma once
-#ifndef MenuAndTime_H
-#define MenuAndTime_H
 
 #include <iostream>
 #include <string>
@@ -12,6 +10,7 @@
 #include <vector>
 #include "Global.h"
 #include "ConsoleColor.h"
+#include "ConsoleSize.h"
 
 inline std::string presentTime() {
     time_t result = time(NULL);
@@ -232,6 +231,3 @@ inline void updatePresentTime() {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 }
-
-
-#endif

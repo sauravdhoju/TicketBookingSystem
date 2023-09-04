@@ -12,6 +12,7 @@
 #include "ConsoleColor.h"
 #include "Admin.h"
 #include "MenuAndTime.h"
+#include "qrcode.hpp"
 #include "Global.h"
 #include "Movies.h"
 

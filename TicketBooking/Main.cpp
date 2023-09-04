@@ -24,25 +24,8 @@ int main() {
 int actualMain() {
     setConsoleSizeAndCenter();
     int i;
-    /*while (true) {
-        do {
-            i = rand() % 15;
-        } while (i == 7);
-        printQr(generateRandomString(12).c_str(), 10, 10, static_cast<colorCode>(i));
-    }*/
 
-    //printQr("rise is god", 10, 10, Black);
-
-
-    //movie m;
-    //m.add();
-    //find(movieMenu(search(""), 10, 10));
-    //m.schedule[0].startTime.modifyTime();
-    //m.update();
-    //find(movieMenu(search(""), 10, 10));
-    ////m.selectSchedule();
-    //_getch();
-
+    
     std::string username, password;
     int choice;
 

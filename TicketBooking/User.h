@@ -2,33 +2,35 @@
 
 #include "qrcode.hpp"
 #include "MenuAndTime.h"
+#include "Movies.h"
 #include "ConsoleColor.h"
+#include <iomanip>
 static const std::string USER_FILE {"UserData/users.txt"};
 static const std::string ADMIN_FILE {"UserData/admin.txt"};
 
-
+std::string currentlyLoggedUsername;//imp
 struct ticket {
-	char movieName[30]="";
-	DateAndTime startTime;
+	std::string id;
+	std::string movieName;
+	int scheduleIndex;
 	int seatNo;
 	void displayTicket() {
-		std::string qrText = movieName[2] + generateRandomString(2) + movieName[1];
-		if(seatNo<10) qrText += '0';
-		qrText += std::to_string(seatNo) + movieName[3];
-		if (startTime.day < 10) qrText += '0';
-		qrText += std::to_string(startTime.day);
-		if (startTime.month < 10) qrText += '0';
-		qrText += std::to_string(startTime.month);
-
-		//printQr(qrText.c_str(), 10, 10, Black);
-		std::cout << "Movie Name: " << movieName << "  Ticket Id: " << qrText << std::endl;
-		std::cout << "Movie StartTime: " << startTime.dateString();
+		movie m;
+		m = find(movieName);
+		printQr(id.c_str(), 10, 10, Black, Default_white);
+		int sx=30, sy=10;
+		gotoxy(sx, sy);
+		std::cout << "Movie Name: " << movieName << "  Ticket Id: " << id;
+		gotoxy(sx, sy++);
+		std::cout << "Movie StartTime: " << m.schedule[scheduleIndex].startTime.dateString();
+		gotoxy(sx, sy++);
+		std::cout << "Movie Length: " << m.length;
+		std::cout <<"\tValid Seat: " <<std::boolalpha<< (m.schedule[scheduleIndex].s[seatNo].id == this->id);
 	}
 };
 
 class User {
-	int id=0 ;
-	ticket tickets[20];
+	//std::vector<ticket> tickets;
 	std::string username;
 	std::string password;
 	std::string phonenumber;
@@ -39,4 +41,5 @@ public:
 	void CustomerDetails();
     void getUserInfo();
 	void Login();
+	void checkTickets();
 };

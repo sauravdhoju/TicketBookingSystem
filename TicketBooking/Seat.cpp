@@ -159,7 +159,7 @@ bool controlHallSeat(run& h){
 				if (choice == 1) {//yes
 					for (int i = 0; i < totalSeat; i++) {
 						if (h.s[i].selected) {
-
+							
 							h.s[i].selected = false;
 							h.s[i].available = false;
 						}

@@ -16,7 +16,6 @@
 #include "Global.h"
 #include "Movies.h"
 
-
 bool usernameIsAlreadyTaken(std::string username) {
     std::ifstream user(USER_FILE, std::ios::in);
     if (!user ) {
@@ -27,7 +26,6 @@ bool usernameIsAlreadyTaken(std::string username) {
     std::string userLine, temp;
     while (std::getline(user, userLine)) {
         std::stringstream iss(userLine);
-        std::getline(iss, temp, ',');//id scanned
         std::getline(iss, temp, ',');//username scanned
         if (username == temp) {
             user.close();
@@ -401,16 +399,15 @@ void User::Login() {
     if (!found) {
         // Check if the user is a customer
         std::string userLine;
-        std::string userId, storedUsername, storedPassword;
+        std::string storedUsername, storedPassword;
 
         while (std::getline(user, userLine)) {
             std::stringstream iss(userLine);
-            std::getline(iss, userId, ',');
             std::getline(iss, storedUsername, ',');
             std::getline(iss, storedPassword, ',');
             if (storedUsername == username && storedPassword == password) {
                 found = true;
-                this->id = std::stoi(userId);
+                currentlyLoggedUsername = username;
                 std::getline(iss, this->phonenumber, ',');
                 std::getline(iss, this->email, ',');
                 break;
@@ -458,14 +455,13 @@ void User::Login() {
         }
         else {
             char choice;
-            User user;
             do {
                 system("cls"); presentTime();
                 Title("Movie-Ticket Booking System", centerY - 12);
                 gotoxy(centerX - 50, centerY - 8);
                 std::cout << "Welcome ";
                 CustomerDetails();
-                choice = menuInput({ "Available Movies","Search Movies","Your Details","Logout" }, centerX - 55, centerY - 4);
+                choice = menuInput({ "Available Movies","Search Movies","Your tickets","Logout" }, centerX - 55, centerY - 4);
 
                 std::string keyword;
                 switch (choice) {
@@ -484,9 +480,9 @@ void User::Login() {
                     break;
 
                 case 3://Your Details
-                    gotoxy(centerX - 10, 3);
-                    std::cout << "Your info";
-                    user.CustomerDetails();
+                    /*gotoxy(centerX - 10, 3);
+                    std::cout << "Your info";*/
+                    checkTickets();
                     break;
                 case 4://Logout
                     return;
@@ -499,4 +495,33 @@ void User::Login() {
         std::cout << "Invalid username or password. Please try again." << std::endl;
         _getch();
     }
+}
+void User::checkTickets() {
+    std::ifstream user(USER_FILE, std::ios::in);
+    if (!user) {
+        std::cout << "File could not open";
+        return;
+    }
+    std::vector<ticket> tickets;
+    std::string userLine, temp;
+    std::string storedUsername, storedPassword;
+
+    while (std::getline(user, userLine)) {
+        std::stringstream iss(userLine);
+        std::getline(iss, storedUsername, ',');
+        for(int i=0; i<3; i++) std::getline(iss, temp, ',');
+        if (storedUsername == username) {
+            std::string id, movieName, scheduleIndex, seatNo;
+            while (!iss.eof()) {
+                 std::getline(iss, id, ',');
+                 std::getline(iss, movieName, ',');
+                 std::getline(iss, scheduleIndex, ',');
+                 std::getline(iss, seatNo, ',');
+                tickets.push_back({ id,movieName,std::stoi(scheduleIndex),std::stoi(seatNo) });
+            }
+            break;
+        }
+    }
+    user.close();
+    if (tickets.size()) tickets.at(0).displayTicket(); _getch();
 }

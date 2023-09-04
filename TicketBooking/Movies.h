@@ -9,6 +9,7 @@
 
 #include "Admin.h"
 #include "title.h"
+#include "user.h"
 #include "MenuAndTime.h"
 #include <fstream>
 #include <vector>
@@ -43,7 +44,7 @@ public:
 	friend std::vector<std::string> search(std::string);
 	friend location giveLocationFromFile(std::string);
 	friend movie find(std::string);
-	friend movie alternativeThis(movie* ptr);
+	friend class ticket;
 	void modifySchedule();
 	void selectSchedule();
 	void modifyLength() {

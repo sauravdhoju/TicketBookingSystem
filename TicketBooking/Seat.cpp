@@ -102,7 +102,12 @@ void drawHall(run& h, int current) {
 		else x += 3;
 	}
 }
-
+void resetHallSeat(run& h) {
+	for (int i = 0; i < totalSeat; i++) {
+		h.s[i].available = true;
+		h.s[i].selected = false;
+	}
+}
 bool controlHallSeat(run& h){
 	char keyPressed;
 	int index = totalSeat / 2;
@@ -153,8 +158,7 @@ bool controlHallSeat(run& h){
 				int choice = menuInput({ "Yes","No" }, centerX, centerY + 2);
 				if (choice == 1) {//yes
 					for (int i = 0; i < totalSeat; i++) {
-						if (h.s[i].selected == true) {
-							std::cout << i;
+						if (h.s[i].selected) {
 							h.s[i].selected == false;
 							h.s[i].available == false;
 						}

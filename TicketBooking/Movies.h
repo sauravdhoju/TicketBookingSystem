@@ -202,11 +202,11 @@ inline void movie::modifySchedule() {
 	char choice;
 	while (true) {
 		std::vector <std::string> availableSchedules = {};
-		for (int i = 0; i < 9; i++) {
-			if (i == 8) availableSchedules.push_back("Exit");
-			else if (schedule[i].startTime.year > 0) availableSchedules.push_back(schedule[i].startTime.dateString());
+		for (int i = 0; i < 8; i++) {
+			if (schedule[i].startTime.year > 0) availableSchedules.push_back(schedule[i].startTime.dateString());
 			else availableSchedules.push_back("~Empty Schedule Slot");
 		}
+		availableSchedules.push_back("Back");
 		int chosedSchedule = menuInput(availableSchedules, 15, 15);
 		if (chosedSchedule == 9) break;
 		schedule[chosedSchedule-1].startTime.modifyTime();
@@ -224,13 +224,12 @@ inline void movie::selectSchedule() {
 			indexOfAvailableSchedules.push_back(i);
 		}
 	}
-	if (availableSchedules.size() == 0) {
-		std::cout << "No Schedule Available!";
-		return;
-	}
+	availableSchedules.push_back("Back");
 	std::cout << "all good";
 	system("cls"); presentTime();
-	int selectedScheduleIndex = indexOfAvailableSchedules.at(menuInput(availableSchedules, 15, 15)-1);
+	int i = menuInput(availableSchedules, 15, 15) - 1;
+	if (i == availableSchedules.size() - 1) return;
+	int selectedScheduleIndex = indexOfAvailableSchedules.at(i);
 	controlHallSeat(schedule[selectedScheduleIndex]);
 	update();
 }

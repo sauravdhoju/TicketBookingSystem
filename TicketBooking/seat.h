@@ -38,12 +38,17 @@ struct seat {
 struct run {//run a;
 	seat s[totalSeat];
 	DateAndTime startTime = {0,0, 0, 0, 0, 0 };
+	run() {
+		for (int i = (row - premiumRowSeats) * column; i < totalSeat; i++) {
+			s[i].qlt = PREMIUM;
+		}
+	}
 };
 
 void initiateHall(run& h);
 void drawSeat(int x, int y, colorCode c);
  void drawHall(run& h, int current);
- bool controlHallSeat(run& h);
+ bool controlHallSeat(run& h, std::string, int);
  void payment(run& a, std::string name, std::string MovieName); // Declare the payment function
 
 #endif

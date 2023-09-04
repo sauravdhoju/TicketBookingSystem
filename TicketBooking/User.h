@@ -6,8 +6,10 @@
 #include "ConsoleColor.h"
 #include <iomanip>
 static const std::string USER_FILE {"UserData/users.txt"};
+static const std::string USER_FILE_TEMP {"UserData/usersTemp.txt"};
 static const std::string ADMIN_FILE {"UserData/admin.txt"};
 
+//inline std::string currentlyLoggedUser;
 struct ticket {
 	std::string id;
 	std::string movieName;

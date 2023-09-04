@@ -1,14 +1,39 @@
 ﻿#include "seat.h"
 #include "Title.h"
+#include "User.h"
+#include "Global.h"
 #include "MenuAndTime.h"
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
 
-void initiateHall(run& h) {
-	for (int i = (row - premiumRowSeats) * column; i < totalSeat; i++) {
-		h.s[i].qlt = PREMIUM;
+void createTicket(std::string username, std::string movieName, int scheduleIndex, int seatNumber) {
+	std::ifstream user(USER_FILE, std::ios::in);
+	std::ofstream temp(USER_FILE_TEMP, std::ios::out);
+	if (!user||!temp) {
+		std::cout << "File could not open";
+		return;
 	}
+	std::string userLine;
+	std::string storedUsername;
+	std::string ticketId = generateRandomString(6) + std::to_string(scheduleIndex);
+	if (seatNumber < 10) ticketId += '0';
+	ticketId += std::to_string(seatNumber);
+	std::string ticketString = ',' + ticketId + ','+ movieName + ',' + std::to_string(scheduleIndex) + ',' + std::to_string(seatNumber);
+	while (std::getline(user, userLine)) {
+		std::stringstream iss(userLine);
+		std::getline(iss, storedUsername, ',');
+		if (storedUsername == username) {
+			temp << userLine << ticketString<<'\n';
+		}
+		else temp << userLine << '\n';
+	}
+	user.close();
+	temp.close();
+	std::remove(USER_FILE.c_str());
+	std::rename(USER_FILE_TEMP.c_str(), USER_FILE.c_str());
 }
+
+
 void drawSeat(int x, int y, colorCode c) {
 	int Block = 219;
 	gotoxy(x, y);
@@ -108,7 +133,7 @@ void resetHallSeat(run& h) {
 		h.s[i].selected = false;
 	}
 }
-bool controlHallSeat(run& h, std::string movieName){
+bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 	char keyPressed;
 	int index = totalSeat / 2;
 	int totalSelected = 0;
@@ -159,7 +184,7 @@ bool controlHallSeat(run& h, std::string movieName){
 				if (choice == 1) {//yes
 					for (int i = 0; i < totalSeat; i++) {
 						if (h.s[i].selected) {
-							
+							createTicket(currentlyLoggedUser, movieName, scheduleIndex, i);
 							h.s[i].selected = false;
 							h.s[i].available = false;
 						}

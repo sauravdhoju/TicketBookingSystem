@@ -1,3 +1,2 @@
-rose,g,+977_9808827451,Rabisha@gmail.com
+g,g,+977_9808827451,g@gmail.com,3JE7x9251,batman,2,51,3JE7x9253,batman,2,53,0cI762085,rise,0,85,0cI762089,rise,0,89
 a,a,+977_9808827451,saurav@gmail.com,ticketId1,spiderman homecoming,0,0,ticketId2,batman,2,1
-

@@ -60,19 +60,18 @@ public:
 		update();
 	}
 	void moviePageForAdmin() {
-		system("cls");
-		std::cout << std::endl << name << '\n';
-		std::ifstream file;
-		file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-		std::string line;
-		int i = 0;
-		while (getline(file, line)) {
-			std::cout << line << std::endl;
-			i++;
-		}
 		int choice;
 		do {
 			system("cls");  presentTime();
+			std::cout << std::endl << name << '\n';
+			std::ifstream file;
+			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
+			std::string line;
+			int i = 0;
+			while (getline(file, line)) {
+				std::cout << line << std::endl;
+				i++;
+			}
 			 choice = menuInput({ "Trailer","modify schedule", "modify length","delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
@@ -100,20 +99,19 @@ public:
 		} while (choice!=5);
 	}
 	void moviePageForUser() {
-		system("cls");
-		std::cout << std::endl << name << '\n';
-		std::ifstream file;
-		file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-		std::cout << moviesDetailsDir + name + "\\synopsis.txt";
-		std::string line;
-		int i = 0;
-		while (getline(file, line)) {
-			std::cout << line << std::endl;
-			i++;
-		}
 		int choice;
 		do {
-			system("cls");  presentTime();
+			system("cls");  presentTime;
+			std::cout << std::endl << name << '\n';
+			std::ifstream file;
+			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
+			std::cout << moviesDetailsDir + name + "\\synopsis.txt";
+			std::string line;
+			int i = 0;
+			while (getline(file, line)) {
+				std::cout << line << std::endl;
+				i++;
+			}
 			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
 			std::string command;
 			switch (choice) {
@@ -253,7 +251,7 @@ inline void movie::selectSchedule() {
 	int i = menuInput(availableSchedules, 15, 15) - 1;
 	if (i == availableSchedules.size() - 1) return;
 	int selectedScheduleIndex = indexOfAvailableSchedules.at(i);
-	controlHallSeat(schedule[selectedScheduleIndex]);
+	controlHallSeat(schedule[selectedScheduleIndex], name, selectedScheduleIndex);
 	update();
 }
 #endif

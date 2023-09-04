@@ -454,10 +454,10 @@ void User::Login() {
                     user.CustomerDetails();
                     break;
                 case 4://Logout
-                    break;
+                    return;
                 }
                 _getch();
-            } while (choice != '3');
+            } while (true);
         }
     }
     else {

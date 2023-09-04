@@ -58,7 +58,7 @@ public:
 		}
 		int choice;
 		do {
-			 choice = menuInput({ "Trailer", "change Name","delete", "Back"}, 1, i + 5);
+			 choice = menuInput({ "Trailer", "modify schedule","delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -72,6 +72,9 @@ public:
 				break;
 			case 3:
 				update(true);
+				return;
+			case 4:
+				return;
 				break;
 			default: break;
 			}

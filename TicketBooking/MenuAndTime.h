@@ -79,8 +79,8 @@ struct DateAndTime {
             gotoxy(vx, vy); system("cls");  presentTime();
             std::cout << "year: ";
             std::cin >> year;
-            if (year < 2000) {
-                std::cout << "\tYear cant be less than 2000"; _getch();
+            if (year < 2023 || year >2030) {
+                std::cout << "\tYear cant be less than 2023 and greater than 2030"; _getch();
             }
         } while (year<2000);
 

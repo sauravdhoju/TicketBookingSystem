@@ -159,8 +159,8 @@ bool controlHallSeat(run& h){
 				if (choice == 1) {//yes
 					for (int i = 0; i < totalSeat; i++) {
 						if (h.s[i].selected) {
-							h.s[i].selected == false;
-							h.s[i].available == false;
+							h.s[i].selected = false;
+							h.s[i].available = false;
 						}
 					}
 					return true;
@@ -178,7 +178,7 @@ bool controlHallSeat(run& h){
 		gotoxy(centerX - 11, centerY + hallBreadth / 2 + 5);
 		std::cout << "Currently on Seat No:  ";
 		if (index < 10)std::cout << '0';
-		std::cout << index;
+		std::cout << index<<" (" << h.s[index].available<<h.s[index].selected<<")";
 		drawHall(h, index);
 	}
 }

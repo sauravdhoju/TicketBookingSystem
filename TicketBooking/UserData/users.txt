@@ -1,2 +1,2 @@
 g,g,+977_9868156515,roj@gmail.com
-a,a,+977_9808827451,saurav@gmail.com,ticketId1,spiderman homecoming,0,0,ticketId2,batman,2,1
+a,a,+977_9808827451,saurav@gmail.com

@@ -15,6 +15,27 @@
 #include "Global.h"
 #include "Movies.h"
 
+
+bool usernameIsAlreadyTaken(std::string username) {
+    std::ifstream user(USER_FILE, std::ios::in);
+    if (!user ) {
+        std::cout << "File could not open";
+        return false;
+    }
+
+    std::string userLine, temp;
+    while (std::getline(user, userLine)) {
+        std::stringstream iss(userLine);
+        std::getline(iss, temp, ',');//id scanned
+        std::getline(iss, temp, ',');//username scanned
+        if (username == temp) {
+            user.close();
+            return true;
+        }
+    }
+    user.close();
+    return false;
+}
 bool isValidPhoneNumber(const std::string& phoneNumber) {
     // Regular expression pattern for a valid phone number
     std::regex pattern("^\\d{8}$");
@@ -43,9 +64,20 @@ void User::getUserInfo() {
     }
     else {
         char c;
-        gotoxy(centerX - 50, centerY - 5);
-        std::cout << "Username: ";
-        std::cin >> username;
+        
+        while (true) {
+            system("cls");  presentTime();
+            gotoxy(centerX - 50, centerY - 5);
+            std::cout << "Username: ";
+            std::cin >> username;
+            gotoxy(centerX - 50 + username.length()+10, centerY - 5);
+            if (usernameIsAlreadyTaken(username)) {
+                std::cout << "  The username is already taken. retry!";
+                _getch();
+            }
+            else break;
+        }
+
         gotoxy(centerX + 50, centerY - 4);
         std::cout << "Uppercase" << std::endl;
         gotoxy(centerX + 50, centerY - 3);
@@ -315,10 +347,8 @@ void User::getUserInfo() {
 
 }
 
-
-
 void User::CustomerDetails() {
-    //customer details
+    std::cout <<"  " << username << " | " << phonenumber << " | " << email << "  ";
 }
 
 
@@ -336,6 +366,11 @@ void User::Login() {
     std::ifstream user(USER_FILE, std::ios::in);
     std::ifstream admin(ADMIN_FILE, std::ios::in);
 
+    if (!user || !admin) {
+        std::cout << "File could not open";
+        return;
+    }
+
     if (username.empty() || password.empty()) {
         system("cls");
         gotoxy(centerX, centerY);
@@ -344,10 +379,6 @@ void User::Login() {
         return;
     }
 
-    if (!user || !admin) {
-        std::cout << "File could not open";
-        return;
-    }
 
     bool isAdmin = false;
     bool found = false;
@@ -369,14 +400,18 @@ void User::Login() {
     if (!found) {
         // Check if the user is a customer
         std::string userLine;
+        std::string userId, storedUsername, storedPassword;
+
         while (std::getline(user, userLine)) {
             std::stringstream iss(userLine);
-            std::string userId, storedUsername, storedPassword;
             std::getline(iss, userId, ',');
             std::getline(iss, storedUsername, ',');
             std::getline(iss, storedPassword, ',');
             if (storedUsername == username && storedPassword == password) {
                 found = true;
+                this->id = std::stoi(userId);
+                std::getline(iss, this->phonenumber, ',');
+                std::getline(iss, this->email, ',');
                 break;
             }
         }
@@ -427,8 +462,8 @@ void User::Login() {
                 system("cls"); presentTime();
                 Title("Movie-Ticket Booking System", centerY - 12);
                 gotoxy(centerX - 50, centerY - 8);
-                std::cout << "Welcome " << username << std::endl;
-
+                std::cout << "Welcome ";
+                CustomerDetails();
                 choice = menuInput({ "Available Movies","Search Movies","Your Details","Logout" }, centerX - 55, centerY - 4);
 
                 std::string keyword;

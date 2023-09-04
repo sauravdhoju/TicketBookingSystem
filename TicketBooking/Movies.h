@@ -48,15 +48,16 @@ public:
 	void modifySchedule();
 	void selectSchedule();
 	void modifyLength() {
-		std::cout << "Enter movie Length(in Minute): ";
 		while (true) {
 			system("cls");  presentTime();
+			std::cout << "Change Movie Length from "<<length<<" minutes to:";
 			std::cin >> length;
 			if (length <= 0 || length > 300) {
 				std::cout << "give proper movie length(1-300 mins)!!";
 			}
 			else break;
 		}
+		update();
 	}
 	void moviePageForAdmin() {
 		system("cls");
@@ -71,6 +72,7 @@ public:
 		}
 		int choice;
 		do {
+			system("cls");  presentTime();
 			 choice = menuInput({ "Trailer","modify schedule", "modify length","delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
@@ -111,6 +113,7 @@ public:
 		}
 		int choice;
 		do {
+			system("cls");  presentTime();
 			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
 			std::string command;
 			switch (choice) {

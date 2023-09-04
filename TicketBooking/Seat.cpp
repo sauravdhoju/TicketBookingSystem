@@ -108,7 +108,7 @@ void resetHallSeat(run& h) {
 		h.s[i].selected = false;
 	}
 }
-bool controlHallSeat(run& h){
+bool controlHallSeat(run& h, std::string movieName){
 	char keyPressed;
 	int index = totalSeat / 2;
 	int totalSelected = 0;

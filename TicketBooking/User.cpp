@@ -407,7 +407,7 @@ void User::Login() {
             std::getline(iss, storedPassword, ',');
             if (storedUsername == username && storedPassword == password) {
                 found = true;
-                currentlyLoggedUsername = username;
+                //currentlyLoggedUsername = username;
                 std::getline(iss, this->phonenumber, ',');
                 std::getline(iss, this->email, ',');
                 break;
@@ -420,12 +420,7 @@ void User::Login() {
         if (isAdmin) {
             char choice;
             do {
-                Admin admin;
-                system("cls");
-                presentTime();
-                Title("Movie-Ticket Booking System", centerY - 12);
-                gotoxy(centerX - 50, centerY - 8);
-                std::cout << "Welcome " << username << std::endl;
+                system("cls");  presentTime();
                 choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 50, centerY - 4);
                 movie m;//instance of movie created for adding new movie option
                 switch (choice) {
@@ -437,7 +432,7 @@ void User::Login() {
                     break;
                 case 2:
                     system("cls"); presentTime();
-                    admin.CustomerDetails();
+                    //admin.CustomerDetails();
                     // _getch();
                     break;
                 case 3:
@@ -482,7 +477,8 @@ void User::Login() {
                 case 3://Your Details
                     /*gotoxy(centerX - 10, 3);
                     std::cout << "Your info";*/
-                    checkTickets();
+                    loadTickets();
+                    displayTickets();
                     break;
                 case 4://Logout
                     return;
@@ -496,16 +492,33 @@ void User::Login() {
         _getch();
     }
 }
-void User::checkTickets() {
+
+void ticket::displayTicket(int sx, int sy) {
+    movie m;
+    m = find(movieName);
+    printQr(id.c_str(), sx, sy, Black, Default_white);
+    sy += 2; gotoxy(sx + 50, sy);
+    std::cout << "Ticket Id: " << id;
+    sy += 2; gotoxy(sx + 50, sy); 
+    std::cout << "Name: " << movieName;
+    sy += 2; gotoxy(sx+50, sy);
+    std::cout << "Movie Start Time: " << m.schedule[scheduleIndex].startTime.dateString();
+    sy += 2; gotoxy(sx+50, sy);
+    std::cout << "Movie Length: " << m.length;
+    std::cout << "\t\tValid Seat: " << std::boolalpha << (m.schedule[scheduleIndex].s[seatNo].id == this->id);
+    sy += 2; gotoxy(sx + 50, sy);
+}
+
+void User::loadTickets() {
     std::ifstream user(USER_FILE, std::ios::in);
     if (!user) {
         std::cout << "File could not open";
         return;
     }
-    std::vector<ticket> tickets;
+    
     std::string userLine, temp;
     std::string storedUsername, storedPassword;
-
+    tickets = {};
     while (std::getline(user, userLine)) {
         std::stringstream iss(userLine);
         std::getline(iss, storedUsername, ',');
@@ -523,5 +536,29 @@ void User::checkTickets() {
         }
     }
     user.close();
-    if (tickets.size()) tickets.at(0).displayTicket(); _getch();
 }
+
+void User::displayTickets() {
+    if (tickets.size() == 0) return;
+    int index = 0;
+    char keyPressed;
+    system("cls");  presentTime();
+    tickets.at(index).displayTicket(20, 10);
+    std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
+    while (true) {
+        do {
+            keyPressed = _getch();
+            if (keyPressed == -32) {
+                keyPressed = _getch();
+                if (keyPressed == 75 && index > 0)  index--;
+                if (keyPressed == 77 && index < tickets.size()) index++;
+            }
+            else if (keyPressed == char(27)) return;
+        } while (keyPressed != 75 && keyPressed != 77 && keyPressed != char(27));
+        system("cls");  presentTime();
+        tickets.at(index).displayTicket(20, 10);
+        std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
+    }
+
+}
+

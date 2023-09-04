@@ -82,7 +82,7 @@ struct DateAndTime {
             if (year < 2023 || year >2030) {
                 std::cout << "\tYear cant be less than 2023 and greater than 2030"; _getch();
             }
-        } while (year<2000);
+        } while (year < 2023 || year >2030);
 
       
         do{

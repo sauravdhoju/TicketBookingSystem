@@ -69,6 +69,7 @@ public:
 				break;
 			case 2:
 				modifySchedule();
+				//update();
 				break;
 			case 3:
 				update(true);
@@ -211,12 +212,13 @@ inline void movie::modifySchedule() {
 		}
 		availableSchedules.push_back("Back");
 		int chosedSchedule = menuInput(availableSchedules, 15, 15);
-		if (chosedSchedule == 9) break;
+		if (chosedSchedule == 9) return;
 		schedule[chosedSchedule-1].startTime.modifyTime();
+		update();
 		std::cout << "Do you want to Continue? (y/n)";  choice = _getch();
 		if (choice == 'n'||choice=='N') break;
 	}
-	update();
+
 }
 inline void movie::selectSchedule() {
 	std::vector <std::string> availableSchedules;

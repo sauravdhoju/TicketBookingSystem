@@ -6,7 +6,7 @@
 #include "seat.h"
 #include <fstream>
 
-movie gl;
+
 
 bool movie::update(bool DEL) {
 	location loc = giveLocationFromFile(name);
@@ -21,7 +21,7 @@ bool movie::update(bool DEL) {
 	std::ifstream fi;
 	fi.open(moviesDir, std::ios::in);
 	char c;
-	gl = *this;
+	movie gl = *this;
 	while (!fi.eof()) {
 		fi.get(c);
 		if (fi.tellg() < loc.start) beforeObject += c;
@@ -39,14 +39,24 @@ bool movie::update(bool DEL) {
 }
 
 bool movie::add() {
-	std::cout << "enter Movie Name to add: ";
-	std::cin.getline(name, 30);
-	location loc = giveLocationFromFile(name);
-	std::cout << loc.start << '-' << loc.end;
-	if (loc.start < loc.end) {
-		std::cout << name << " already exist in the file"; _getch();
-		return false;
-	}
+	location loc;
+	std::string name_s;
+	do {
+		system("cls");  presentTime();
+		gotoxy(centerX - 7, 5);
+		std::cout << "enter Movie Name to add: ";
+		std::cin.getline(name, 30);
+		gotoxy(centerX, 6);
+		name_s = name;
+		loc = giveLocationFromFile(name);
+		if (loc.start < loc.end) {
+			std::cout << name << " already exist in the file"; _getch();
+		}
+		if (name_s.length() < 1) {
+			std::cout << "Enter valid name"; _getch();
+		}
+	} while (loc.start < loc.end || name_s.length() < 1);
+	
 	std::ofstream fo;
 	fo.open(moviesDir, std::ios::app);
 	fo.write((char*)&*this, sizeof(movie));

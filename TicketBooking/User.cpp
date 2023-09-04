@@ -375,7 +375,6 @@ void User::Login() {
             std::getline(iss, userId, ',');
             std::getline(iss, storedUsername, ',');
             std::getline(iss, storedPassword, ',');
-
             if (storedUsername == username && storedPassword == password) {
                 found = true;
                 break;

@@ -6,12 +6,12 @@
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
 
-void createTicket(std::string username, std::string movieName, int scheduleIndex, int seatNumber) {
+std::string createTicket(std::string username, std::string movieName, int scheduleIndex, int seatNumber) {
 	std::ifstream user(USER_FILE, std::ios::in);
 	std::ofstream temp(USER_FILE_TEMP, std::ios::out);
 	if (!user||!temp) {
 		std::cout << "File could not open";
-		return;
+		return "";
 	}
 	std::string userLine;
 	std::string storedUsername;
@@ -31,6 +31,7 @@ void createTicket(std::string username, std::string movieName, int scheduleIndex
 	temp.close();
 	std::remove(USER_FILE.c_str());
 	std::rename(USER_FILE_TEMP.c_str(), USER_FILE.c_str());
+	return ticketId;
 }
 void User::deleteTicket(ticket t) {
 	std::string ticketString = ',' + t.id + ',' + t.movieName + ',' + std::to_string(t.scheduleIndex) + ',' + std::to_string(t.seatNo);
@@ -206,7 +207,8 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 				if (choice == 1) {//yes
 					for (int i = 0; i < totalSeat; i++) {
 						if (h.s[i].selected) {
-							createTicket(currentlyLoggedUser, movieName, scheduleIndex, i);
+							std::string idCode = createTicket(currentlyLoggedUser, movieName, scheduleIndex, i);
+							std::strncpy(h.s[i].id, idCode.c_str(), sizeof(idCode));
 							h.s[i].selected = false;
 							h.s[i].available = false;
 						}

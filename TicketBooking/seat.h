@@ -29,7 +29,7 @@ const int columnPartition = column / columnDivision;
 enum qualityOfSeat { NON_PREMIUM, PREMIUM };
 
 struct seat {
-	char id[10];//ends with 2 digit seat number
+	char id[10]="";//ends with 2 digit seat number
 	bool available=true;
     bool selected = false;
 	qualityOfSeat qlt= NON_PREMIUM;

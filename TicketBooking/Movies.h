@@ -241,7 +241,7 @@ inline void movie::selectSchedule() {
 	std::vector<int> indexOfAvailableSchedules;
 	for (int i = 0; i < 8; i++) {
 		if (schedule[i].startTime.year > 0) {
-			availableSchedules.push_back(schedule[i].startTime.dateString() + " [" + std::to_string(i) + "]");
+			availableSchedules.push_back("Starts at: " + schedule[i].startTime.dateString());
 			indexOfAvailableSchedules.push_back(i);
 		}
 	}

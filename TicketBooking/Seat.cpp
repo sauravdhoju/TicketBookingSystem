@@ -6,6 +6,7 @@
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
 
+
 std::string createTicket(std::string username, std::string movieName, int scheduleIndex, int seatNumber) {
 	std::ifstream user(USER_FILE, std::ios::in);
 	std::ofstream temp(USER_FILE_TEMP, std::ios::out);

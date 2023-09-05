@@ -45,12 +45,13 @@ bool isValidPhoneNumber(const std::string& phoneNumber) {
     return std::regex_match(phoneNumber, pattern);
 }
 
-bool isValidEmail(const std::string& email) {
+bool isValidEmail(const std::string email) {
     const std::regex pattern1("(\\w+)(\\.|)?(\\w*)@gmail(\\.com)+");
     const std::regex pattern2("(\\w+)(\\.|)?(\\w*)@yahoo(\\.com)+");
-    const std::regex pattern3("(\\w+)(\\.|)?(\\w*)@khec(\\.np)+");
+    const std::regex pattern3("(\\w+)(\\.|)?(\\w*)@khec(\\.com.np)+");
     const std::regex pattern4("(\\w+)(\\.|)?(\\w*)@hotmail(\\.com)+");
-    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4);
+    const std::regex pattern5("(\\w+)(\\.|)?(\\w*)@outlook(\\.com)+");
+    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4) || regex_match(email, pattern5);
 }
 
 
@@ -284,9 +285,8 @@ void User::getUserInfo() {
             }
         }
 
-        while (!isValidEmail(email)) {
+       do {
             email = ""; // Clear the email variable before capturing a new email address
-
             gotoxy(centerX - 50, centerY - 2);
             std::cout << "Email: ";
 
@@ -303,34 +303,23 @@ void User::getUserInfo() {
                     gotoxy(centerX - 43 + email.length(), centerY - 2);
                     std::cout << " ";
                 }
+
+                if (isValidEmail(email)) {
+                    gotoxy(centerX + 20, centerY - 2);
+                    highlightGreen();
+                    std::cout << "  valid email";
+                    resetHighlight();
+                }
+                else {
+                    gotoxy(centerX + 20, centerY - 2);
+                    highlightRed();
+                    std::cout << "invalid email";
+                    resetHighlight();
+                }
             } while (c != '\r');
-
-            if (!isValidEmail(email)) {
-                gotoxy(centerX + 20, centerY - 2);
-                highlightRed();
-                std::cout << "Invalid Email";
-                resetHighlight();
-                _getch();
-                gotoxy(centerX + 20, centerY - 2);
-                std::cout << "                ";
-            }
-        }
-
-        
-        std::string id;
-        // Generate a unique ID for the new user
-        int maxId = 00;
-        std::string userline;
-        while (std::getline(user1, userline)) {
-            std::stringstream iss(userline);
-            std::string userId;
-            std::getline(iss, userId, ',');
-            int userIdInt = std::stoi(userId);
-            maxId = max(maxId, userIdInt);
-        }
-        int newId = maxId + 01;
-        id = std::to_string(newId);
-
+       } while (!isValidEmail(email));
+       gotoxy(centerX + 20, centerY - 2);
+       std::cout << "                ";
 
         system("cls");
         Title("Movie-Ticket Booking System", centerY - 12);
@@ -338,7 +327,7 @@ void User::getUserInfo() {
         _getch();
         // Write the user data to the file
         std::ostringstream UserData;
-        user << id << "," << username << "," << password << "," << phonenumber << "," << email << std::endl;
+        user << username << "," << password << "," << phonenumber << "," << email << std::endl;
         user << UserData.str();
         if (user.fail()) {
             std::cout << "Error occurred while writing user data to the file." << std::endl;
@@ -550,7 +539,8 @@ void User::displayTickets(bool adminControl) {
     system("cls");  presentTime();
     tickets.at(index).displayTicket(20, 10);
     std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
-    if (adminControl) std::cout << "press d for deleting the ticket";
+    //if (adminControl) 
+        std::cout << "press d for deleting the ticket";
     while (true) {
         do {
             keyPressed = _getch();
@@ -559,7 +549,7 @@ void User::displayTickets(bool adminControl) {
                 if (keyPressed == 75 && index > 0)  index--;
                 if (keyPressed == 77 && index < tickets.size()-1) index++;
             }
-            else if (keyPressed == 'd'&&adminControl) {//delete button
+            else if (keyPressed == 'd') {//delete button
                 deleteTicket(tickets.at(index));
                 loadTicketsAndOtherInfo();  displayTickets(adminControl); 
                 return;

@@ -57,8 +57,6 @@ bool isValidEmail(const std::string email) {
 
 void User::getUserInfo() {
     system("cls");  presentTime();
-    Title("Movie-Ticket Booking System", centerY - 12);
-    Title("CREATE ACCOUNT", centerY - 8);
     std::ofstream user(USER_FILE, std::ios::app );
     std::ifstream user1(USER_FILE, std::ios::app);
     if (!user) {
@@ -69,6 +67,9 @@ void User::getUserInfo() {
         
         while (true) {
             system("cls");  presentTime();
+
+            Title("Movie-Ticket Booking System", centerY - 12);
+            Title("CREATE ACCOUNT", centerY - 8);
             gotoxy(centerX - 50, centerY - 5);
             std::cout << "Username: ";
             std::cin >> username;

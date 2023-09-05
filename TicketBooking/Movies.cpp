@@ -43,8 +43,10 @@ bool movie::add() {
 	std::string name_s;
 	do {
 		system("cls");  presentTime();
-		gotoxy(centerX - 7, 5);
-		std::cout << "enter Movie Name to add: ";
+
+		Title("Movie-Ticket Booking System", centerY - 12);
+		gotoxy(centerX -30, 12);
+		std::cout << "Enter Movie Name to add: ";
 		std::cin.getline(name, 30);
 		gotoxy(centerX, 6);
 		name_s = name;

@@ -76,7 +76,10 @@ struct DateAndTime {
       
         do{
             gotoxy(vx, vy); system("cls");  presentTime();
-            std::cout << "year: ";
+
+            Title("Movie-Ticket Booking System", centerY - 12);
+            gotoxy(centerX -40, centerY - 12 - 12);//not working gotoxy function in this section
+            std::cout << "Movie Released Year: ";
             std::cin >> year;
             if (year < 2023 || year >2030) {
                 std::cout << "\tYear cant be less than 2023 and greater than 2030"; _getch();
@@ -86,50 +89,56 @@ struct DateAndTime {
       
         do{
             gotoxy(vx, vy); system("cls");  presentTime();
-            std::cout << "month: ";
+            Title("Movie-Ticket Booking System", centerY - 12);
+            gotoxy(centerX - 40, centerY - 12 - 12);//not working gotoxy function in this section
+            std::cout << "Movie Release Month: ";
             std::cin >> month;
             if (month < 1 || month>12) {
-                std::cout << "\tmonth cant be less than 1 and greater than 12"; _getch();
+                std::cout << "\tMonth cant be less than 1 and greater than 12"; _getch();
             }
         }while (month<1||month>12);
 
       
         do{
             gotoxy(vx, vy); system("cls");  presentTime();
-            std::cout << "day: ";
+            Title("Movie-Ticket Booking System", centerY - 12);
+            std::cout << "Movie Release Day: ";
             std::cin >> day;
             if (day < 1 || day>31) {
-                std::cout << "\tday cant be less than 1 and greater than 31"; _getch();
+                std::cout << "\tDay cant be less than 1 and greater than 31"; _getch();
             }
         } while (day<1||day>31);
 
       
         do{
             gotoxy(vx, vy); system("cls");  presentTime();
-            std::cout << "hour: ";
+            Title("Movie-Ticket Booking System", centerY - 12);
+            std::cout << "Movie Release Hour: ";
             std::cin >> hour;
             if (hour < 0 || hour>23) {
-                std::cout << "\thour cant be less than 0 and greater than 23"; _getch();
+                std::cout << "\tHour cant be less than 0 and greater than 23"; _getch();
             }
         } while (hour<0||hour>23);
 
       
         do{
              gotoxy(vx, vy);system("cls");  presentTime();
-             std::cout << "minute: ";
+             Title("Movie-Ticket Booking System", centerY - 12);
+             std::cout << "Movie Release Minute: ";
             std::cin >> minute;
             if (minute < 0 || minute>59) {
-                std::cout << "\tminute cant be less than 0 and greater than 59"; _getch();
+                std::cout << "\tMinute cant be less than 0 and greater than 59"; _getch();
             }
         } while (minute < 0 || minute>59);
 
       
         do{
              gotoxy(vx, vy);system("cls");  presentTime();
-             std::cout << "second: ";
+             Title("Movie-Ticket Booking System", centerY - 12);
+             std::cout << "Movie Release Second: ";
             std::cin >> second;
             if (second < 0 || second>59) {
-                std::cout << "\tsecond cant be less than 0 and greater than 59"; _getch();
+                std::cout << "\tSecond cant be less than 0 and greater than 59"; _getch();
             }
         } while (second<0||second>59);
         gotoxy(vx, vy); system("cls");  presentTime();

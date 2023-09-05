@@ -124,7 +124,11 @@ void drawHall(run& h, int current) {
 		<< "Selected  Seat      \n\n\n\n\n"
 		<< "Payment			: SPACE\n"
 		<< "Reset Selection		: R\n"
-		<< "Quit			: Esc";
+		<< "Quit			: Esc\n\n\n"
+		<< "Left			: ←\n" 
+		<< "Right			: →\n" 
+		<< "Up			 : ↑\n" 
+		<< "Down			: ↓\n";
 	drawSeat(19, ssy, Default_white);
 	drawSeat(19, ssy + 2, yellow);
 	drawSeat(19, ssy + 4, Red);
@@ -163,6 +167,8 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 	int totalSelected = 0;
 	drawHall(h, totalSeat / 2);
 	while (true) {
+		Title("Movie Ticket Management System", centerY - 12);
+		Title("Seat Selection", centerY - 10);
 		do {
 			keyPressed = _getch();
 			if (keyPressed == -32) {

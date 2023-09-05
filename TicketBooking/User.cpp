@@ -413,12 +413,16 @@ void User::Login() {
             char choice;
             do {
                 system("cls");  presentTime();
+                Title("Movie-Ticket Booking System", centerY - 14);
+                Title("Admin", centerY - 12);
                 choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 50, centerY - 4);
                 movie m;//instance of movie created for adding new movie option
                 switch (choice) {
                 case 1:
                     system("cls"); presentTime();
-                    gotoxy(centerX - 10, 3);
+
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    gotoxy(centerX - 400, 3);
                     std::cout << "Movie List";
                     find(movieMenu(search(""), 10, 10)).moviePageForAdmin();
                     break;
@@ -459,8 +463,12 @@ void User::Login() {
                     break;
                 case 2:///Search Movies
                     system("cls"); presentTime();
-                    gotoxy(centerX - 10, 3);
-                    std::cout << "Movie Search";
+
+                    Title("Movie Ticket Management System", centerY - 12);
+                    gotoxy(centerX - 6, centerY - 10);
+                    std::cout << "Movie Search\n\n\n";
+
+                    gotoxy(centerX - 35, centerY - 6);
                     std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
                     find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
                     break;

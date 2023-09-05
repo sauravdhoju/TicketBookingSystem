@@ -63,16 +63,19 @@ public:
 		int choice;
 		do {
 			system("cls");  presentTime();
-			std::cout << std::endl << name << '\n';
+			gotoxy(centerX - std::string(name).length() / 2, 3);
+			std::cout << name << '\n';
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
 			std::string line;
 			int i = 0;
+
+			std::cout << "\n\n";
 			while (getline(file, line)) {
 				std::cout << line << std::endl;
 				i++;
 			}
-			 choice = menuInput({ "Trailer","modify schedule", "modify length","delete", "Back"}, 1, i + 5);
+			 choice = menuInput({ "Trailer","Modify Schedule", "Modify Length","Delete", "Back"}, 1, i + 5);
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -102,10 +105,11 @@ public:
 		int choice;
 		do {
 			system("cls");  presentTime;
-			std::cout << std::endl << name << '\n';
+			gotoxy(centerX - std::string(name).length() / 2, 3);
+			std::cout << name << '\n';
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-			std::cout << moviesDetailsDir + name + "\\synopsis.txt";
+			std::cout << "\n\n";
 			std::string line;
 			int i = 0;
 			while (getline(file, line)) {
@@ -129,7 +133,6 @@ public:
 			}
 		} while (choice != 3);	
 	}
-    
 };
 
 
@@ -220,6 +223,10 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 
 inline void movie::modifySchedule() {
 	char choice;
+	system("cls");  presentTime();
+
+	Title("Movie-Ticket Booking System", centerY - 12);
+	Title("Schedules", centerY - 9);
 	while (true) {
 		std::vector <std::string> availableSchedules = {};
 		for (int i = 0; i < 8; i++) {
@@ -248,10 +255,15 @@ inline void movie::selectSchedule() {
 	availableSchedules.push_back("Back");
 	std::cout << "all good";
 	system("cls"); presentTime();
+	Title("Movie-Ticket Management System", centerY - 12);
+	Title("Available Schedules", centerY - 9);
 	int i = menuInput(availableSchedules, 15, 15) - 1;
 	if (i == availableSchedules.size() - 1) return;
 	int selectedScheduleIndex = indexOfAvailableSchedules.at(i);
+
+	system("cls"); presentTime();
 	controlHallSeat(schedule[selectedScheduleIndex], name, selectedScheduleIndex);
+	
 	update();
 }
 #endif

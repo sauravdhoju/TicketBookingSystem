@@ -347,7 +347,7 @@ void User::getUserInfo() {
     }
 
 }
-
+void findUserDetails();
 void User::CustomerDetails() {
     std::cout <<"  " << username << " | " << phonenumber << " | " << email << "  ";
 }
@@ -434,8 +434,7 @@ void User::Login() {
                     break;
                 case 2:
                     system("cls"); presentTime();
-                    //admin.CustomerDetails();
-                    // _getch();
+                    findUserDetails();
                     break;
                 case 3:
                     system("cls"); presentTime();
@@ -477,9 +476,7 @@ void User::Login() {
                     break;
 
                 case 3://Your Details
-                    /*gotoxy(centerX - 10, 3);
-                    std::cout << "Your info";*/
-                    loadTickets();
+                    loadTicketsAndOtherInfo();
                     displayTickets();
                     break;
                 case 4://Logout
@@ -507,24 +504,28 @@ void ticket::displayTicket(int sx, int sy) {
     std::cout << "Movie Start Time: " << m.schedule[scheduleIndex].startTime.dateString();
     sy += 2; gotoxy(sx+50, sy);
     std::cout << "Movie Length: " << m.length;
-    std::cout << "\t\tValid Seat: " << std::boolalpha << (m.schedule[scheduleIndex].s[seatNo].id == this->id);
+    sy += 2; gotoxy(sx + 50, sy);
+    std::cout << "Seat No: " << seatNo;
+    std::cout << "\t\tValid Ticket: " << std::boolalpha << (m.schedule[scheduleIndex].s[seatNo].id == this->id);
     sy += 2; gotoxy(sx + 50, sy);
 }
 
-void User::loadTickets() {
+bool User::loadTicketsAndOtherInfo() {
     std::ifstream user(USER_FILE, std::ios::in);
     if (!user) {
         std::cout << "File could not open";
-        return;
+        return false;
     }
     
-    std::string userLine, temp;
+    std::string userLine, scheduleIndex_s, seatNo_s;
     std::string storedUsername;
     tickets = {};
     while (std::getline(user, userLine)) {
         std::stringstream iss(userLine);
         std::getline(iss, storedUsername, ',');
-        for(int i=0; i<3; i++) std::getline(iss, temp, ',');
+        std::getline(iss, password, ',');
+        std::getline(iss, phonenumber, ',');
+        std::getline(iss, email, ',');
         if (storedUsername == username) {
             std::string id, movieName, scheduleIndex, seatNo;
             while (!iss.eof()) {
@@ -534,19 +535,22 @@ void User::loadTickets() {
                  std::getline(iss, seatNo, ',');
                 tickets.push_back({ id,movieName,std::stoi(scheduleIndex),std::stoi(seatNo) });
             }
-            break;
+            user.close();
+            return true;
         }
     }
     user.close();
+    return false;
 }
 
-void User::displayTickets() {
+void User::displayTickets(bool adminControl) {
     if (tickets.size() == 0) return;
     int index = 0;
     char keyPressed;
     system("cls");  presentTime();
     tickets.at(index).displayTicket(20, 10);
     std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
+    if (adminControl) std::cout << "press d for deleting the ticket";
     while (true) {
         do {
             keyPressed = _getch();
@@ -555,15 +559,37 @@ void User::displayTickets() {
                 if (keyPressed == 75 && index > 0)  index--;
                 if (keyPressed == 77 && index < tickets.size()-1) index++;
             }
-            else if (keyPressed == 'd') {//delete button
+            else if (keyPressed == 'd'&&adminControl) {//delete button
                 deleteTicket(tickets.at(index));
-                loadTickets();  displayTickets(); return;
+                loadTicketsAndOtherInfo();  displayTickets(adminControl); 
+                return;
             }
             else if (keyPressed == char(27)) return;
         } while (keyPressed != 75 && keyPressed != 77 && keyPressed != char(27) && keyPressed != 'd');
         system("cls");  presentTime();
         tickets.at(index).displayTicket(20, 10);
         std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
+        if (adminControl) std::cout << "press d for deleting the ticket";
+    }
+}
+
+void findUserDetails() {
+    std::string username;
+    std::cout << "Enter Useraname That you want to search:"; std::cin >> username;
+    User u(username);
+    if (u.loadTicketsAndOtherInfo()) {
+        std::cout << "< ";
+        u.CustomerDetails();
+        std::cout << " > ";
+        std::cout << " < Password: " << u.password << ">";
+        std::cout <<" < Number of Tickets: " << u.tickets.size()<<" > modify their ticket?(y/n)";
+        char key;
+        do { key = _getch(); } while (key != 'y' && key != 'n');
+        if (key == 'y') { u.displayTickets(true); }
+        else return;
+    }
+    else {
+        std::cout << "Wrong username, doesnt exist!";
     }
 }
 

@@ -26,11 +26,14 @@ class User {
 	std::string email;
 public:
 	User(){}
-	User(std::string username, std::string password, std::string phonenumber, std::string email){}
+	User(std::string username){
+		this->username = username;
+	}
+	friend void findUserDetails();
 	void CustomerDetails();
     void getUserInfo();
 	void Login();
-	void loadTickets();
-	void displayTickets();
+	bool loadTicketsAndOtherInfo();
+	void displayTickets(bool adminControl =false);
 	void deleteTicket(ticket);
 };

@@ -6,6 +6,12 @@
 #include "ConsoleColor.h"
 #include "ConsoleSize.h"
 
+void wout(const wchar_t* c) {//prints out wide characters
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD written = 0;
+	// explicitly call the wide version (which always accepts UTF-16)
+	WriteConsoleW(handle, c, 1, &written, NULL);
+}
 
 std::string createTicket(std::string username, std::string movieName, int scheduleIndex, int seatNumber) {
 	std::ifstream user(USER_FILE, std::ios::in);
@@ -124,11 +130,11 @@ void drawHall(run& h, int current) {
 		<< "Selected  Seat      \n\n\n\n\n"
 		<< "Payment			: SPACE\n"
 		<< "Reset Selection		: R\n"
-		<< "Quit			: Esc\n\n\n"
-		<< "Left			: ←\n" 
-		<< "Right			: →\n" 
-		<< "Up			 : ↑\n" 
-		<< "Down			: ↓\n";
+		<< "Quit			: Esc\n\n\n";
+		std::cout << "Left			: "; wout(L"←");
+		std::cout << "\nRight			: "; wout(L"→");
+		std::cout<< "\nUp			: "; wout(L"↑");
+		std::cout<< "\nDown			: "; wout(L"↓");
 	drawSeat(19, ssy, Default_white);
 	drawSeat(19, ssy + 2, yellow);
 	drawSeat(19, ssy + 4, Red);

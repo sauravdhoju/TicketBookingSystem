@@ -157,8 +157,7 @@ inline std::vector<std::string> search(std::string s = ""){
 	std::ifstream f;
 	f.open(moviesDir, std::ios::in);
 	if (f.eof()) return {};
-	while (f.read((char*)&m, sizeof(m)))
-	{
+	while (f.read((char*)&m, sizeof(m))){
 		//std::cout <<m.name<< "\n" << f.tellg();
 		movieName = m.name;
 		if (s == "" || movieName.find(s) != std::string::npos) listOfMovies.push_back(m.name);

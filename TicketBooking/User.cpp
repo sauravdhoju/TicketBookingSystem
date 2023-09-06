@@ -420,21 +420,23 @@ void User::Login() {
                 switch (choice) {
                 case 1:
                     system("cls"); presentTime();
-
                     Title("Movie-Ticket Booking System", centerY - 14);
-                    gotoxy(centerX - 400, 3);
-                    std::cout << "Movie List";
+                    Title ("Movie List", centerY-12);
                     find(movieMenu(search(""), 10, 10)).moviePageForAdmin();
                     break;
                 case 2:
                     system("cls"); presentTime();
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    Title("User Details", centerY - 12);
                     findUserDetails();
                     break;
                 case 3:
                     system("cls"); presentTime();
-                    gotoxy(centerX - 10, 3);
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    Title("Add Movie", centerY - 12);
+                    gotoxy(centerX - 10, centerY-8);
                     std::cout << "Add movie:";
-                    gotoxy(centerX - 10, 4);
+                    gotoxy(centerX - 10, centerY+2);
                     //movie m;
                     m.add();
                     break;
@@ -457,19 +459,21 @@ void User::Login() {
                 switch (choice) {
                 case 1://Available Movies
                     system("cls"); presentTime();
-                    gotoxy(centerX - 10, 3);
-                    std::cout << "Movie List";
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    Title("Movie List", centerY - 12);
                     find(movieMenu(search(""), 10, 10)).moviePageForUser();
                     break;
                 case 2:///Search Movies
                     system("cls"); presentTime();
-
-                    Title("Movie Ticket Management System", centerY - 12);
-                    gotoxy(centerX - 6, centerY - 10);
-                    std::cout << "Movie Search\n\n\n";
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    Title("Search Movie", centerY - 12);
 
                     gotoxy(centerX - 35, centerY - 6);
                     std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
+
+                    system("cls"); presentTime();
+                    Title("Movie-Ticket Booking System", centerY - 14);
+                    Title("Search Movie", centerY - 12);
                     find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
                     break;
 
@@ -546,6 +550,8 @@ void User::displayTickets(bool adminControl) {
     int index = 0;
     char keyPressed;
     system("cls");  presentTime();
+    Title("Movie-Ticket Booking System", centerY - 14);
+    Title("Tickets", centerY - 12);
     tickets.at(index).displayTicket(20, 10);
     std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
     //if (adminControl) 
@@ -566,6 +572,8 @@ void User::displayTickets(bool adminControl) {
             else if (keyPressed == char(27)) return;
         } while (keyPressed != 75 && keyPressed != 77 && keyPressed != char(27) && keyPressed != 'd');
         system("cls");  presentTime();
+        Title("Movie-Ticket Booking System", centerY - 14);
+        Title("Tickets", centerY - 12);
         tickets.at(index).displayTicket(20, 10);
         std::cout << "<" << std::setw(2) << index + 1 << '\\' << std::setw(2) << tickets.size() << ">";
         if (adminControl) std::cout << "press d for deleting the ticket";

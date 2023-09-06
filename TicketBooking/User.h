@@ -30,7 +30,7 @@ public:
 		this->username = username;
 	}
 	friend void findUserDetails();
-	void CustomerDetails();
+	void CustomerDetails(int);
     void getUserInfo();
 	void Login();
 	bool loadTicketsAndOtherInfo();

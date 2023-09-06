@@ -81,19 +81,13 @@ void User::getUserInfo() {
             else break;
         }
 
-        gotoxy(centerX + 50, centerY - 4);
-        std::cout << "Uppercase" << std::endl;
-        gotoxy(centerX + 50, centerY - 3);
-        std::cout << "Lowercase" << std::endl;
-        gotoxy(centerX + 50, centerY - 2);
-        std::cout << "Digit" << std::endl;
-        gotoxy(centerX + 50, centerY - 1);
-        std::cout << "Special" << std::endl;
-        gotoxy(centerX + 50, centerY - 0);
-        std::cout << "Character count: " << std::endl;
+        gotoxy(centerX + 30, centerY - 4); std::cout << "Uppercase" << std::endl;
+        gotoxy(centerX + 30, centerY - 3); std::cout << "Lowercase" << std::endl;
+        gotoxy(centerX + 30, centerY - 2); std::cout << "Digit" << std::endl;
+        gotoxy(centerX + 30, centerY - 1); std::cout << "Special" << std::endl;
+        gotoxy(centerX + 30, centerY - 0); std::cout << "Character count: " << std::endl;
 
-        gotoxy(centerX - 50, centerY - 4); 
-        std::cout << "Password: ";
+        gotoxy(centerX - 50, centerY - 4); std::cout << "Password: ";
 
         int tick = 1;
 
@@ -165,26 +159,12 @@ void User::getUserInfo() {
                     else hasSpecialChar = true;
                 }
 
-                hasUpperCase ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 4);
-                std::cout << "Uppercase" << std::endl;
+                hasUpperCase ? highlightGreen() : highlightRed();               gotoxy(centerX + 30, centerY - 4); std::cout << "Uppercase";
+                hasLowerCase ? highlightGreen() : highlightRed();               gotoxy(centerX + 30, centerY - 3); std::cout << "Lowercase";
+                hasDigit ? highlightGreen() : highlightRed();                   gotoxy(centerX + 30, centerY - 2); std::cout << "Digit"    ;
+                hasSpecialChar ? highlightGreen() : highlightRed();             gotoxy(centerX + 30, centerY - 1); std::cout << "Special"  ;
+                (password.length() >= 8) ? highlightGreen() : highlightRed();   gotoxy(centerX + 30, centerY - 0); std::cout << "Character count: " << password.length();
 
-                hasLowerCase ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 3);
-                std::cout << "Lowercase" << std::endl;
-
-                hasDigit ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 2);
-                std::cout << "Digit" << std::endl;
-
-                hasSpecialChar ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 1);
-                std::cout << "Special" << std::endl;
-
-                //character count and password count
-                (password.length() >= 8) ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY - 0);
-                std::cout << "Character Count: " << password.length() << " " << std::endl;
 
                 
             }
@@ -338,8 +318,8 @@ void User::getUserInfo() {
 
 }
 void findUserDetails();
-void User::CustomerDetails() {
-    std::cout <<"  " << username << " | " << phonenumber << " | " << email << "  ";
+void User::CustomerDetails(int y) {
+    Title("  " + username + " | " + phonenumber + " | " + email + "  ", y);
 }
 
 
@@ -415,14 +395,14 @@ void User::Login() {
                 system("cls");  presentTime();
                 Title("Movie-Ticket Booking System", centerY - 14);
                 Title("Admin", centerY - 12);
-                choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 50, centerY - 4);
+                choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 48, centerY - 4);
                 movie m;//instance of movie created for adding new movie option
                 switch (choice) {
                 case 1:
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title ("Movie List", centerY-12);
-                    find(movieMenu(search(""), 10, 10)).moviePageForAdmin();
+                    find(movieMenu(search(""), centerX - 48, centerY - 4)).moviePageForAdmin();
                     break;
                 case 2:
                     system("cls"); presentTime();
@@ -450,10 +430,8 @@ void User::Login() {
             do {
                 system("cls"); presentTime();
                 Title("Movie-Ticket Booking System", centerY - 12);
-                gotoxy(centerX - 50, centerY - 8);
-                std::cout << "Welcome ";
-                CustomerDetails();
-                choice = menuInput({ "Available Movies","Search Movies","Your tickets","Logout" }, centerX - 55, centerY - 4);
+                CustomerDetails(centerY-8);
+                choice = menuInput({ "Available Movies","Search Movies","Your tickets","Logout" }, centerX - 48, centerY - 4);
 
                 std::string keyword;
                 switch (choice) {
@@ -461,7 +439,7 @@ void User::Login() {
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Movie List", centerY - 12);
-                    find(movieMenu(search(""), 10, 10)).moviePageForUser();
+                    find(movieMenu(search(""), centerX - 48, centerY - 4)).moviePageForUser();
                     break;
                 case 2:///Search Movies
                     system("cls"); presentTime();
@@ -474,7 +452,7 @@ void User::Login() {
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Search Movie", centerY - 12);
-                    find(movieMenu(search(keyword), 10, 10)).moviePageForUser();
+                    find(movieMenu(search(keyword),centerX - 48, centerY - 4)).moviePageForUser();
                     break;
 
                 case 3://Your Details
@@ -497,7 +475,7 @@ void User::Login() {
 void ticket::displayTicket(int sx, int sy) {
     movie m;
     m = find(movieName);
-    printQr(id.c_str(), sx, sy, Black, Default_white);
+    printQr(id.c_str(), sx, sy, Black, Bright_white);
     sy += 2; gotoxy(sx + 50, sy);
     std::cout << "Ticket Id: " << id;
     sy += 2; gotoxy(sx + 50, sy); 
@@ -582,14 +560,14 @@ void User::displayTickets(bool adminControl) {
 
 void findUserDetails() {
     std::string username;
-    std::cout << "Enter Useraname That you want to search:"; std::cin >> username;
+    gotoxy(centerX -12, centerY - 10);
+    std::cout << "Enter Username: "; std::cin >> username;
     User u(username);
     if (u.loadTicketsAndOtherInfo()) {
-        std::cout << "< ";
-        u.CustomerDetails();
-        std::cout << " > ";
-        std::cout << " < Password: " << u.password << ">";
-        std::cout <<" < Number of Tickets: " << u.tickets.size()<<" > modify their ticket?(y/n)";
+        u.CustomerDetails(centerY-8);
+        Title("Password: " + u.password, centerY - 7);
+        Title("Number of Tickets: " + std::to_string(u.tickets.size()), centerY - 6);
+        Title("Modify Your Ticket?(Y/N)", centerY - 5);
         char key;
         do { key = _getch(); } while (key != 'y' && key != 'n');
         if (key == 'y') { u.displayTickets(true); }

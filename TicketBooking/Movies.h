@@ -75,7 +75,7 @@ public:
 				std::cout << line << std::endl;
 				i++;
 			}
-			 choice = menuInput({ "Trailer","Modify Schedule", "Modify Length","Delete", "Back"}, 1, i + 5);
+			 choice = menuInput({ "Trailer","Modify Schedule", "Modify Length","Delete", "Back"}, centerX - 48, centerY - 4);// 1, i + 5
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -105,18 +105,21 @@ public:
 		int choice;
 		do {
 			system("cls");  presentTime;
-			gotoxy(centerX - std::string(name).length() / 2, 3);
-			std::cout << name << '\n';
+
+			Title(name, centerY - 7);
+			gotoxy(0, 3);
+			std::cout << "Synopsis\n";
+
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-			std::cout << "\n\n";
 			std::string line;
 			int i = 0;
 			while (getline(file, line)) {
 				std::cout << line << std::endl;
 				i++;
 			}
-			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, 1, i + 5);
+			
+			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, centerX - 48, centerY - 4);// 1, i + 5
 			std::string command;
 			switch (choice) {
 				case 1:
@@ -233,7 +236,7 @@ inline void movie::modifySchedule() {
 			else availableSchedules.push_back("~Empty Schedule Slot");
 		}
 		availableSchedules.push_back("Back");
-		int chosedSchedule = menuInput(availableSchedules, 15, 15);
+		int chosedSchedule = menuInput(availableSchedules, centerX - 48, centerY - 4);
 		if (chosedSchedule == 9) return;
 		schedule[chosedSchedule-1].startTime.modifyTime();
 		update();
@@ -256,7 +259,7 @@ inline void movie::selectSchedule() {
 	system("cls"); presentTime();
 	Title("Movie-Ticket Management System", centerY - 12);
 	Title("Available Schedules", centerY - 9);
-	int i = menuInput(availableSchedules, 15, 15) - 1;
+	int i = menuInput(availableSchedules, centerX - 48, centerY - 4) - 1;
 	if (i == availableSchedules.size() - 1) return;
 	int selectedScheduleIndex = indexOfAvailableSchedules.at(i);
 

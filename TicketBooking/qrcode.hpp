@@ -10,6 +10,7 @@
 #include "qrcodegen.hpp"
 #include "Title.h"
 #include "ConsoleColor.h"
+
 using std::uint8_t;
 using qrcodegen::QrCode;
 using qrcodegen::QrSegment;

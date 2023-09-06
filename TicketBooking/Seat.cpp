@@ -97,6 +97,8 @@ void drawHall(run& h, int current) {
 		}
 	}
 
+
+
 	int sy = y + 15;
 	if (totalSelected == 0) {
 		gotoxy(sx, y);
@@ -111,34 +113,42 @@ void drawHall(run& h, int current) {
 			std::cout << "                                                      ";
 		}
 	}
+
+
+	
+
 	else {
 		gotoxy(sx, y);
 		std::cout << "Selected Seat List\n";
 		gotoxy(sx, sy);
-		std::cout << "Normal  Seats:     " << nonPremiumSelected << " * Rs " << nonPremiumRate << " = Rs " << nonPremiumSelected * nonPremiumRate;
+		std::cout << "Normal  : " << nonPremiumSelected << " * Rs " << nonPremiumRate << " = Rs " << nonPremiumSelected * nonPremiumRate;
 		gotoxy(sx, sy + 1);
-		std::cout << "Premium Seats:     " << premiumSelected << " * Rs " << premiumRate << " = Rs " << premiumSelected * premiumRate;
+		std::cout << "Premium : " << premiumSelected << " * Rs " << premiumRate << " = Rs " << premiumSelected * premiumRate;
 		gotoxy(sx, sy + 2);
-		std::cout << "Total        :     " << totalSelected << "          = Rs " << nonPremiumSelected * nonPremiumRate + premiumSelected * premiumRate;
+		std::cout << "Total   : " << totalSelected << "          = Rs " << nonPremiumSelected * nonPremiumRate + premiumSelected * premiumRate;
 	}
 	int Block = 219;
 	int ssy = y;
-	gotoxy(0, ssy);
+	gotoxy(0, ssy-1);
+
 	std::cout << "Normal    Seat      \n\n"
 		<< "Premium   Seat      \n\n"
 		<< "Booked    Seat      \n\n"
-		<< "Selected  Seat      \n\n\n\n\n"
-		<< "Payment			: SPACE\n"
-		<< "Reset Selection		: R\n"
-		<< "Quit			: Esc\n\n\n";
-		std::cout << "Left			: "; wout(L"←");
-		std::cout << "\nRight			: "; wout(L"→");
-		std::cout<< "\nUp			: "; wout(L"↑");
-		std::cout<< "\nDown			: "; wout(L"↓");
-	drawSeat(19, ssy, Default_white);
-	drawSeat(19, ssy + 2, yellow);
-	drawSeat(19, ssy + 4, Red);
-	drawSeat(19, ssy + 6, Green);
+		<< "Selected  Seat      \n\n\n";
+
+	std::cout << "Left		 : "; wout(L"←");
+	std::cout << "\nRight	  	 : "; wout(L"→");
+	std::cout << "\nUp		 : "; wout(L"↑");
+	std::cout << "\nDown		 : "; wout(L"↓");
+
+
+		std::cout<< "\n\n\nPayment		 : SPACE\n"
+		<< "Reset Selection	 : R\n"
+		<< "Quit		 : Esc";
+	drawSeat(19, ssy-1, Default_white);
+	drawSeat(19, ssy-1 + 2, yellow);
+	drawSeat(19, ssy-1 + 4, Red);
+	drawSeat(19, ssy-1 + 6, Green);
 
 
 
@@ -150,7 +160,7 @@ void drawHall(run& h, int current) {
 			if (h.s[i].qlt == NON_PREMIUM) c = Default_white;
 			else if (h.s[i].qlt == PREMIUM) c = yellow;
 		}
-		drawSeat(x, y, c);
+		drawSeat(x, y-1, c);
 		//columnPartition=column/column division 12/4 = 3
 		if ((i % columnPartition) == columnPartition - 1) x += corridorGap;
 		if (i % column == column - 1) {
@@ -238,7 +248,7 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 			keyPressed != char(72) && keyPressed != char(80) && keyPressed != char(75) && keyPressed != char(77) &&
 			keyPressed != '\r' && keyPressed != char(27) && keyPressed != char(32)&&keyPressed!='r'&&keyPressed!='R');
 		//      enter                          escape                    space				//rR
-		gotoxy(centerX - 11, centerY + hallBreadth / 2 + 5);
+		gotoxy(centerX - 11, centerY + hallBreadth / 2+2);
 		std::cout << "Currently on Seat No:  ";
 		if (index < 10)std::cout << '0';
 		std::cout << index<<" (" << h.s[index].available<<h.s[index].selected<<")";

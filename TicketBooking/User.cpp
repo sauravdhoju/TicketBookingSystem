@@ -550,7 +550,7 @@ void findUserDetails() {
         u.CustomerDetails(centerY-8);
         Title("Password: " + u.password, centerY - 7);
         Title("Number of Tickets: " + std::to_string(u.tickets.size()), centerY - 6);
-        Title("Modify Your Ticket?(Y/N)", centerY - 5);
+        Title("Modify Their Ticket?(Y/N)", centerY - 5);
         char key;
         do { key = _getch(); } while (key != 'y' && key != 'n');
         if (key == 'y') { u.displayTickets(true); }

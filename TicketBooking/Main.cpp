@@ -42,7 +42,7 @@ int actualMain() {
     do {
         system("cls");  presentTime();
         Title("Movie-Ticket Booking System", centerY-7);
-        choice = menuInput({"Login", "Register", "Exit"}, centerX-3, centerY-4);
+        choice = menuInput({"Login", "Register", "Exit"}, centerX-5, centerY-4);
 
         switch (choice) {
         case 1:

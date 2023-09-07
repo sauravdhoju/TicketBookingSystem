@@ -63,19 +63,25 @@ public:
 		int choice;
 		do {
 			system("cls");  presentTime();
-			gotoxy(centerX - std::string(name).length() / 2, 3);
-			std::cout << name << '\n';
+			Title(name, 3);
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-			std::string line;
-			int i = 0;
-
+			std::string word;
+			int lineCount = 1;
+			int letterCountInALine = 0;
 			std::cout << "\n\n";
-			while (getline(file, line)) {
-				std::cout << line << std::endl;
-				i++;
+			bool hasEnteredNewLine=false;
+			while (getline(file, word, ' ')) {
+				std::cout << word << ' ';
+				if (letterCountInALine >= 105) {
+					std::cout << std::endl;
+					letterCountInALine = 0;
+					lineCount++;
+				}
+				letterCountInALine += word.length() + 1;
 			}
-			 choice = menuInput({ "Trailer","Modify Schedule", "Modify Length","Delete", "Back"}, centerX - 48, centerY - 4);// 1, i + 5
+			std::cout << lineCount;
+			 choice = menuInput({ "Trailer","Modify Schedule", "Modify Length","Delete", "Back"}, centerX - 48, lineCount + 7);// 1, i + 5
 			std::string command;
 			switch (choice) {
 			case 1:
@@ -112,14 +118,16 @@ public:
 
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
-			std::string line;
+			std::string word;
 			int i = 0;
-			while (getline(file, line)) {
-				std::cout << line << std::endl;
+			std::cout << "\n\n";
+			while (getline(file, word, ' ')) {
+				std::cout << word << ' ';
+				if (i % 14 == 0) std::cout << std::endl;
 				i++;
 			}
 			
-			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, centerX - 48, centerY - 4);// 1, i + 5
+			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, centerX - 48, i+centerY - 4);// 1, i + 5
 			std::string command;
 			switch (choice) {
 				case 1:

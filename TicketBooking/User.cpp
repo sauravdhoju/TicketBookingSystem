@@ -445,7 +445,6 @@ void User::Login() {
                 case 4://Logout
                     return;
                 }
-                _getch();
             } while (true);
         }
     }

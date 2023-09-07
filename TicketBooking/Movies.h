@@ -110,24 +110,25 @@ public:
 	void moviePageForUser() {
 		int choice;
 		do {
-			system("cls");  presentTime;
-
-			Title(name, centerY - 7);
-			gotoxy(0, 3);
-			std::cout << "Synopsis\n";
-
+			system("cls");  presentTime();
+			Title(name, 3);
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);
 			std::string word;
-			int i = 0;
+			int lineCount = 1;
+			int letterCountInALine = 0;
 			std::cout << "\n\n";
+			bool hasEnteredNewLine = false;
 			while (getline(file, word, ' ')) {
 				std::cout << word << ' ';
-				if (i % 14 == 0) std::cout << std::endl;
-				i++;
+				if (letterCountInALine >= 105) {
+					std::cout << std::endl;
+					letterCountInALine = 0;
+					lineCount++;
+				}
+				letterCountInALine += word.length() + 1;
 			}
-			
-			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, centerX - 48, i+centerY - 4);// 1, i + 5
+			choice = menuInput({ "Trailer", "Book Ticket", "Back" }, centerX - 48, lineCount + 7);// 1, i + 5
 			std::string command;
 			switch (choice) {
 				case 1:

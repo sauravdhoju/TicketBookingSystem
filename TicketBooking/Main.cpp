@@ -11,6 +11,11 @@
 #include "Global.h"
 #include "Movies.h"
 #include "qrcode.hpp"
+
+
+
+
+
 int actualMain();
 
 int main() {

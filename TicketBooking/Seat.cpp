@@ -236,6 +236,7 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 							h.s[i].available = false;
 						}
 					}
+
 					return true;
 				}
 				else {//No
@@ -251,10 +252,7 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 		gotoxy(centerX - 11, centerY + hallBreadth / 2+2);
 		std::cout << "Currently on Seat No:  ";
 		if (index < 10)std::cout << '0';
-		std::cout << index<<" (" << h.s[index].available<<h.s[index].selected<<")";
+		std::cout << index;// << " (" << h.s[index].available << h.s[index].selected << ")";
 		drawHall(h, index);
 	}
 }
-
-
-

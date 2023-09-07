@@ -86,7 +86,6 @@ void User::getUserInfo() {
         gotoxy(centerX + 30, centerY - 2); std::cout << "Digit" << std::endl;
         gotoxy(centerX + 30, centerY - 1); std::cout << "Special" << std::endl;
         gotoxy(centerX + 30, centerY - 0); std::cout << "Character count: " << std::endl;
-
         gotoxy(centerX - 50, centerY - 4); std::cout << "Password: ";
 
         int tick = 1;
@@ -133,6 +132,7 @@ void User::getUserInfo() {
                         else showPassword = true;
                     }
                     else{
+                        if (password.length() >= 16) continue;
                         password += c;
                     }
                     if (showPassword) {
@@ -163,22 +163,23 @@ void User::getUserInfo() {
                 hasLowerCase ? highlightGreen() : highlightRed();               gotoxy(centerX + 30, centerY - 3); std::cout << "Lowercase";
                 hasDigit ? highlightGreen() : highlightRed();                   gotoxy(centerX + 30, centerY - 2); std::cout << "Digit"    ;
                 hasSpecialChar ? highlightGreen() : highlightRed();             gotoxy(centerX + 30, centerY - 1); std::cout << "Special"  ;
-                (password.length() >= 8) ? highlightGreen() : highlightRed();   gotoxy(centerX + 30, centerY - 0); std::cout << "Character count: " << password.length();
-
-
-                
+                (password.length() >= 8) ? highlightGreen() : highlightRed();   gotoxy(centerX + 30, centerY - 0); std::cout << "Character count: " << password.length()<<" ";
             }
             resetHighlight();
+
             if (password.length() >= 8 && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar) {
-                gotoxy(centerX + 20, centerY - 4);
-                highlightGreen();
-                std::cout << "Strong Enough\n";
-                resetHighlight();
-                isPasswordValid = true;
                 gotoxy(centerX - 40, centerY - 3);
                 std::cout << "                           ";//overwriting show password by ~
                 gotoxy(centerX - 40, centerY - 4);
                 for (int i = 0; i < password.length(); i++) std::cout << "*";
+                gotoxy(centerX + 30, centerY - 4); std::cout << "           " << std::endl;
+                gotoxy(centerX + 30, centerY - 3); std::cout << "           " << std::endl;
+                gotoxy(centerX + 30, centerY - 2); std::cout << "           " << std::endl;
+                gotoxy(centerX + 30, centerY - 1); std::cout << "           " << std::endl;
+                gotoxy(centerX + 30, centerY - 0); std::cout << "                    " << std::endl; 
+                gotoxy(centerX + 20, centerY - 4); highlightGreen(); std::cout << "Strong Enough\n";
+                resetHighlight();
+                isPasswordValid = true;
             }
             else {
                 gotoxy(centerX - 40, centerY - 4);
@@ -188,22 +189,10 @@ void User::getUserInfo() {
                 password = "";
                 gotoxy(centerX + 20, centerY - 4);
                 highlightRed();
-                std::cout << "Weak Password\n";
+                std::cout << "Weak";
                 resetHighlight();
             }
         }
-      
-        
-        gotoxy(centerX + 50, centerY - 4);
-        std::cout << "         " << std::endl;
-        gotoxy(centerX + 50, centerY - 3);
-        std::cout << "         " << std::endl;
-        gotoxy(centerX + 50, centerY - 2);
-        std::cout << "      " << std::endl;
-        gotoxy(centerX + 50, centerY - 1);
-        std::cout << "        " << std::endl;
-        gotoxy(centerX + 50, centerY - 0);
-        std::cout << "                       " << std::endl;
 
         while (true) {
             gotoxy(centerX - 50, centerY - 3);
@@ -220,20 +209,18 @@ void User::getUserInfo() {
                 }
 
                 (phoneNumberSuffix.length() == 8) ? highlightGreen() : highlightRed();
-                gotoxy(centerX + 50, centerY-3);
+                gotoxy(centerX + 20, centerY - 3);
                 std::cout << "Character Count: " << phoneNumberSuffix.length()+2 << " " << std::endl;
                 resetHighlight();
 
                 
                 if ((c < char('0') || c > char('9')) && c!='\b' && c!='\r') {
-                    gotoxy(centerX + 50, centerY-2);
-                    highlightRed();  std::cout << "Please Enter Numbers Only!";
-                    resetHighlight();
+                    gotoxy(centerX + 20, centerY);
+                    highlightRed();  std::cout << "Please Enter Numbers Only!"; resetHighlight();
                 }
                 else{
-                    gotoxy(centerX + 50, centerY-2); std::cout << "                           ";
+                    gotoxy(centerX + 20, centerY); std::cout << "                           ";
                 }
-
                 gotoxy(centerX - 50, centerY - 3);
                 std::cout << "Phone Number: +977-98" << phoneNumberSuffix;
                 gotoxy(centerX - 29+ phoneNumberSuffix.length(), centerY - 3);
@@ -247,16 +234,12 @@ void User::getUserInfo() {
                 for (int i = 0; i < phoneNumberSuffix.length(); i++) {
                     std::cout << " ";
                 }
-                gotoxy(centerX + 20, centerY - 3);
-                highlightRed();
-                std::cout << "Invalid Number\n";
-                resetHighlight();
                 phoneNumberSuffix = "";
                 continue;
             }
 
             else {
-                gotoxy(centerX + 50, centerY - 3);
+                gotoxy(centerX + 20, centerY - 3);
                 std::cout << "                                    ";//Overwrite Character Count
                 gotoxy(centerX + 20, centerY - 3);
                 highlightGreen();
@@ -288,13 +271,13 @@ void User::getUserInfo() {
                 if (isValidEmail(email)) {
                     gotoxy(centerX + 20, centerY - 2);
                     highlightGreen();
-                    std::cout << "  valid email";
+                    std::cout << "Valid Email  ";
                     resetHighlight();
                 }
                 else {
                     gotoxy(centerX + 20, centerY - 2);
                     highlightRed();
-                    std::cout << "invalid email";
+                    std::cout << "Invalid Email";
                     resetHighlight();
                 }
             } while (c != '\r');
@@ -577,4 +560,3 @@ void findUserDetails() {
         std::cout << "Wrong username, doesnt exist!";
     }
 }
-

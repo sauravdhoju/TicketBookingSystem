@@ -1,18 +1,15 @@
 #pragma once
 
-#ifndef SEAT_H
-#define SEAT_H
-
-
 #include<windows.h>
 #include"Title.h"
 #include"ConsoleColor.h"
 #include<conio.h>
 #include"ConsoleSize.h"
 #include"MenuAndTime.h"
+#include "payment.h"
 
 //int debug;
-#define row 8// last ko 2 row premium
+#define row 8// last ko 2 row premium//8,12
 #define column 12// 4 division
 #define totalSeat row*column
 #define hallLength 2*column+(column-1)//gap ko value 1
@@ -50,5 +47,3 @@ void drawSeat(int x, int y, colorCode c);
  void drawHall(run& h, int current);
  bool controlHallSeat(run& h, std::string, int);
  void payment(run& a, std::string name, std::string MovieName); // Declare the payment function
-
-#endif

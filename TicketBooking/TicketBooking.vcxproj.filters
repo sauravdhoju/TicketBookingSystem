@@ -74,5 +74,8 @@
     <ClInclude Include="qrcode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="payment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

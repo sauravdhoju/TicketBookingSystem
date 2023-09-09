@@ -29,7 +29,6 @@ int main() {
 int actualMain() {
     setConsoleSizeAndCenter();
     int i;
-
     
     std::string username, password;
     int choice;
@@ -58,7 +57,6 @@ int actualMain() {
             exit(0);
         }
     } while (choice != 3);
-
     return 0;
 }
 

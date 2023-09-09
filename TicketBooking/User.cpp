@@ -374,78 +374,80 @@ void User::Login() {
     if (found) {
         if (isAdmin) {
             char choice;
-            do {
+            while (true){
                 system("cls");  presentTime();
                 Title("Movie-Ticket Booking System", centerY - 14);
                 Title("Admin", centerY - 12);
                 choice = menuInput({ "List of Movies for Modification", "Customer Details", "Add New Movie","Logout" }, centerX - 48, centerY - 4);
-                movie m;//instance of movie created for adding new movie option
-                switch (choice) {
-                case 1:
+                if(choice == 1){
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
-                    Title ("Movie List", centerY-12);
-                    find(movieMenu(search(""), centerX - 48, centerY - 4)).moviePageForAdmin();
-                    break;
-                case 2:
+                    Title("Movie List", centerY - 12);
+                    std::string movieChosed = movieMenu(search(""), centerX - 48, centerY - 4);
+                    if(movieChosed != "back") find(movieChosed).moviePageForAdmin();
+                }
+                else if(choice == 2){
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("User Details", centerY - 12);
                     findUserDetails();
-                    break;
-                case 3:
+                }
+                else if(choice == 3){
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Add Movie", centerY - 12);
-                    gotoxy(centerX - 10, centerY-8);
+                    gotoxy(centerX - 10, centerY - 8);
                     std::cout << "Add movie:";
-                    gotoxy(centerX - 10, centerY+2);
-                    //movie m;
+                    gotoxy(centerX - 10, centerY + 2);
+                    movie m;
                     m.add();
-                    break;
-                case 4:
-                    return;
                 }
-            } while (true);
+                else return;
+            } 
         }
         else {
             char choice;
-            do {
+            while(true) {
                 system("cls"); presentTime();
                 Title("Movie-Ticket Booking System", centerY - 12);
                 CustomerDetails(centerY-8);
                 choice = menuInput({ "Available Movies","Search Movies","Your tickets","Logout" }, centerX - 48, centerY - 4);
 
-                std::string keyword;
-                switch (choice) {
-                case 1://Available Movies
+                if(choice==1)//Available Movies
+                {
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Movie List", centerY - 12);
-                    find(movieMenu(search(""), centerX - 48, centerY - 4)).moviePageForUser();
-                    break;
-                case 2:///Search Movies
+                    std::string movieChosed = movieMenu(search(""), centerX - 48, centerY - 4);
+                    if (movieChosed != "back") find(movieChosed).moviePageForUser();
+                }
+                else if (choice == 2) {///Search Movies
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Search Movie", centerY - 12);
-
                     gotoxy(centerX - 35, centerY - 6);
+                    std::string keyword;
                     std::cout << "Enter the Keyword to search: "; std::cin >> keyword;
-
                     system("cls"); presentTime();
                     Title("Movie-Ticket Booking System", centerY - 14);
                     Title("Search Movie", centerY - 12);
-                    find(movieMenu(search(keyword),centerX - 48, centerY - 4)).moviePageForUser();
-                    break;
+                    std::vector<std::string> moviesFound = search(keyword);
+                    if (moviesFound.size() == 0) {
+                        gotoxy(centerX - 35, centerY - 6);
+                        std::cout << "No movies found with keyword: " << keyword<<"   :("; _getch();
+                        continue;
+                    }
+                    std::string movieChosed = movieMenu(moviesFound, centerX - 48, centerY - 4);
+                    if(movieChosed!="back") find(movieChosed).moviePageForUser();
+                }
 
-                case 3://Your Details
+                if (choice == 3) {//Your Details
                     loadTicketsAndOtherInfo();
                     displayTickets();
-                    break;
-                case 4://Logout
-                    return;
                 }
-            } while (true);
+
+                if(choice == 4) return;
+            } 
         }
     }
     else {

@@ -209,6 +209,9 @@ inline int menuInput(std::vector<std::string> options, int startX, int startY, c
         else if (keyPressed == '\r') {
             return choice;
         }
+        else if (keyPressed == char(27)) {//esc to exit lol
+            return options.size();
+        }
     } while (true);
 }
 

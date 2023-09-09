@@ -170,7 +170,6 @@ inline std::vector<std::string> search(std::string s = ""){
 	f.open(moviesDir, std::ios::in);
 	if (f.eof()) return {};
 	while (f.read((char*)&m, sizeof(m))){
-		//std::cout <<m.name<< "\n" << f.tellg();
 		movieName = m.name;
 		if (s == "" || movieName.find(s) != std::string::npos) listOfMovies.push_back(m.name);
 	}
@@ -196,7 +195,7 @@ inline location giveLocationFromFile(std::string n){
 
 
 inline std::string movieMenu(std::vector<std::string> options, int startX, int startY, char cursor = '>') {
-	if (options.size() == 0) return "";
+	options.push_back("back");
 	char keyPressed;
 	int choice = 1;
 	do {

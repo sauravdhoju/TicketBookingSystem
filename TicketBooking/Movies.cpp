@@ -43,7 +43,6 @@ bool movie::add() {
 	std::string name_s;
 	do {
 		system("cls");  presentTime();
-
 		Title("Movie-Ticket Booking System", centerY - 12);
 		gotoxy(centerX -30, 12);
 		std::cout << "Enter Movie Name to add: ";
@@ -54,10 +53,10 @@ bool movie::add() {
 		if (loc.start < loc.end) {
 			std::cout << name << " already exist in the file"; _getch();
 		}
-		if (name_s.length() < 1) {
+		if (name_s.length() < 1 || name_s == "back") {
 			std::cout << "Enter valid name"; _getch();
 		}
-	} while (loc.start < loc.end || name_s.length() < 1);
+	} while (loc.start < loc.end || name_s.length() < 1 ||name_s=="back");
 	std::ofstream fo;
 	fo.open(moviesDir, std::ios::app);
 	fo.write((char*)&*this, sizeof(movie));

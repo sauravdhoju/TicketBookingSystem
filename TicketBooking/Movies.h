@@ -199,6 +199,7 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 	char keyPressed;
 	int choice = 1;
 	do {
+		
 		for (int i = 0; i < options.size(); i++) {
 			gotoxy(startX - 1, startY + i);
 			if (i == choice - 1) {
@@ -211,7 +212,7 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 			std::cout<< options.at(i);
 			resetHighlight();
 		}
-		gotoxy(startX - 1, startY + choice - 1);
+		gotoxy(2 * centerX - 1, 0);
 		keyPressed = _getch(); // Read a single character without echoing it
 		if (keyPressed == -32) { // Check if the character is the escape character
 			keyPressed = _getch(); // Read the arrow key character
@@ -231,6 +232,8 @@ inline std::string movieMenu(std::vector<std::string> options, int startX, int s
 		else if (keyPressed == '\r') {
 			return options[choice - 1];
 		}
+		else if (keyPressed == char(27)) return "back";
+		
 	} while (true);
 }
 

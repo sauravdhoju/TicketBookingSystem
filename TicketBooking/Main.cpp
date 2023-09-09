@@ -14,10 +14,7 @@
 
 
 
-
-
 int actualMain();
-
 int main() {
     std::thread mainThread(actualMain);
     std::thread timeThread(updatePresentTime);

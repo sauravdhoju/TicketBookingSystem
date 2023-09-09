@@ -187,9 +187,12 @@ inline int menuInput(std::vector<std::string> options, int startX, int startY, c
                 std::cout << cursor;
             }
             else std::cout << " ";
-            std::cout << i + 1 << ". " << options.at(i);
+            std::cout << i + 1 << ". ";
+            if(i+1<10)std::cout << " ";
+            std::cout<< options.at(i);
             resetHighlight();
         }
+        gotoxy(2 * centerX -1, 0);
         keyPressed = _getch(); // Read a single character without echoing it
         if (keyPressed == -32) { // Check if the character is the escape character
             keyPressed = _getch(); // Read the arrow key character

@@ -315,7 +315,50 @@ void User::Login() {
     std::getline(std::cin, username);
     gotoxy(centerX - 50, centerY - 4);
     std::cout << "Password: ";
-    std::getline(std::cin, password);
+    password = ""; // Clear the password on each iteration
+    gotoxy(centerX - 40, centerY - 3);
+    std::cout << "Press '~' to show password\n";
+    char c; bool showPassword = false;
+    while (true) {
+        gotoxy(centerX - 40 + password.length(), centerY - 4);
+        c = _getch();
+        if (c == '\r') {
+            // Enter key pressed, exit the loop
+            break;
+        }
+        else if (c == '\b') {
+            // Backspace key pressed, erase the last character
+            if (!password.empty()) {
+                password.pop_back();
+                // Move the cursor back one position
+                gotoxy(centerX + password.length() - 40, centerY - 4);
+                // Print a space to erase the character
+                std::cout << ' ';
+            }//password empty closing
+            gotoxy(centerX + password.length() - 41, centerY - 4); //move the cursor back after each backspace
+        }//backspace closing
+
+        else {
+            //tilde sign gives password
+            resetHighlight();
+            if (c == '~') {
+                if (showPassword) showPassword = false;
+                else showPassword = true;
+            }
+            else {
+                if (password.length() >= 16) continue;
+                password += c;
+            }
+            if (showPassword) {
+                gotoxy(centerX - 40, centerY - 4);
+                std::cout << password;
+            }
+            else {
+                gotoxy(centerX - 40, centerY - 4);
+                for (int i = 0; i < password.length(); i++) std::cout << "*";
+            }
+        }
+    }
 
     std::ifstream user(USER_FILE, std::ios::in);
     std::ifstream admin(ADMIN_FILE, std::ios::in);

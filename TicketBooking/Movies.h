@@ -63,6 +63,10 @@ public:
 		int choice;
 		do {
 			system("cls");  presentTime();
+			//Ascii art
+
+
+
 			Title(name, 3);
 			std::ifstream file;
 			file.open(moviesDetailsDir + name + "\\synopsis.txt", std::ios::in);

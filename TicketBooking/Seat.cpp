@@ -216,30 +216,16 @@ bool controlHallSeat(run& h, std::string movieName, int scheduleIndex){
 				h.s[index].selected = true;
 				totalSelected++;
 
-				gotoxy(centerX - 11, centerY + hallBreadth / 2 + 4);
-				std::cout << "                                 ";
-				//// Add an alert message here
-				//Title("Alert Message", centerY);
-				//std::cout << "Seat " << (index < 10 ? "0" : "") << index << " selected!" << std::endl;
-				//Sleep(1500); // Display the message for 1.5 seconds
-				//system("cls");
-
-				//// Redraw the hall with the updated seat selection
-				//drawHall(h, index);
-
-			}
-			else if (h.s[index].available == true) {
 				gotoxy(centerX - 15, centerY + hallBreadth / 2 + 4);
-				//std::cout << "Alert Message";
-				//Title("Alert Message", centerY);
-				std::cout << "Alert"; wout(L"→"); wout(L"←");
-				std::cout << " Seat " << (index < 10 ? "0" : "") << index << " is already booked!" << std::endl;
-				//Sleep(1500); // Display the message for 1.5 seconds
-				//system("cls");
-
-				// Redraw the hall without making any changes
-				drawHall(h, index);
+				std::cout << "                                     ";
 			}
+			//else if (h.s[index].available == true) {
+			//	gotoxy(centerX - 15, centerY + hallBreadth / 2 + 4);
+			//	std::cout << "Alert"; wout(L"→"); wout(L"→");
+			//	std::cout << " Seat " << (index < 10 ? "0" : "") << index << " is already booked!" << std::endl;
+			//	// Redraw the hall without making any changes
+			//	drawHall(h, index);
+			//}
 			else if (keyPressed == 'r'|| keyPressed=='R') {//reset
 				for (int i = 0; i < totalSeat; i++) {
 					if (h.s[i].selected) {

@@ -46,12 +46,14 @@ bool isValidPhoneNumber(const std::string& phoneNumber) {
 }
 
 bool isValidEmail(const std::string email) {
-    const std::regex pattern1("(\\w+)(\\.|)?(\\w*)@gmail(\\.com)+");
+    const std::regex pattern(R"(\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b)");
+    return std::regex_match(email, pattern);
+    /*const std::regex pattern1("(\\w+)(\\.|)?(\\w*)@gmail(\\.com)+");
     const std::regex pattern2("(\\w+)(\\.|)?(\\w*)@yahoo(\\.com)+");
     const std::regex pattern3("(\\w+)(\\.|)?(\\w*)@khec(\\.com.np)+");
     const std::regex pattern4("(\\w+)(\\.|)?(\\w*)@hotmail(\\.com)+");
     const std::regex pattern5("(\\w+)(\\.|)?(\\w*)@outlook(\\.com)+");
-    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4) || regex_match(email, pattern5);
+    return regex_match(email, pattern1) || regex_match(email, pattern2) || regex_match(email, pattern3) || regex_match(email, pattern4) || regex_match(email, pattern5);*/
 }
 
 
@@ -284,7 +286,6 @@ void User::getUserInfo() {
        } while (!isValidEmail(email));
        gotoxy(centerX + 20, centerY - 2);
        std::cout << "                ";
-
         system("cls");
         Title("Movie-Ticket Booking System", centerY - 12);
         Title("Your account has been created successfully", centerY + 2);
